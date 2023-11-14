@@ -1,0 +1,15 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 0;
+
+  display: flex;
+  gap: 1rem;
+
+  &.vertical {
+    flex-direction: column;
+  }
+  &.horizontal {
+    flex-direction: row;
+  }
+}

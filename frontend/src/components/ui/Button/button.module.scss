@@ -1,0 +1,34 @@
+.button {
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  &.primary {
+    background-color: var(--primary-color);
+    color: var(--text-contrast-color);
+
+    &:hover {
+      background-color: var(--primary-dark-color);
+    }
+  }
+  &.secondary {
+    background-color: var(--element-bg-2);
+    color: var(--text-color);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+}
