@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// npx prisma migrate dev --name init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  refreshTokens RefreshToken[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  studentProfile StudentProfile?
+  employerProfile EmployerProfile?
+}
+
+model StudentProfile {
+  id     Int      @id @unique @default(autoincrement())
+  userId Int      @unique
+  // Добавьте поля, специфичные для студентов
+  // Например: имя, фамилия, учебное заведение и др.
+  user   User     @relation(fields: [userId], references: [id])
+}
+
+model EmployerProfile {
+  id     Int      @id @unique @default(autoincrement())
+  userId Int      @unique
+  // Добавьте поля, специфичные для работодателей
+  // Например: название компании, отрасль и др.
+  user   User     @relation(fields: [userId], references: [id])
+}
+
+model RefreshToken {
+  id          String   @id @unique @default(uuid())
+  hashedToken String
+  userId      Int
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revoked     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
