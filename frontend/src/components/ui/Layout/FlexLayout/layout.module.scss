@@ -12,4 +12,19 @@
   &.horizontal {
     flex-direction: row;
   }
+
+  & div, form {
+    flex-grow: 1;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .container.isAdaptive {
+    &.vertical {
+      flex-direction: row;
+    }
+    &.horizontal {
+      flex-direction: column;
+    }
+  }
 }

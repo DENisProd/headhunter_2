@@ -7,14 +7,14 @@ export function findUserByEmail(email: string) {
         where: {
             email,
         },
-    });
+    })
 }
 
 export function createUserByEmailAndPassword(user: User) {
     user.password = bcrypt.hashSync(user.password, 12);
     return db.user.create({
         data: user,
-    });
+    })
 }
 
 export function findUserById(id: number) {
@@ -22,17 +22,17 @@ export function findUserById(id: number) {
         where: {
             id,
         },
-    });
+    })
 }
 
 export function getStudentProfileById (userId: number) {
     return db.studentProfile.findUnique({
         where: { userId },
-    });
+    })
 }
 
 export function getEmployerProfileById (userId: number) {
     return db.employerProfile.findUnique({
         where: { userId },
-    });
+    })
 }
