@@ -7,6 +7,8 @@ import {Button} from "../ui/Button/Button.jsx";
 import {useRegisterUserMutation} from "../../store/api/userApi.js";
 import {TextField} from "../ui/TextInput/TextField.jsx";
 import styles from './form.module.scss'
+import globalStyles from "../../styles/global.module.scss";
+import {Checkbox} from "../ui/Checkbox/Checkbox.jsx";
 
 export const RegisterForm = () => {
     const [registerUser, { error }] = useRegisterUserMutation()
@@ -82,6 +84,13 @@ export const RegisterForm = () => {
                     }}
                                message={errors?.password2?.type === "required" ? 'Пароли не совпадают!' : ''}
                     />
+
+                    <FlexLayout className={globalStyles.between}>
+                        <Checkbox inputProps={{
+                            ...register("agree")
+                        }}/>
+                        <div>Запомнить меня</div>
+                    </FlexLayout>
 
                     {emailIsBusy && <p>Email уже занят!</p>}
 

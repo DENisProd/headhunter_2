@@ -9,7 +9,7 @@ export const LAYOUT_TYPES = {
     HORIZONTAL: 'HORIZONTAL'
 }
 
-export const FlexLayout = ({ children, maxWidth, type, isAdaptive }) => {
+export const FlexLayout = ({ children, maxWidth, type, className, isAdaptive }, props) => {
 
     const getStyle = () => {
         let style = null
@@ -25,11 +25,11 @@ export const FlexLayout = ({ children, maxWidth, type, isAdaptive }) => {
                 style = styles.horizontal
         }
 
-        return cn(styles.container, style, isAdaptive && styles.isAdaptive)
+        return cn(styles.container, style, isAdaptive && styles.isAdaptive, className)
     }
 
     return (
-        <div className={getStyle()}>
+        <div className={getStyle()} {...props}>
             {children}
         </div>
     )

@@ -45,6 +45,8 @@ body {
   place-items: center;
   width: 100vw;
   min-height: 100vh;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 
