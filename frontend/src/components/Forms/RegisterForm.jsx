@@ -101,7 +101,7 @@ export const RegisterForm = () => {
                     </Button>
 
                     <div>
-                        {/*<Link to={"/auth"}>У меня уже есть аккаунт</Link>*/}
+                        <Link to={"/login"}>У меня уже есть аккаунт</Link>
                     </div>
                 </FlexLayout>
             </form>

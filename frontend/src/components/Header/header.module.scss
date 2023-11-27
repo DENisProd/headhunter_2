@@ -1,0 +1,29 @@
+.container {
+      width: 100vw;
+      height: 3.5rem;
+      background-color: var(--element-bg-contrast);
+      border-bottom: 1px solid var(--element-bg-2);
+      box-sizing: border-box;
+      padding: 1rem;
+      
+
+      .inner {
+            font-size: 1rem;
+            max-width: 1160px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-contrast-color);
+
+            & nav {
+                  display: flex;
+                  justify-content: space-between;
+                  gap: 1rem;
+            }
+
+            & .logo {
+                  font-weight: 600;
+                  font-style: italic;
+            }
+      }
+}

@@ -81,7 +81,7 @@ export const LoginForm = () => {
                     <Button buttonProps={{
                         type: 'submit'
                     }}>
-                        Создать аккаунт
+                        Войти
                     </Button>
 
                     <Button type={BUTTON_TYPES.SECONDARY} buttonProps={{
@@ -91,7 +91,7 @@ export const LoginForm = () => {
                     </Button>
 
                     <div>
-                        {/*<Link to={"/auth"}>Создать аккаунта</Link>*/}
+                        <Link to={"/register"}>Создать аккаунта</Link>
                     </div>
                 </FlexLayout>
             </form>
