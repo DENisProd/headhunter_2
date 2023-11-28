@@ -12,9 +12,10 @@ import {Checkbox} from "../ui/Checkbox/Checkbox.jsx";
 
 export const RegisterForm = () => {
     const [registerUser, { error }] = useRegisterUserMutation()
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const isAuth = useSelector((state) => state.userState.isAuth)
     const [emailIsBusy, setEmailIsBusy] = useState(false)
+    const role = useSelector(state => state.userState.role);
 
     const {
         register,
@@ -32,6 +33,7 @@ export const RegisterForm = () => {
             email: data.email,
             password: data.password,
             password2: data.password2,
+            role
         };
 
         console.log(user)
@@ -42,6 +44,9 @@ export const RegisterForm = () => {
                     setEmailIsBusy(true)
                 }
                 console.log(data)
+                localStorage.setItem('token', data.accessToken)
+                localStorage.setItem('refresh_token', data.refreshToken)
+                navigate('/profile')
             })
             .catch((er) => {
                 console.log(er)

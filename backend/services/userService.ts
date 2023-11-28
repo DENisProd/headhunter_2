@@ -36,3 +36,15 @@ export function getEmployerProfileById (userId: number) {
         where: { userId },
     })
 }
+
+export function createStudentProfileById (userId: number) {
+    return db.studentProfile.create({
+        data: { userId },
+    })
+}
+
+export function createEmployerProfileById (userId: number) {
+    return db.employerProfile.create({
+        data: { userId },
+    })
+}

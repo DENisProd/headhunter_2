@@ -1,5 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {setUserData} from "../slices/userSlice.js";
 
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
@@ -52,13 +53,21 @@ export const userApi = createApi({
         }),
         getProfile: builder.mutation({
             query: () => ({
-                url: '/user/profile/',
+                url: '/user/profile',
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 },
             }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const result = await queryFulfilled;
+                    dispatch(setUserData(result.data));
+                } catch (e) {
+                    console.log(e)
+                }
+            }
         }),
     }),
 })

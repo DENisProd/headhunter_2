@@ -1,25 +1,25 @@
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {FlexLayout, LAYOUT_TYPES} from "../ui/Layout/FlexLayout/FlexLayout.jsx";
 import {Button, BUTTON_TYPES} from "../ui/Button/Button.jsx";
-import {useRegisterUserMutation} from "../../store/api/userApi.js";
+import {useLoginUserMutation, useRegisterUserMutation} from "../../store/api/userApi.js";
 import {TextField} from "../ui/TextInput/TextField.jsx";
 import styles from './form.module.scss'
 import {Checkbox} from "../ui/Checkbox/Checkbox";
 import globalStyles from "../../styles/global.module.scss";
 
 export const LoginForm = () => {
-    const [loginUser, { error }] = useRegisterUserMutation()
-    // const navigate = useNavigate()
+    const [loginUser, {error}] = useLoginUserMutation()
+    const navigate = useNavigate()
     const isAuth = useSelector((state) => state.userState.isAuth)
     const [emailIsBusy, setEmailIsBusy] = useState(false)
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
     } = useForm()
 
     useEffect(() => {
@@ -40,7 +40,9 @@ export const LoginForm = () => {
                 if ((data.message = "Error: Email is already in use!")) {
                     setEmailIsBusy(true)
                 }
-                console.log(data)
+                localStorage.setItem('token', data.data.accessToken)
+                localStorage.setItem('refresh_token', data.data.refreshToken)
+                navigate('/profile')
             })
             .catch((er) => {
                 console.log(er)
@@ -56,7 +58,7 @@ export const LoginForm = () => {
                     <TextField fieldProps={{
                         type: 'email',
                         placeholder: 'Введите email',
-                        ...register("email", { required: true, pattern: /^\S+@\S+$/i })
+                        ...register("email", {required: true, pattern: /^\S+@\S+$/i})
                     }}
                                message={errors?.email?.type === "required" ? 'Введите вашу почту!' : ''}
                     />
@@ -64,7 +66,7 @@ export const LoginForm = () => {
                     <TextField fieldProps={{
                         type: 'password',
                         placeholder: 'Введите пароль',
-                        ...register("password", { required: true, minLength: 6, maxLength: 12 })
+                        ...register("password", {required: true, minLength: 6, maxLength: 12})
                     }}
                                message={errors?.password?.type === "required" ? 'Введите пароль!' : ''}
                     />
@@ -91,7 +93,7 @@ export const LoginForm = () => {
                     </Button>
 
                     <div>
-                        <Link to={"/register"}>Создать аккаунта</Link>
+                        <Link to={"/register/"}>Создать аккаунта</Link>
                     </div>
                 </FlexLayout>
             </form>

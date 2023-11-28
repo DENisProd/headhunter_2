@@ -8,7 +8,8 @@ export const getUserProfileSchema = {
             description: 'Профиль успешно получен',
             type: 'object',
             properties: {
-                accessToken: { type: 'string' },
+                id: { type: 'number' },
+                userId: { type: 'number' },
             },
         },
         401: {

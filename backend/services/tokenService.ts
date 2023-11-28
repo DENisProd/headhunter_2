@@ -25,7 +25,7 @@ export function sendRefreshToken(reply: FastifyReply, token: string) {
 
 export function generateAccessToken(user: { id: number }) {
     return jwt.sign({ userId: user.id }, process.env.JWT_ACCESS_SECRET as Secret, {
-        expiresIn: '5m',
+        expiresIn: '25m',
     });
 }
 

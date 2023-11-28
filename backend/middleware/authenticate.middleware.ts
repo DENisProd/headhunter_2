@@ -1,12 +1,11 @@
-import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyInstance, FastifyRequest, FastifyReply, HookHandlerDoneFunction, preHandlerHookHandler } from 'fastify';
 import jwt, { Secret } from 'jsonwebtoken';
 
-export function isAuthenticated(
-    req: FastifyRequest,
-    res: FastifyReply,
-    next: (err?: FastifyError) => void
-) {
-    const { authorization } = req.headers;
+export const isAuthenticated: preHandlerHookHandler = async function (
+    req,
+    res
+): Promise<void> {
+    const { authorization } = req.headers as { authorization: string };
 
     if (!authorization) {
         res.status(401);
@@ -15,8 +14,9 @@ export function isAuthenticated(
 
     try {
         const token = authorization.split(' ')[1];
-        const secret: Secret = process.env.JWT_ACCESS_SECRET || 'qwerty123'; // Явно указываем тип
-        (req as any).payload = jwt.verify(token, secret) as Record<string, any>;
+        const secret: Secret = process.env.JWT_ACCESS_SECRET || 'qwerty123';
+        const user = await jwt.verify(token, secret); // Используйте ваш пользовательский тип данных
+        (req as any).user = user;
     } catch (err) {
         res.status(401);
         if (err instanceof jwt.TokenExpiredError) {
@@ -24,6 +24,4 @@ export function isAuthenticated(
         }
         throw new Error('🚫 Un-Authorized 🚫');
     }
-
-    return next();
 }

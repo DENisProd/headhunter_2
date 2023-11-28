@@ -7,12 +7,17 @@ import Tile from '../ui/Tile/Tile'
 import Art1 from '../../assets/art1.svg'
 import Art2 from '../../assets/art2.svg'
 import Art3 from '../../assets/art3.svg'
+import {useDispatch} from "react-redux";
+import {setRole} from "../../store/slices/userSlice.js";
 
 function RoleChoose() {
       const navigate = useNavigate()
+      const dispatch = useDispatch();
 
       const chooseRole = (role) => {
-            navigate('/login/main')
+            if (Number(role) === 3) navigate('/register/main')
+            else navigate('/login')
+            dispatch(setRole(role));
       }
   return (
     <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
@@ -28,7 +33,7 @@ function RoleChoose() {
             </Tile>
 
             <Tile props={{
-                  onClick: () => chooseRole(1),
+                  onClick: () => chooseRole(2),
                   classNames: globalStyles.center
             }}>
                   <img src={Art2}/>
@@ -36,7 +41,7 @@ function RoleChoose() {
             </Tile>
 
             <Tile props={{
-                  onClick: () => chooseRole(1),
+                  onClick: () => chooseRole(3),
                   classNames: globalStyles.center
             }}>
                   <img src={Art3}/>

@@ -2,7 +2,12 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import {v4 as uuidv4} from "uuid";
 import bcrypt from 'bcrypt';
 import jwt, { VerifyErrors  } from 'jsonwebtoken';
-import {createUserByEmailAndPassword, findUserByEmail, findUserById} from "../services/userService";
+import {
+    createEmployerProfileById, createStudentProfileById,
+    createUserByEmailAndPassword,
+    findUserByEmail,
+    findUserById
+} from "../services/userService";
 import {generateTokens, hashToken} from "../services/tokenService";
 import {
     addRefreshTokenToWhitelist,
@@ -15,7 +20,7 @@ import {User} from "../models/dto/User";
 
 export async function register(req: FastifyRequest, reply: FastifyReply) {
     try {
-        const { email, password } = req.body as { email: string; password: string };
+        const { email, password, role } = req.body as { email: string; password: string, role: number };
         if (!email || !password) {
             reply.status(400);
             throw new Error('You must provide an email and a password.');
@@ -34,6 +39,10 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
         };
 
         const user = await createUserByEmailAndPassword(newUser);
+
+        if (Number(role) === 3) await createEmployerProfileById(user.id)
+        else await createStudentProfileById(user.id)
+
         const jti = uuidv4();
         const { accessToken, refreshToken } = generateTokens(user, jti);
         await addRefreshTokenToWhitelist({ jti, refreshToken, userId: user.id });

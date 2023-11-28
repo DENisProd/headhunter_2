@@ -3,22 +3,20 @@ import {getEmployerProfileById, getStudentProfileById} from "../services/userSer
 
 export const getProfile = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-        const user = (request as any).user
-        console.log(user)
-        const { userId } = user
+        const user = (request as any).user;
+        const { userId } = user;
 
         const studentProfile = await getStudentProfileById(userId);
         const employerProfile = await getEmployerProfileById(userId);
 
         if (studentProfile) {
-            reply.send(studentProfile);
+            return reply.send(studentProfile);
         } else if (employerProfile) {
-            reply.send(employerProfile);
-        } else {
-            reply.code(404).send({ error: 'User profile not found' });
+            return reply.send(employerProfile);
         }
+            return reply.code(404).send({ error: 'User profile not found' });
     } catch (error) {
-        console.log(error)
-        reply.code(500).send({ error: 'Failed to fetch user profile' });
+        console.log('Error:', error);
+        return reply.code(500).send({ error: 'Failed to fetch user profile' });
     }
 };
