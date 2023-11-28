@@ -19,6 +19,7 @@ model User {
   refreshTokens RefreshToken[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  avatar        String         @default("")
   studentProfile StudentProfile?
   employerProfile EmployerProfile?
 }
@@ -26,9 +27,22 @@ model User {
 model StudentProfile {
   id     Int      @id @unique @default(autoincrement())
   userId Int      @unique
+  lastName String
+  firstName String
+  patronymic String
+
   // Добавьте поля, специфичные для студентов
   // Например: имя, фамилия, учебное заведение и др.
   user   User     @relation(fields: [userId], references: [id])
+  portfolio PortfolioDocument[]
+}
+
+model PortfolioDocument {
+  id     Int      @id @unique @default(autoincrement())
+  type   String
+  name   String
+  studentId Int   @unique
+  student StudentProfile @relation(fields: [studentId], references: [id])
 }
 
 model EmployerProfile {

@@ -1,4 +1,5 @@
 import Fastify from "fastify"
+import multipart from '@fastify/multipart'
 import cors from "@fastify/cors"
 import swagger from "@fastify/swagger"
 import swaggerUI from "@fastify/swagger-ui"
@@ -6,6 +7,7 @@ import {swaggerData, swaggerUIData} from "./swagger"
 import authRoutes from "./routing/auth/auth.routes";
 import Admin from "./routing/admin";
 import userRoutes from "./routing/user/user.routes";
+import profileRoutes from "./routing/profile/profile.routes";
 
 const fastify = Fastify({ logger: true, bodyLimit: 30 * 1024 * 1024 })
 fastify.register(cors, {})
@@ -14,7 +16,10 @@ fastify.register(swaggerUI, swaggerUIData)
 
 fastify.register(authRoutes, { logLevel: "debug", prefix: "/v1/auth" })
 fastify.register(userRoutes, { logLevel: "debug", prefix: "/v1/user" })
+fastify.register(profileRoutes, { logLevel: "debug", prefix: "/v1/user/prof/" })
 fastify.register(Admin, { logLevel: "debug", prefix: "/v1/admin" })
+
+// fastify.use('/v1/files/', serveStatic(path.join(__dirname, '/uploads')))
 
 fastify.listen({ port: 8080 }, (err, addr) => {
     if (err) throw err;

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@fastify/cors": "^8.4.0",
+    "@fastify/multipart": "^8.0.0",
     "@fastify/swagger": "^8.11.0",
     "@fastify/swagger-ui": "^1.10.0",
     "@prisma/client": "^5.5.0",
@@ -13,6 +14,7 @@
     "fastify": "^4.23.2",
     "fastify-cookie": "^5.7.0",
     "fastify-decorators": "^3.15.1",
+    "fastify-multer": "^2.0.3",
     "fastify-swagger": "^5.2.0",
     "helmet": "^7.0.0",
     "json-schema-to-ts": "^2.9.2",
@@ -20,6 +22,7 @@
     "mongoose": "^7.6.0",
     "nodemailer": "^6.9.7",
     "prisma": "^5.5.0",
+    "sharp": "^0.32.6",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
     "uuid": "^9.0.1"
