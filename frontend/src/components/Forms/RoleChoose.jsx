@@ -9,6 +9,7 @@ import Art2 from '../../assets/art2.svg'
 import Art3 from '../../assets/art3.svg'
 import {useDispatch} from "react-redux";
 import {setRole} from "../../store/slices/userSlice.js";
+import cn from "classnames";
 
 function RoleChoose() {
       const navigate = useNavigate()
@@ -27,7 +28,7 @@ function RoleChoose() {
       <FlexLayout>
             <Tile props={{
                   onClick: () => chooseRole(1),
-                  classNames: globalStyles.center
+                  classNames: cn(globalStyles.center, globalStyles.width_30)
             }}>
                   <img src={Art1}/>
                   <p>Я студент</p>
@@ -35,7 +36,7 @@ function RoleChoose() {
 
             <Tile props={{
                   onClick: () => chooseRole(2),
-                  classNames: globalStyles.center
+                  classNames: cn(globalStyles.center, globalStyles.width_30)
             }}>
                   <img src={Art2}/>
                   <p>Я выпускник</p>
@@ -43,7 +44,7 @@ function RoleChoose() {
 
             <Tile props={{
                   onClick: () => chooseRole(3),
-                  classNames: globalStyles.center
+                  classNames: cn(globalStyles.center, globalStyles.width_30)
             }}>
                   <img src={Art3}/>
                   <p>Я работодатель</p>

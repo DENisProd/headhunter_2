@@ -49,8 +49,49 @@
       padding: 1rem;
 }
 
+.padding_0 {
+      padding: 0!important;
+}
+.padding_1000 {
+      padding: 1rem 0 0 0!important;
+}
+
+.with_icon {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      & svg {
+            width: 22px;
+            height: 22px;
+      }
+}
+
+.flex {
+      display: flex;
+}
+
 .big_avatar {
-      width: 8rem;
-      height: 8rem;
+      width: 50%;
+      aspect-ratio: 1/1 !important;
+      object-fit: cover;
       border-radius: 50%;
+      border: 1px solid var(--divider-color);
+      box-shadow: 0 0 0 1px var(--element-bg-2);
+}
+
+@media screen and (max-width: 800px){
+      .flex_container {
+            flex-direction: column !important;
+      }
+
+      .width_50 {
+            width: 100%;
+      }
+      .width_30 {
+            width: 100%;
+      }
+      .width_60 {
+            width: 100%;
+      }
 }

@@ -8,6 +8,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {TabContent, TabGroup} from "../../components/ui/TabBar/TabBar.jsx";
 import ImageUploader from "../../components/ui/ImageUploader/ImageUploader.jsx";
 import {Portfolio} from "./Portfolio/Portfolio";
+import cn from "classnames";
+import {Education} from "./Education/Education.jsx";
 
 const Profile = () => {
     const [getProfile, { error }] = useGetProfileMutation()
@@ -21,28 +23,17 @@ const Profile = () => {
     }, [])
 
     return (
-        <FlexLayout className={globalStyles.page}>
+        <FlexLayout className={cn(globalStyles.page, globalStyles.flex_container)}>
             <Sidebar/>
             <main className={globalStyles.flex_grow_2}>
                 <TabGroup className={globalStyles.tab_group} changeState={setActiveTab}>
                     <TabContent label="Учеба">
-                        <Tile props={{
-                            classNames: globalStyles.start
-                        }}>
-                            Учёба
-
-                            {/*<FileUpload/>*/}
-                        </Tile>
-                        <Tile props={{
-                            classNames: globalStyles.start
-                        }}>
-                            Учёба
-                        </Tile>
+                        <Education/>
                     </TabContent>
                     <TabContent label="Портфолио">
                         <Portfolio />
                     </TabContent>
-                    <TabContent label="Аудитория">
+                    <TabContent label="Опыт работы">
 
                     </TabContent>
                 </TabGroup>

@@ -98,6 +98,28 @@ export const userApi = createApi({
                 }
             }
         }),
+        addEducation: builder.mutation({
+            query: (data) => ({
+                url: '/student/education',
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+            }),
+        }),
+        addMoney: builder.mutation({
+            query: (data) => ({
+                url: '/employer/balance',
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+            }),
+        }),
     }),
 })
 
@@ -110,5 +132,7 @@ export const {
     useRevokeRefreshTokensMutation,
     useGetProfileMutation,
     useAddPortfolioUserMutation,
-    useGetPortfolioMutation
+    useGetPortfolioMutation,
+    useAddEducationMutation,
+    useAddMoneyMutation
 } = userApi

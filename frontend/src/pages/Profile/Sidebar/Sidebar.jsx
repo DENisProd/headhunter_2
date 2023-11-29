@@ -4,6 +4,7 @@ import cn from 'classnames'
 import AvatarIcon from '../../../assets/avatar.png'
 import globalStyles from "../../../styles/global.module.scss";
 import {useSelector} from "react-redux";
+import Tile from "../../../components/ui/Tile/Tile.jsx";
 
 export const Sidebar = () => {
     const data = {
@@ -15,20 +16,22 @@ export const Sidebar = () => {
     const userState = useSelector((state) => state.userState)
 
     return (
-        <aside className={cn(globalStyles.center, globalStyles.width_30)}>
-            <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(globalStyles.center)}>
-                <h3>Профиль ID: {userState.user?.id}</h3>
-                <img src={AvatarIcon} className={globalStyles.big_avatar}/>
-                <h4>{data.lastName + " " + data.firstName + " " + data.patronymic}</h4>
+        <aside className={cn(globalStyles.center, globalStyles.width_30, styles.aside)}>
+            <Tile>
+                <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(globalStyles.center)}>
+                    <h3>Профиль ID: {userState.user?.id}</h3>
+                    <img src={AvatarIcon} className={globalStyles.big_avatar}/>
+                    <h4>{data.lastName + " " + data.firstName + " " + data.patronymic}</h4>
 
-                <div>
-                    <h4 className={globalStyles.margin_block_0}>E-mail</h4>
-                    <h6 className={globalStyles.margin_block_0}>{userState.user?.email}</h6>
+                    <div>
+                        <h4 className={globalStyles.margin_block_0}>E-mail</h4>
+                        <h6 className={globalStyles.margin_block_0}>{userState.user?.email}</h6>
 
-                    <h4 className={globalStyles.margin_block_0}>Телефон</h4>
-                    <h6 className={globalStyles.margin_block_0}>8******</h6>
-                </div>
-            </FlexLayout>
+                        <h4 className={globalStyles.margin_block_0}>Телефон</h4>
+                        <h6 className={globalStyles.margin_block_0}>8******</h6>
+                    </div>
+                </FlexLayout>
+            </Tile>
         </aside>
     )
 }

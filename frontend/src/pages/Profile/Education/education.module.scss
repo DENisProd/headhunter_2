@@ -1,0 +1,14 @@
+.list {
+  border-radius: 1rem;
+  border: 1px solid var(--divider-color);
+  padding: 0.8rem;
+
+  & .row {
+    border-bottom: 1px solid var(--divider-color);
+    padding: 0 0 0.2rem 0;
+
+    &:last-child {
+      border-bottom: 1px solid transparent;
+    }
+  }
+}

@@ -5,7 +5,8 @@ const initialState = {
     user: null,
     profile: null,
     role: 0,
-    portfolio: []
+    portfolio: [],
+    balance: 0.0
 }
 
 export const userSlice = createSlice({

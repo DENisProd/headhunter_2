@@ -11,17 +11,14 @@ export default async function userRoutes(fastify: FastifyInstance) {
     fastify.get("/profile", {
         schema: getUserProfileSchema,
         preHandler: isAuthenticated,
-        // preValidation: isAuthenticated,
         handler: userController.getProfile
     })
     fastify.get("/portfolio", {
         preHandler: isAuthenticated,
-        // preValidation: isAuthenticated,
         handler: portfolioController.getUserPortfolio
     })
     fastify.post("/portfolio", {
         preHandler: isAuthenticated,
-        // preValidation: isAuthenticated,
         handler: portfolioController.createPortfolioDocument
     })
 }

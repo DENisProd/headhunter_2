@@ -35,6 +35,17 @@ model StudentProfile {
   // Например: имя, фамилия, учебное заведение и др.
   user   User     @relation(fields: [userId], references: [id])
   portfolio PortfolioDocument[]
+  educations StudentEducation[]
+}
+
+model StudentEducation {
+    id     Int      @id @unique @default(autoincrement())
+    name   String
+    specialization String
+    faculty String
+    period  String
+    studentId Int
+    student StudentProfile @relation(fields: [studentId], references: [id])
 }
 
 model PortfolioDocument {
@@ -59,9 +70,30 @@ model PortfolioFile {
 model EmployerProfile {
   id     Int      @id @unique @default(autoincrement())
   userId Int      @unique
+  balance Int     @default(0)
+  companyName String @default("")
+  companyAddress String @default("")
   // Добавьте поля, специфичные для работодателей
   // Например: название компании, отрасль и др.
   user   User     @relation(fields: [userId], references: [id])
+  payment PaymentAction[]
+}
+
+enum TransactionType {
+    DEPOSIT
+    SUBSCRIPTION_PAYMENT
+    STUDENT_PAYMENT
+}
+
+model PaymentAction {
+    id     Int      @id @unique @default(autoincrement())
+    value  Int
+    type   String
+    //studentId Int
+    //student StudentProfile @relation(fields: [studentId], references: [id])
+    createdAt     DateTime       @default(now())
+    employerId Int
+    employer EmployerProfile @relation(fields: [employerId], references: [id])
 }
 
 model RefreshToken {

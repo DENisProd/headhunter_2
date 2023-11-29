@@ -28,6 +28,9 @@ export function findUserById(id: number) {
 export function getStudentProfileById (userId: number) {
     return db.studentProfile.findUnique({
         where: { userId },
+        include: {
+            educations: true
+        }
     })
 }
 

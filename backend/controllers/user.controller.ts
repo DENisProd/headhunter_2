@@ -13,9 +13,9 @@ export const getProfile = async (request: FastifyRequest, reply: FastifyReply) =
         const employerProfile = await getEmployerProfileById(userId);
 
         if (studentProfile) {
-            return reply.send({ profile: studentProfile, user: userProfile});
+            return reply.send({ profile: studentProfile, user: userProfile, userType: "student"});
         } else if (employerProfile) {
-            return reply.send({ profile: employerProfile, user: userProfile});
+            return reply.send({ profile: employerProfile, user: userProfile, userType: "employer"});
         }
             return reply.code(404).send({ error: 'User profile not found' });
     } catch (error) {
