@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {setUserData} from "../slices/userSlice.js";
+import {setUserData, setUserPortfolio} from "../slices/userSlice.js";
 
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
@@ -69,9 +69,46 @@ export const userApi = createApi({
                 }
             }
         }),
+        addPortfolioUser: builder.mutation({
+            query: (data) => ({
+                url: '/user/portfolio',
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+            }),
+        }),
+        getPortfolio: builder.mutation({
+            query: () => ({
+                url: '/user/portfolio',
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const result = await queryFulfilled;
+                    dispatch(setUserPortfolio(result.data));
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        }),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useRegisterUserMutation, useLoginUserMutation, useRefreshTokenMutation, useRevokeRefreshTokensMutation, useGetProfileMutation } = userApi
+export const {
+    useRegisterUserMutation,
+    useLoginUserMutation,
+    useRefreshTokenMutation,
+    useRevokeRefreshTokensMutation,
+    useGetProfileMutation,
+    useAddPortfolioUserMutation,
+    useGetPortfolioMutation
+} = userApi

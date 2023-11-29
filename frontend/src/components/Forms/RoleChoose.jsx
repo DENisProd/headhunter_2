@@ -16,6 +16,7 @@ function RoleChoose() {
 
       const chooseRole = (role) => {
             if (Number(role) === 3) navigate('/register/main')
+            if (Number(role) === 2) navigate('/register/main')
             else navigate('/login')
             dispatch(setRole(role));
       }

@@ -1,0 +1,36 @@
+$small: 600px;
+$medium: 1200px;
+
+.tabs_container {
+  //background: var(--background-secondary);
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+
+  & .tab {
+    flex-grow: 1;
+    text-align: center;
+    padding: 0.5em;
+    user-select: none;
+    transition: all 0.2s ease-in-out;
+    color: var(--text-color);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: 1rem;
+
+    &.selected {
+      //background: var(--element-bg-2);
+      border-radius: 0.9em 0.9em 0 0;
+      border-bottom: 3px solid var(--primary-color);
+
+    }
+
+    @media screen and (max-width: 520px) {
+      & {
+        font-size: 0.9em;
+      }
+    }
+  }
+}

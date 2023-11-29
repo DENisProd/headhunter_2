@@ -3,7 +3,9 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     isAuth: false,
     user: null,
-    role: 0
+    profile: null,
+    role: 0,
+    portfolio: []
 }
 
 export const userSlice = createSlice({
@@ -14,14 +16,18 @@ export const userSlice = createSlice({
             state.isAuth = action.payload;
         },
         setUserData(state, action) {
-            state.user = action.payload;
+            state.user = action.payload?.user;
+            state.profile = action.payload?.profile;
         },
         setRole(state, action) {
             state.role = action.payload
+        },
+        setUserPortfolio(state, action) {
+            state.portfolio = action.payload
         }
     },
 })
 
-export const {setIsAuth, setUserData, setRole} = userSlice.actions;
+export const {setIsAuth, setUserData, setRole, setUserPortfolio} = userSlice.actions;
 
 export default userSlice.reducer
