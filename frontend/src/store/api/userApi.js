@@ -5,12 +5,15 @@ import {setUserData, setUserPortfolio} from "../slices/userSlice.js";
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
     reducerPath: 'userApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8080/v1/' }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://localhost:8080/v1/',
+        prepareHeaders: headers => {
+            headers.set('Content-Type', 'application/json');
+            headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            return headers;
+        }
+    }),
     endpoints: (builder) => ({
-        // getMe: builder.query({
-        //     query: (name) => `user/me`,
-        //     credentials: "include"
-        // }),
         registerUser: builder.mutation({
             query: (user) => ({
                 url: '/auth/register',
@@ -26,46 +29,40 @@ export const userApi = createApi({
                 url: '/auth/login',
                 method: 'POST',
                 body: JSON.stringify(user),
-                headers: {
-                    "Content-Type": "application/json",
-                },
             }),
         }),
         refreshToken: builder.mutation({
             query: () => ({
                 url: '/auth/refresh_token/',
                 method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                },
             }),
         }),
         revokeRefreshTokens: builder.mutation({
             query: () => ({
                 url: '/auth/revoke_refresh_tokens/',
                 method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                },
             }),
         }),
         getProfile: builder.mutation({
             query: () => ({
                 url: '/user/profile',
                 method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                },
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const result = await queryFulfilled;
                     dispatch(setUserData(result.data));
-                } catch (e) {
-                    console.log(e)
+                } catch (error) {
+                    if (error.status === 401) {
+                        // Обработка ошибки 401 (Unauthorized)
+                        // Здесь вы можете выполнить переадресацию на страницу /login
+                        // Например, с помощью библиотеки react-router-dom или другой библиотеки маршрутизации
+                        // Пример с react-router-dom:
+                        // history.push('/login');
+                    } else {
+                        window.location.href = "/login"
+                    }
+                    // queryFailed(error); // Помечаем запрос как проваленный, чтобы обработчик ошибок на верхнем уровне сработал
                 }
             }
         }),
@@ -74,28 +71,17 @@ export const userApi = createApi({
                 url: '/user/portfolio',
                 method: 'POST',
                 body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                },
             }),
         }),
         getPortfolio: builder.mutation({
             query: () => ({
                 url: '/user/portfolio',
                 method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                },
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
+                //try {
                     const result = await queryFulfilled;
                     dispatch(setUserPortfolio(result.data));
-                } catch (e) {
-                    console.log(e)
-                }
             }
         }),
         addEducation: builder.mutation({
@@ -103,21 +89,24 @@ export const userApi = createApi({
                 url: '/student/education',
                 method: 'POST',
                 body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                },
+            })
+        }),
+        editStudentProfile: builder.mutation({
+            query: (data) => ({
+                url: '/student/',
+                method: 'PATCH',
+                body: JSON.stringify(data),
             }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                    const result = await queryFulfilled;
+                    console.log(result)
+            }
         }),
         addMoney: builder.mutation({
             query: (data) => ({
                 url: '/employer/balance',
                 method: 'POST',
                 body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                },
             }),
         }),
     }),
@@ -134,5 +123,6 @@ export const {
     useAddPortfolioUserMutation,
     useGetPortfolioMutation,
     useAddEducationMutation,
-    useAddMoneyMutation
+    useAddMoneyMutation,
+    useEditStudentProfileMutation,
 } = userApi

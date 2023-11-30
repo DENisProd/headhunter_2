@@ -4,7 +4,7 @@ const initialState = {
     isAuth: false,
     user: null,
     profile: null,
-    role: 0,
+    role: "",
     portfolio: [],
     balance: 0.0
 }
@@ -19,6 +19,7 @@ export const userSlice = createSlice({
         setUserData(state, action) {
             state.user = action.payload?.user;
             state.profile = action.payload?.profile;
+            state.role = action.payload?.userType
         },
         setRole(state, action) {
             state.role = action.payload

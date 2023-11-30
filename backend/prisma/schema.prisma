@@ -20,22 +20,22 @@ model User {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   avatar        String         @default("")
+  phone         Int            @default(0)
   studentProfile StudentProfile?
   employerProfile EmployerProfile?
 }
 
 model StudentProfile {
-  id     Int      @id @unique @default(autoincrement())
-  userId Int      @unique
-  lastName String @default("")
-  firstName String @default("")
-  patronymic String @default("")
-
-  // Добавьте поля, специфичные для студентов
-  // Например: имя, фамилия, учебное заведение и др.
-  user   User     @relation(fields: [userId], references: [id])
-  portfolio PortfolioDocument[]
-  educations StudentEducation[]
+  id          Int      @id @unique @default(autoincrement())
+  userId      Int      @unique
+  lastName    String   @default("")
+  firstName   String   @default("")
+  patronymic  String   @default("")
+  skills      String   @default("")
+  interests   String   @default("")
+  user        User     @relation(fields: [userId], references: [id])
+  portfolio   PortfolioDocument[]
+  educations  StudentEducation[]
 }
 
 model StudentEducation {

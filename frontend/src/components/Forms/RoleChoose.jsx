@@ -23,7 +23,7 @@ function RoleChoose() {
       }
   return (
     <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
-      <h1>Кто вы</h1>
+      <h1 className={globalStyles.center}>Ваш статус: </h1>
 
       <FlexLayout>
             <Tile props={{
@@ -35,19 +35,19 @@ function RoleChoose() {
             </Tile>
 
             <Tile props={{
-                  onClick: () => chooseRole(2),
-                  classNames: cn(globalStyles.center, globalStyles.width_30)
-            }}>
-                  <img src={Art2}/>
-                  <p>Я выпускник</p>
-            </Tile>
-
-            <Tile props={{
                   onClick: () => chooseRole(3),
                   classNames: cn(globalStyles.center, globalStyles.width_30)
             }}>
-                  <img src={Art3}/>
+                  <img src={Art2}/>
                   <p>Я работодатель</p>
+            </Tile>
+
+            <Tile props={{
+                  onClick: () => chooseRole(2),
+                  classNames: cn(globalStyles.center, globalStyles.width_30)
+            }}>
+                  <img src={Art3}/>
+                  <p>Я выпускник</p>
             </Tile>
       </FlexLayout>
     </FlexLayout>
