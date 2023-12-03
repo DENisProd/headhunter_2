@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import {User} from "../models/dto/User";
 import {db} from "../database/db";
+import {StudentEditProfile} from "../controllers/student.controller";
 
 export function findUserByEmail(email: string) {
     return db.user.findUnique({
@@ -25,21 +26,33 @@ export function findUserById(id: number) {
     })
 }
 
+export function createStudentProfileById (userId: number) {
+    return db.studentProfile.create({
+        data: { userId },
+    })
+}
+
 export function getStudentProfileById (userId: number) {
     return db.studentProfile.findUnique({
         where: { userId },
+        include: {
+            educations: true
+        }
     })
+}
+
+export function updateStudentProfileById(userId: number, updatedData: StudentEditProfile) {
+    return db.studentProfile.update({
+        where: { userId },
+        data: {
+            ...updatedData
+        }
+    });
 }
 
 export function getEmployerProfileById (userId: number) {
     return db.employerProfile.findUnique({
         where: { userId },
-    })
-}
-
-export function createStudentProfileById (userId: number) {
-    return db.studentProfile.create({
-        data: { userId },
     })
 }
 

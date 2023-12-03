@@ -67,6 +67,8 @@ body {
     --primary-color: #11519C;
     --primary-dark-color: #0E468B;
     --primary-light-color: #1370B9;
+
+    --divider-color: #D2DAE3;
   }
   a:hover {
     color: #747bff;

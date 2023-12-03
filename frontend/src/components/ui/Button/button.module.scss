@@ -14,6 +14,10 @@
   align-items: center;
   gap: 0.5rem;
 
+  &.short {
+    width: fit-content;
+  }
+
   &.primary {
     background-color: var(--primary-color);
     color: var(--text-contrast-color);

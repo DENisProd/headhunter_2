@@ -8,15 +8,30 @@ import authRoutes from "./routing/auth/auth.routes";
 import Admin from "./routing/admin";
 import userRoutes from "./routing/user/user.routes";
 import profileRoutes from "./routing/profile/profile.routes";
+import fileRoutes from "./routing/files/file.routes";
+import fastifyStatic from '@fastify/static'
+import path from "path";
+import employerRoutes from "./routing/employer/employer.routes";
+import studentRoutes from "./routing/student/student.routes";
 
 const fastify = Fastify({ logger: true, bodyLimit: 30 * 1024 * 1024 })
 fastify.register(cors, {})
 fastify.register(swagger, swaggerData)
 fastify.register(swaggerUI, swaggerUIData)
 
+export const uploadsDir = path.join(__dirname, '/uploads');
+// Настройка статического обслуживания папки 'uploads'
+fastify.register(fastifyStatic, {
+        root: uploadsDir, // Путь к папке с загруженными файлами
+    prefix: '/v1/uploads', // Префикс URL, по которому будут доступны файлы
+});
+
 fastify.register(authRoutes, { logLevel: "debug", prefix: "/v1/auth" })
 fastify.register(userRoutes, { logLevel: "debug", prefix: "/v1/user" })
-fastify.register(profileRoutes, { logLevel: "debug", prefix: "/v1/user/prof/" })
+fastify.register(profileRoutes, { logLevel: "debug", prefix: "/v1/user/prof" })
+fastify.register(fileRoutes, { logLevel: "debug", prefix: "/v1/file" })
+fastify.register(employerRoutes, { logLevel: "debug", prefix: "/v1/employer/" })
+fastify.register(studentRoutes, { logLevel: "debug", prefix: "/v1/student/" })
 fastify.register(Admin, { logLevel: "debug", prefix: "/v1/admin" })
 
 // fastify.use('/v1/files/', serveStatic(path.join(__dirname, '/uploads')))

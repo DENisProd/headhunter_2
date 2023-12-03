@@ -44,8 +44,8 @@ export const RegisterForm = () => {
                     setEmailIsBusy(true)
                 }
                 console.log(data)
-                localStorage.setItem('token', data.accessToken)
-                localStorage.setItem('refresh_token', data.refreshToken)
+                localStorage.setItem('token', data.data?.accessToken)
+                localStorage.setItem('refresh_token', data.data?.refreshToken)
                 navigate('/profile')
             })
             .catch((er) => {

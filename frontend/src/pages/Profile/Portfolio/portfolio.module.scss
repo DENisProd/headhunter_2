@@ -1,0 +1,52 @@
+.main_tile {
+  padding: 0;
+}
+
+.tile {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  border-bottom: 1px solid var(--divider-color);
+  padding: 0rem 0 1rem 0;
+  align-items: center;
+
+  &:last-child {
+    border-bottom: 1px solid transparent;
+  }
+
+  & .text {
+    margin-left: 1rem;
+  }
+
+  & img {
+    width: 100%;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+
+  & .buttons {
+    display: flex;
+    gap: 1rem;
+
+    & button {
+      border: none;
+      outline: none;
+      background: none;
+      cursor: pointer;
+      border-radius: 1rem;
+      width: 40px;
+      height: 40px;
+
+      &:hover {
+        background: var(--element-bg-2);
+      }
+
+      & svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}

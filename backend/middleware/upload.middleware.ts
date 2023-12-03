@@ -1,36 +1,33 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-import sharp from 'sharp';
-import fs from 'fs';
-import { RawFile } from 'fastify-multer/lib/interfaces';
+import multer  from 'fastify-multer';
+import { FastifyRequest } from 'fastify';
+import path from 'path';
 
-export const uploadFile = async (request: FastifyRequest, reply: FastifyReply) => {
-    const file = request.file as RawFile; // Приводим к типу RawFile
-
-    if (!file) {
-        return reply.status(400).send({ message: 'Файл не предоставлен' });
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
+        cb(null, 'public/uploads/');
+    },
+    filename(req, file, cb) {
+        cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
     }
+});
 
-    try {
-        // Путь к исходному файлу
-        const originalPath = file.path;
+function checkFileType(file: File, cb: (error: Error | null, acceptFile: boolean) => void) {
+    const filetypes = /jpg|jpeg|png/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = filetypes.test(file.mimetype);
 
-        // Сжатие и сохранение файла
-        const compressedPath = 'uploads/compressed-' + file.filename;
-        await sharp(originalPath)
-            .resize(1920, 1080, { fit: 'inside' })
-            .toFormat('webp')
-            .toFile(compressedPath);
+    if (extname && mimetype) {
+        return cb(null, true);
+    } else {
+        cb(new Error('Images only!'));
+    }
+}
 
-        fs.unlinkSync(originalPath);
-
-        // Обновление пути файла в request
-        (request as any).file.path = compressedPath;
-
-        return reply.send({
-            message: 'Файл успешно загружен, сжат и конвертирован в WebP',
-            file: compressedPath
-        });
-    } catch (error) {
-        return reply.status(500).send({ message: 'Ошибка при обработке файла', error });
+const upload = multer({
+    storage,
+    fileFilter(req: FastifyRequest, file, cb) {
+        checkFileType(file, cb);
     }
 };
+
+export default upload;

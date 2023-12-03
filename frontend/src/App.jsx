@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Header from './components/Header/Header.jsx';
 import Profile from './pages/Profile/Profile.jsx';
 import Landing from "./pages/Landing/Landing.jsx";
+import {Balance} from "./pages/Balance/Balance";
 
 function PageTransition({ children }) {
     return (
@@ -49,6 +50,11 @@ function App() {
                 <Route path="/profile" element={
                     <PageTransition>
                         <Profile/>
+                    </PageTransition>
+                } />
+                <Route path="/balance" element={
+                    <PageTransition>
+                        <Balance/>
                     </PageTransition>
                 } />
 

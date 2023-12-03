@@ -1,6 +1,6 @@
 .container {
       background-color: var(--element-bg);
-      border: 1px solid var(--element-bg-2);
+      //border: 1px solid var(--element-bg-2);
       color: var(--text-color);
       border-radius: 1rem;
       box-sizing: border-box;
@@ -8,7 +8,8 @@
       display: flex;
       flex-direction: column;
       //align-items: center;
-      margin-bottom: 1rem;
+      //margin-bottom: 1rem;
+      box-shadow: 0 0 0 1px var(--element-bg-2);
 
       & img {
             aspect-ratio: 1/1.3;

@@ -15,7 +15,8 @@ export const getUserProfileSchema = {
                 user: {
                     id: {type: 'number'},
                     avatar: {type: 'string'}
-                }
+                },
+                userType:  { type: 'string' }
             },
         },
         401: {

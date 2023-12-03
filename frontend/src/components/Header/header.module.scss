@@ -1,10 +1,20 @@
 .container {
       width: 100vw;
-      height: 5rem;
-      background-color: var(--element-bg-contrast);
-      border-bottom: 1px solid var(--element-bg-2);
+      height: 4.6rem;
+      background-color: var(--element-bg);
+      border-bottom: 2px solid var(--divider-color);
       box-sizing: border-box;
       padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      transform: translateY(-100%);
+      pointer-events: none;
+
+      &.visible {
+            pointer-events: all;
+            opacity: 1;
+            transform: translateY(0);
+      }
       
 
       .inner {
@@ -13,13 +23,31 @@
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
-            color: var(--text-contrast-color);
+            color: var(--text-color);
             align-items: center;
 
             & nav {
                   display: flex;
                   justify-content: space-between;
                   gap: 1rem;
+            }
+
+            & .button {
+                  padding: 0.5rem 1rem;
+                  border-radius: 9px;
+                  background: var(--app-bg);
+                  border: 1px solid var(--divider-color);
+                  text-decoration: none;
+                  color: var(--text-2-color);
+                  font-weight: 400;
+                  display: flex;
+                  gap: 0.5rem;
+                  align-items: center;
+
+                  & svg {
+                        width: 24px;
+                        height: 24px;
+                  }
             }
 
             & .logo {
@@ -30,7 +58,7 @@
                   align-items: center;
 
                   & img {
-                        height: 3rem;
+                        height: 2.5rem;
                   }
             }
       }

@@ -20,37 +20,81 @@ model User {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   avatar        String         @default("")
+  phone         Int            @default(0)
   studentProfile StudentProfile?
   employerProfile EmployerProfile?
 }
 
 model StudentProfile {
-  id     Int      @id @unique @default(autoincrement())
-  userId Int      @unique
-  lastName String
-  firstName String
-  patronymic String
+  id          Int      @id @unique @default(autoincrement())
+  userId      Int      @unique
+  lastName    String   @default("")
+  firstName   String   @default("")
+  patronymic  String   @default("")
+  skills      String   @default("")
+  interests   String   @default("")
+  isWorkSearch Boolean @default(false)
+  user        User     @relation(fields: [userId], references: [id])
+  portfolio   PortfolioDocument[]
+  educations  StudentEducation[]
+}
 
-  // Добавьте поля, специфичные для студентов
-  // Например: имя, фамилия, учебное заведение и др.
-  user   User     @relation(fields: [userId], references: [id])
-  portfolio PortfolioDocument[]
+model StudentEducation {
+    id     Int      @id @unique @default(autoincrement())
+    name   String
+    specialization String
+    faculty String
+    period  String
+    studentId Int
+    student StudentProfile @relation(fields: [studentId], references: [id])
 }
 
 model PortfolioDocument {
   id     Int      @id @unique @default(autoincrement())
   type   String
   name   String
-  studentId Int   @unique
+  description   String
+  studentId Int
   student StudentProfile @relation(fields: [studentId], references: [id])
+  portfolioFile PortfolioFile[]
+}
+
+model PortfolioFile {
+  id     Int      @id @unique @default(autoincrement())
+  url   String
+  size  Int       @default(1)
+  mimeType String
+  portfolioDocumentId Int
+  portfolioDocument PortfolioDocument @relation(fields: [portfolioDocumentId], references: [id])
 }
 
 model EmployerProfile {
   id     Int      @id @unique @default(autoincrement())
   userId Int      @unique
+  balance Int     @default(0)
+  companyName String @default("")
+  companyAddress String @default("")
   // Добавьте поля, специфичные для работодателей
   // Например: название компании, отрасль и др.
   user   User     @relation(fields: [userId], references: [id])
+  payment PaymentAction[]
+}
+
+enum TransactionType {
+    DEPOSIT
+    SUBSCRIPTION_PAYMENT
+    STUDENT_PAYMENT
+}
+
+model PaymentAction {
+    id     Int      @id @unique @default(autoincrement())
+    value  Int
+    type   String
+    //studentId Int
+    //student StudentProfile @relation(fields: [studentId], references: [id])
+    createdAt     DateTime       @default(now())
+    employerId Int
+    employer EmployerProfile @relation(fields: [employerId], references: [id])
 }
 
 model RefreshToken {
