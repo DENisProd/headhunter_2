@@ -23,6 +23,11 @@ export const Portfolio = () => {
         getPortfolio()
     }, [])
 
+    const closeAdding = () => {
+        setIsAdd(false)
+        getPortfolio()
+    }
+
     return (
         <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={globalStyles.padding_0}>
             <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={globalStyles.padding_0}>
@@ -44,7 +49,7 @@ export const Portfolio = () => {
                     </FlexLayout>
                 </Tile>
 
-                {isAdd && <ImageUploader setParentImages={setFiles} setIsAdd={setIsAdd}/>}
+                {isAdd && <ImageUploader setParentImages={setFiles} setIsAdd={setIsAdd} closeAdding={closeAdding}/>}
                 <Tile props={{
                     classNames: cn(globalStyles.start)
                 }}>

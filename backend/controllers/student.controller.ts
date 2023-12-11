@@ -55,7 +55,7 @@ export const editStudentInformation = async (request: FastifyRequest, reply: Fas
 
         const updatedStudent = await updateStudentProfileById(userId, data)
         if (!updatedStudent) reply.status(400).send({message: 'ошибка'})
-        reply.status(400).send(updatedStudent)
+        reply.status(200).send(updatedStudent)
 
     } catch (e) {
         console.log(e)

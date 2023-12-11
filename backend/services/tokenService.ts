@@ -51,3 +51,7 @@ export function generateTokens(user: { id: number }, jti: string) {
 export function hashToken(token: string) {
     return crypto.createHash('sha512').update(token).digest('hex');
 }
+
+export function hashToken256(token: string) {
+    return crypto.createHash('sha256').update(token).digest('hex');
+}

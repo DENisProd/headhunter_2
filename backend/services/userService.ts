@@ -14,7 +14,10 @@ export function findUserByEmail(email: string) {
 export function createUserByEmailAndPassword(user: User) {
     user.password = bcrypt.hashSync(user.password, 12);
     return db.user.create({
-        data: user,
+        data: {
+            ...user,
+            confirmHashCreated: new Date()
+        },
     })
 }
 
@@ -59,5 +62,16 @@ export function getEmployerProfileById (userId: number) {
 export function createEmployerProfileById (userId: number) {
     return db.employerProfile.create({
         data: { userId },
+    })
+}
+
+export function confirmUserEmailById (id: number) {
+    return db.user.update({
+        where: {
+            id
+        },
+        data: {
+            emailConfirmed: true
+        }
     })
 }

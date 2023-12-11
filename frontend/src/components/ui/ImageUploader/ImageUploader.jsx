@@ -13,9 +13,10 @@ import {useForm} from "react-hook-form";
 import {Button} from "../Button/Button.jsx";
 import {useAddPortfolioUserMutation, useRegisterUserMutation} from "../../../store/api/userApi.js";
 
-export const BASE_URL = "http://localhost:8080/v1/"
+// export const BASE_URL = 'https://hh.darksecrets.ru/api/v1/'
+export const BASE_URL = 'http://localhost:8080/v1/'
 
-const ImageUploader = ({ setParentImages }) => {
+const ImageUploader = ({ setParentImages, closeAdding }) => {
     const [images, setImages] = useState([]);
     const [addPortfolioUser, { error }] = useAddPortfolioUserMutation()
     // New state to store upload progress
@@ -29,7 +30,7 @@ const ImageUploader = ({ setParentImages }) => {
             formData.append('file', file);
 
             try {
-                const response = await axios.post('http://localhost:8080/v1/file/upload', formData, {
+                const response = await axios.post(BASE_URL + 'file/upload', formData, {
                     onUploadProgress: (progressEvent) => {
                         const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
                         setUploadProgress((prevState) => ({ ...prevState, [file.name]: progress }));
@@ -86,6 +87,7 @@ const ImageUploader = ({ setParentImages }) => {
             addPortfolioUser(_data)
                 .then(res => {
                     console.log(res)
+                    closeAdding()
                 })
                 .catch(err => console.log(err))
 

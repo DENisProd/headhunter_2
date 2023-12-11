@@ -20,5 +20,11 @@ export default async function authRoutes(fastify: FastifyInstance) {
     fastify.post("/revoke_refresh_tokens", {
         handler: authController.revokeRefreshTokensController
     })
+    fastify.get("/confirm/:hash", {
+        handler: authController.confirmUser
+    })
+    // fastify.post("/reset", {
+    //     handler: authController.re
+    // })
 
 }

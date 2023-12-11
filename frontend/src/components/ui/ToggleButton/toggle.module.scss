@@ -1,0 +1,48 @@
+.btn {
+  //border: 2px solid var(--background-secondary);
+  background-color: var(--app-bg);
+  color: var(--text-color);
+  border-radius: 100px;
+  font-size: 0.8em;
+  padding: 5px 0px;
+  position: relative;
+  cursor: pointer;
+  min-width: 3.5em;
+  height: 1.5em;
+  font-weight: 600;
+  user-select: none;
+
+  & span {
+    transition: all .5s ease;
+    margin: 3px 2px;
+    user-select: none;
+    position: absolute;
+    top: 50%;
+    left: .55em;
+    transform: translateY(-66%);
+  }
+
+  & .circle {
+    transition: all .5s ease;
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 100px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  & .textOff {
+    left: calc(100% - 3.6em);
+  }
+
+  & .off {
+    background-color: var(--element-bg-2);
+    left: .4em;
+  }
+
+  & .on {
+    background-color: var(--primary-color);
+    left: calc(100% - 1.8em);
+  }
+}

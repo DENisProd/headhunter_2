@@ -44,7 +44,10 @@ export const Education = () => {
     }
 
     const onSubmitEditProfileInfo = (data) => {
-        editStudentProfile(data).then(res => console.log(res))
+        editStudentProfile(data).then(res => {
+            getProfile()
+            setIsEdit(false)
+        })
     }
 
     return (
@@ -240,7 +243,7 @@ export const Education = () => {
                     <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(styles.list)}>
                         <div className={styles.row}>
                             <h5 className={globalStyles.margin_block_0}>Сфера профессиональных интересов</h5>
-                            <p className={globalStyles.margin_block_0}>Изучение и внедрение новых образовательных технологий</p>
+                            <p className={globalStyles.margin_block_0}>{user?.profile?.interests}</p>
 
                             <button className={styles.edit_btn} onClick={() => setIsEdit(true)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="30" viewBox="0 0 25 30" fill="none">
@@ -261,7 +264,7 @@ export const Education = () => {
                     <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(styles.list)}>
                         <div className={styles.row}>
                             <h5 className={globalStyles.margin_block_0}>Умения и навыки </h5>
-                            <p className={globalStyles.margin_block_0}>Отличное знание теории предмета; Умение решать практические задачи;Социальная компетентность</p>
+                            <p className={globalStyles.margin_block_0}>{user?.profile?.skills}</p>
 
                             <button className={styles.edit_btn} onClick={() => setIsEdit(true)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="30" viewBox="0 0 25 30" fill="none">
@@ -290,7 +293,7 @@ export const Education = () => {
                     <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(styles.list)}>
                         <div className={styles.row}>
                             <h5 className={globalStyles.margin_block_0}>ФИО</h5>
-                            <p className={globalStyles.margin_block_0}>Иванов Иван Иванович</p>
+                            <p className={globalStyles.margin_block_0}>{user?.profile?.lastName}{" "}{user?.profile?.firstName}{" "}{user?.profile?.patronymic}</p>
 
                             <button className={styles.edit_btn} onClick={() => setIsEdit(true)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="30" viewBox="0 0 25 30" fill="none">
@@ -340,6 +343,15 @@ export const Education = () => {
                         <div className={styles.row}>
                             <h5 className={globalStyles.margin_block_0}>Двухфакторная аутентификация</h5>
                             <p className={globalStyles.margin_block_0}>Отключена</p>
+                        </div>
+                    </FlexLayout>
+
+                    <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(styles.list)}>
+                        <div className={styles.row}>
+                            <h5 className={globalStyles.margin_block_0}>Сменить пароль</h5>
+                            <p className={globalStyles.margin_block_0}>
+                                <Button type={BUTTON_TYPES.SECONDARY}>Сменить пароль</Button>
+                            </p>
                         </div>
                     </FlexLayout>
                 </FlexLayout>

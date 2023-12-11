@@ -1,5 +1,7 @@
 import {db} from "../database/db";
-import {hashToken} from "./tokenService";
+import {hashToken, hashToken256} from "./tokenService";
+import {createEmailConfirmDTO} from "./mail/dto/emailConfirmDTO";
+import {sendMailTo} from "./mail/mailService";
 
 export function addRefreshTokenToWhitelist({ jti, refreshToken, userId }: { jti: string, refreshToken: string, userId: number }) {
     return db.refreshToken.create({
@@ -41,6 +43,25 @@ export function revokeTokens(userId: number) {
     });
 }
 
-export function sendConfirmationEmail (userId: number) {
-    
+export function findUserByConfirmHash(confirmHash: string) {
+    return db.user.findMany({
+        where: {
+            confirmHash
+        }
+    })
+}
+
+export function findUserByResetHash(resetHash: string) {
+    return db.user.findMany({
+        where: {
+            resetHash
+        }
+    })
+}
+
+export async function sendConfirmationEmail (user: any, hash: string) {
+    console.log("sending mail with hash: " + hash)
+    const confirmMailDto = createEmailConfirmDTO(user.email, hash)
+    // const confirmMailDto = createEmailConfirmDTO("denisproduction17@gmail.com", hash)
+    return await sendMailTo(confirmMailDto)
 }
