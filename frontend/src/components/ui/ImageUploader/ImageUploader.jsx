@@ -14,7 +14,7 @@ import {Button} from "../Button/Button.jsx";
 import {useAddPortfolioUserMutation, useRegisterUserMutation} from "../../../store/api/userApi.js";
 
 // export const BASE_URL = 'https://hh.darksecrets.ru/api/v1/'
-export const BASE_URL = 'http://localhost:8080/v1/'
+export const BASE_URL = 'http://localhost:5555/v1/'
 
 const ImageUploader = ({ setParentImages, closeAdding }) => {
     const [images, setImages] = useState([]);

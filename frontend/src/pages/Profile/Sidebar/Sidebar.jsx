@@ -27,7 +27,10 @@ export const Sidebar = () => {
                         <h4 className={globalStyles.margin_block_0}>Телефон</h4>
                         <h6 className={globalStyles.margin_block_0}>8******</h6>
 
-                        <ToggleButton isOn={wantWork} toggle={setWantWork}/>
+                        <FlexLayout>
+                            <div>Ищу работу</div>
+                            <ToggleButton isOn={wantWork} toggle={setWantWork}/>
+                        </FlexLayout>
                     </div>
                 </FlexLayout>
             </Tile>

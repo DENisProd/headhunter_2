@@ -1,6 +1,7 @@
 import {FastifyReply, FastifyRequest} from "fastify";
 import {_createEducation} from "../services/educationService";
 import {getStudentProfileById, updateStudentProfileById} from "../services/userService";
+import {getStudentForms} from "../services/studentService";
 
 export type Education = {
     faculty: string
@@ -60,5 +61,16 @@ export const editStudentInformation = async (request: FastifyRequest, reply: Fas
     } catch (e) {
         console.log(e)
         reply.status(500)
+    }
+}
+
+export const getStudentsForms = async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        const students = await getStudentForms({ scienceScore: 0})
+
+        return reply.send(students)
+    } catch (e) {
+        console.log(e)
+        return reply.status(500)
     }
 }

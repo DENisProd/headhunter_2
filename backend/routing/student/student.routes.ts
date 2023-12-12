@@ -15,6 +15,10 @@ export default async function studentRoutes(fastify: FastifyInstance) {
         preHandler: isAuthenticated,
         handler: studentController.editStudentInformation
     })
+    fastify.get("/all", {
+        preHandler: isAuthenticated,
+        handler: studentController.getStudentsForms
+    })
     // fastify.get("/portfolio", {
     //     preHandler: isAuthenticated,
     //     handler: portfolioController.getUserPortfolio

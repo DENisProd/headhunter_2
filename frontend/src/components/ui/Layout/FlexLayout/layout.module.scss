@@ -13,6 +13,11 @@
   &.horizontal {
     flex-direction: row;
   }
+  &.center {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 
   & div, form {
     flex-grow: 1;

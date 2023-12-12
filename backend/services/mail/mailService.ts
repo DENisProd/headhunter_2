@@ -7,13 +7,13 @@ export const sendMailTo = async (dto: IBaseDTO) => {
         port: 465,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: 'denis.secret2022@yandex.ru',
-            pass: 'ssypqjkfmctcmjbk',
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASS,
         },
     });
 
     const mailOptions = {
-        from: 'denis.secret2022@yandex.ru',
+        from: process.env.MAIL_USER,
         to: dto.to,
         subject: dto.subject,
         html: dto.text,

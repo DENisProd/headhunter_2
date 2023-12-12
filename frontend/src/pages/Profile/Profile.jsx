@@ -33,6 +33,9 @@ const Profile = () => {
                     <TabContent label="Портфолио">
                         <Portfolio />
                     </TabContent>
+                    <TabContent label="Резюме">
+                        <Portfolio />
+                    </TabContent>
                     <TabContent label="Опыт работы">
 
                     </TabContent>

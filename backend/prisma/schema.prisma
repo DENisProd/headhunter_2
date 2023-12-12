@@ -41,9 +41,19 @@ model StudentProfile {
   skills      String   @default("")
   interests   String   @default("")
   isWorkSearch Boolean @default(false)
+
+  science     Int      @default(0)
+  study       Int      @default(0)
+  community   Int      @default(0)
+  culture     Int      @default(0)
+  project     Int      @default(0)
+  sport       Int      @default(0)
+  total       Int      @default(0)
+
   user        User     @relation(fields: [userId], references: [id])
   portfolio   PortfolioDocument[]
   educations  StudentEducation[]
+  eduPortfolios   PortfolioEdu[]
 }
 
 model StudentEducation {
@@ -64,6 +74,18 @@ model PortfolioDocument {
   studentId Int
   student StudentProfile @relation(fields: [studentId], references: [id])
   portfolioFile PortfolioFile[]
+}
+
+model PortfolioEdu {
+  id     Int      @id @unique @default(autoincrement())
+  ballOfWork   Int
+  category   String
+  description   String?
+  typeName  String
+  name String
+
+  studentId Int
+  student StudentProfile @relation(fields: [studentId], references: [id])
 }
 
 model PortfolioFile {

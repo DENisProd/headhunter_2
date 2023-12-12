@@ -7,7 +7,7 @@
   padding: 5px 0px;
   position: relative;
   cursor: pointer;
-  min-width: 3.5em;
+  width: 4.5em;
   height: 1.5em;
   font-weight: 600;
   user-select: none;
@@ -33,16 +33,16 @@
   }
 
   & .textOff {
-    left: calc(100% - 3.6em);
+    left: calc(100% - 2.6em);
   }
 
   & .off {
     background-color: var(--element-bg-2);
-    left: .4em;
+    left: .5em;
   }
 
   & .on {
     background-color: var(--primary-color);
-    left: calc(100% - 1.8em);
+    left: calc(100% - 1.9em);
   }
 }
