@@ -1,5 +1,6 @@
 import {db} from "../database/db";
 import {EduPortfolio} from "../models/dto/EduPortfolio";
+import {EduPortfolioDto} from "../controllers/portfolio.controller";
 
 export async function _createPortfolioDocument(data: any, studentId: number) {
     return await db.portfolioDocument.create({
@@ -38,7 +39,7 @@ export async function setEduPortfolioToStudentId(studentId: number, portfolioDto
     })
 }
 
-export async function updatePortfolioNumbers(studentId: number, portfolioDto: EduPortfolio[]) {
+export async function updatePortfolioNumbers(studentId: number, portfolioDto: EduPortfolio[], portfolio: EduPortfolioDto) {
     let rating: { [key: string]: number } = {
         'Научно-исследовательская': 0,
         'Другое': 0,
@@ -64,7 +65,10 @@ export async function updatePortfolioNumbers(studentId: number, portfolioDto: Ed
             culture: rating['Культурно-творческая'],
             project: rating['Учебная и проектная'],
             sport: rating['Спортивная'],
-            total
+            total,
+            lastName: portfolio.surname,
+            firstName: portfolio.name,
+            patronymic: portfolio.middleName,
         },
         where: {
             id: studentId

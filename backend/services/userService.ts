@@ -29,9 +29,12 @@ export function findUserById(id: number) {
     })
 }
 
-export function createStudentProfileById (userId: number) {
+export function createStudentProfileById (userId: number, firstName: string) {
     return db.studentProfile.create({
-        data: { userId },
+        data: {
+            userId,
+            firstName
+        },
     })
 }
 
@@ -59,7 +62,7 @@ export function getEmployerProfileById (userId: number) {
     })
 }
 
-export function createEmployerProfileById (userId: number) {
+export function createEmployerProfileById (userId: number, firstName: string) {
     return db.employerProfile.create({
         data: { userId },
     })

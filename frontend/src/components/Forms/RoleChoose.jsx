@@ -16,22 +16,27 @@ function RoleChoose() {
       const dispatch = useDispatch();
 
       const chooseRole = (role) => {
-            if (Number(role) === 3) navigate('/register/main')
+            console.log(role)
+            if (Number(role) === 3) {
+                  console.log('/reg/main')
+                  navigate('/register/main')
+            }
             if (Number(role) === 2) navigate('/register/main')
-            else navigate('/login')
+            else navigate('/register/main')
+            // else navigate('/login')
             dispatch(setRole(role));
       }
   return (
     <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
       <h1 className={globalStyles.center}>Ваш статус: </h1>
 
-      <FlexLayout>
+      <FlexLayout className={globalStyles.flex_container}>
             <Tile props={{
                   onClick: () => chooseRole(1),
                   classNames: cn(globalStyles.center, globalStyles.width_30)
             }}>
                   <img src={Art1}/>
-                  <p>Я студент</p>
+                  <p className={globalStyles.bold_text}>Я студент</p>
             </Tile>
 
             <Tile props={{
@@ -39,7 +44,7 @@ function RoleChoose() {
                   classNames: cn(globalStyles.center, globalStyles.width_30)
             }}>
                   <img src={Art2}/>
-                  <p>Я работодатель</p>
+                  <p className={globalStyles.bold_text}>Я работодатель</p>
             </Tile>
 
             <Tile props={{
@@ -47,7 +52,7 @@ function RoleChoose() {
                   classNames: cn(globalStyles.center, globalStyles.width_30)
             }}>
                   <img src={Art3}/>
-                  <p>Я выпускник</p>
+                  <p className={globalStyles.bold_text}>Я выпускник</p>
             </Tile>
       </FlexLayout>
     </FlexLayout>

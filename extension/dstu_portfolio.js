@@ -89,6 +89,7 @@
                         if (response.ok) return response.json()
                     }).then(res => {
                         data = {
+                            ...data,
                             categories: res.data.categories.map(({ category, description, categoryID, ...rest }) => ({ category, description, categoryID })),
                             listWorks: res.data.listWorks.map(({ name, ballOfWork, type, ...rest }) => ({ name, ballOfWork, category: type.category, description: type.description, categoryID: type.categoryID, typeName: type.name }))
                         }
@@ -102,6 +103,55 @@
                         // Показываем блок с кнопками "Даю согласие" и "Отмена"
                         confirmButton.style.display = 'inline-block';
                         cancelButton.style.display = 'inline-block';
+                    })
+
+                    const studentId = localStorage.getItem('workAuthorID')
+                    fetch("https://edu.donstu.ru/api/UserInfo/Student?studentID=" + studentId, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`,
+                            'Content-Type': 'application/json',
+                            'Cookie': document.cookie
+                        }
+                    }).then(response => {
+                        if (response.ok) return response.json()
+                    }).then(res => {
+                        console.log(res.data)
+                        const _data = {
+                            photoLink: res.data?.photoLink,
+                            facul: res.data?.facul?.faculName,
+                            groupID: res.data?.group?.item2,
+                            kafName: res.data?.kaf?.kafName,
+                            surname: res.data?.surname,
+                            name: res.data?.name,
+                            middleName: res.data?.middleName,
+                            admissionYear: res.data?.admissionYear,
+                            birthday: res.data?.birthday,
+                        }
+                        data = {
+                            ...data,
+                            ..._data
+                        }
+                    })
+
+                    fetch("https://edu.donstu.ru/api/EducationalActivity/StudentAvgMark", {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`,
+                            'Content-Type': 'application/json',
+                            'Cookie': document.cookie
+                        }
+                    }).then(response => {
+                        if (response.ok) return response.json()
+                    }).then(res => {
+                        console.log(res.data)
+                        const _data = {
+                            avgMark: res.data?.avgMark,
+                        }
+                        data = {
+                            ...data,
+                            ..._data
+                        }
                     })
                 })
 

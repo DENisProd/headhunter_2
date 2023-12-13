@@ -25,7 +25,7 @@ const Profile = () => {
     return (
         <FlexLayout className={cn(globalStyles.page, globalStyles.flex_container)}>
             <Sidebar/>
-            <main className={globalStyles.flex_grow_2}>
+            <main className={cn(globalStyles.flex_grow_2, globalStyles.marginTop)}>
                 <TabGroup className={globalStyles.tab_group} changeState={setActiveTab}>
                     <TabContent label="Учеба">
                         <Education/>

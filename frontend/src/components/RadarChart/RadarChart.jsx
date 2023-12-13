@@ -25,7 +25,7 @@ export const RadarChart = () => {
                 value: sport
             },
             {
-                category: "Учебная и проектная",
+                category: "Проектная",
                 value: project
             },
             {
@@ -37,13 +37,13 @@ export const RadarChart = () => {
                 value: science
             },
             {
-                category: "Культурно-творческая",
-                value: culture
-            },
-            {
                 category: "Учебная",
                 value: study
-            }
+            },
+            {
+                category: "Творческая",
+                value: culture
+            },
         ]
 
         setData(_data)
@@ -51,19 +51,19 @@ export const RadarChart = () => {
 
     return (
         <FlexLayout center minHeight>
-            <div style={{ width: 600, height: 350 }}>
+            <div style={{ minWidth: 300, height: 300 }}>
                 <ResponsiveRadar
                     animate
                     curve="linearClosed"
                     data={data}
-                    height={350}
                     indexBy="category"
                     keys={[
                         "value",
                     ]}
-                    width={600}
                     margin={{
                         top: 25,
+                        left: 80,
+                        right: 80,
                         bottom: 25
                     }}
                 />

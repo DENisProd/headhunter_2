@@ -23,3 +23,14 @@ export const getProfile = async (request: FastifyRequest, reply: FastifyReply) =
         return reply.code(500).send({ error: 'Failed to fetch user profile' });
     }
 };
+
+export async function checkAuth (request: FastifyRequest, reply: FastifyReply) {
+    try {
+        const user = (request as any).user;
+        const { userId } = user;
+
+        return reply.send(200).send({ success: true, userId})
+    } catch (err) {
+        return reply.send(err)
+    }
+}

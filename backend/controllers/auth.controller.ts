@@ -22,7 +22,7 @@ import {STATUS_CODES} from "http";
 
 export async function register(req: FastifyRequest, reply: FastifyReply) {
     try {
-        const { email, password, role } = req.body as { email: string; password: string, role: number };
+        const { email, password, role, firstName } = req.body as { email: string; password: string, role: number, firstName: string };
         if (!email || !password) {
             reply.status(400);
             throw new Error('You must provide an email and a password.');
@@ -46,8 +46,8 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
 
         const user = await createUserByEmailAndPassword(newUser);
 
-        if (Number(role) === 3) await createEmployerProfileById(user.id)
-        else await createStudentProfileById(user.id)
+        if (Number(role) === 3) await createEmployerProfileById(user.id, firstName)
+        else await createStudentProfileById(user.id, firstName)
 
         const jti = uuidv4();
         const { accessToken, refreshToken } = generateTokens(user, jti);

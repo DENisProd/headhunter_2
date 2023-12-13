@@ -42,6 +42,7 @@ model StudentProfile {
   interests   String   @default("")
   isWorkSearch Boolean @default(false)
 
+  avgMark     Int      @default(0)
   science     Int      @default(0)
   study       Int      @default(0)
   community   Int      @default(0)

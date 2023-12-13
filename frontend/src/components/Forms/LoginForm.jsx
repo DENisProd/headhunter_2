@@ -9,6 +9,7 @@ import {TextField} from "../ui/TextInput/TextField.jsx";
 import styles from './form.module.scss'
 import {Checkbox} from "../ui/Checkbox/Checkbox";
 import globalStyles from "../../styles/global.module.scss";
+import cn from "classnames";
 
 export const LoginForm = () => {
     const [loginUser, {error}] = useLoginUserMutation()
@@ -71,7 +72,7 @@ export const LoginForm = () => {
                                message={errors?.password?.type === "required" ? 'Введите пароль!' : ''}
                     />
 
-                    <FlexLayout className={globalStyles.between}>
+                    <FlexLayout className={cn(globalStyles.between, globalStyles.padding_0)}>
                         <Checkbox inputProps={{
                             ...register("remember")
                         }}/>

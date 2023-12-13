@@ -60,8 +60,9 @@ export const userApi = createApi({
                         // Например, с помощью библиотеки react-router-dom или другой библиотеки маршрутизации
                         // Пример с react-router-dom:
                         // history.push('/login');
-                    } else {
                         window.location.href = "/login"
+                    } else {
+
                     }
                     // queryFailed(error); // Помечаем запрос как проваленный, чтобы обработчик ошибок на верхнем уровне сработал
                 }

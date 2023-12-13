@@ -27,10 +27,19 @@ type category = {
     categoryID: number
 }
 
-type EduPortfolioDto = {
+export type EduPortfolioDto = {
     categories: category[]
     listWorks: EduPortfolio[]
     email: string
+    admissionYear: number
+    avgMark: number
+    birthday: string
+    facul: string
+    groupID: number
+    kafName: string
+    middleName: string
+    name: string
+    surname: string
 }
 
 export const createPortfolioDocument = async (req: FastifyRequest, reply: FastifyReply) => {
@@ -73,9 +82,9 @@ export const getUserPortfolio = async (request: FastifyRequest, reply: FastifyRe
 
 export const addEduPortfolio = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-        const { listWorks, categories, email } = request.body as EduPortfolioDto
+        const portfolio = request.body as EduPortfolioDto
 
-        const user = await findUserByEmail(email)
+        const user = await findUserByEmail(portfolio.email)
         if (!user) return reply.status(404).send({ message: 'Пользователь не найден' })
 
         const studentProfile = await getStudentProfileById(user.id);
@@ -85,11 +94,11 @@ export const addEduPortfolio = async (request: FastifyRequest, reply: FastifyRep
         if (eduPortfolio) await deleteEduPortfolioToStudentId(studentProfile.id)
 
         let _categories: { [key: string]: string } = {};
-        categories.map(category => _categories[category.category] = category.description);
+        portfolio.categories.map(category => _categories[category.category] = category.description);
 
-        const newListWorks2: EduPortfolio[] = listWorks.map(item => ({ ...item, category: _categories[item.category] || "Другое" }))
+        const newListWorks2: EduPortfolio[] = portfolio.listWorks.map(item => ({ ...item, category: _categories[item.category] || "Другое" }))
 
-        const newListWorks = await Promise.all(listWorks.map(async item => {
+        const newListWorks = await Promise.all(portfolio.listWorks.map(async item => {
             const updatedItem: EduPortfolio = {
                 name: item.name,
                 ballOfWork: item.ballOfWork,
@@ -100,7 +109,7 @@ export const addEduPortfolio = async (request: FastifyRequest, reply: FastifyRep
             return await setEduPortfolioToStudentId(studentProfile.id, updatedItem);
         }));
 
-        await updatePortfolioNumbers(studentProfile.id, newListWorks2)
+        await updatePortfolioNumbers(studentProfile.id, newListWorks2, portfolio)
 
         return reply.send(newListWorks)
     } catch (error) {
