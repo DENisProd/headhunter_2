@@ -4,23 +4,39 @@ import globalStyles from "../../styles/global.module.scss";
 import Tile from "../ui/Tile/Tile.jsx";
 import cn from "classnames";
 
+import Avatar from '../../assets/avatars/avatar1.png'
+import {useNavigate} from "react-router-dom";
+
 export const StudentCard = ({ student, inFavorites, updateFavorites }) => {
+    const navigate = useNavigate()
 
     const addToFavorites = () => {
         let favs = JSON.parse(localStorage.getItem('favorites'))
-        if (Array.isArray(favs)) favs.push(student)
-        else favs = [ student ]
+        if (inFavorites) {
+            if (Array.isArray(favs)) favs = favs.filter(stud => stud.id !== student.id)
+            else favs = []
+        } else {
+            if (Array.isArray(favs)) favs.push(student)
+            else favs = [student]
+        }
         localStorage.setItem('favorites', JSON.stringify(favs))
         updateFavorites()
     }
 
+    const navToStudent = () => {
+        navigate('/student/' + student.id)
+    }
+
     return (
         <Tile props={{
-            classNames: cn(globalStyles.start, globalStyles.flex_grow_0)
+            classNames: cn(globalStyles.start, globalStyles.flex_grow_0, styles.with_hover),
+            onClick: () => navToStudent()
         }}>
             <div className={styles.container}>
-                <div>
-
+                <div className={styles.avatar}>
+                    <picture>
+                        <img src={Avatar}/>
+                    </picture>
                 </div>
 
                 <div className={globalStyles.start}>

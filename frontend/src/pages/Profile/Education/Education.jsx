@@ -165,18 +165,14 @@ export const Education = () => {
                                                 type: 'submit'
                                             }}>Сохранить</Button>
 
-                                            <Button type={BUTTON_TYPES.SECONDARY} isShort buttonProps={{
-                                                onClick: () => setIsAddingEdu(false),
-                                            }}>Отменить</Button>
+                                            <Button type={BUTTON_TYPES.SECONDARY} isShort onClick={() => setIsAddingEdu(false)}>Отменить</Button>
                                         </FlexLayout>
 
                                     </form>
                                 </>
                                 :
                                 <>
-                                    <Button type={BUTTON_TYPES.SECONDARY} isShort buttonProps={{
-                                        onClick: () => setIsAddingEdu(true)
-                                    }}>+ Добавить образование</Button>
+                                    <Button type={BUTTON_TYPES.SECONDARY} isShort onClick={() => setIsAddingEdu(true)}>+ Добавить образование</Button>
                                 </>
                             }
 

@@ -6,7 +6,12 @@ const initialState = {
     profile: null,
     role: "",
     portfolio: [],
-    balance: 0.0
+    balance: 0.0,
+    notifies: [
+        {
+            title: 'aboba'
+        }
+    ]
 }
 
 export const userSlice = createSlice({

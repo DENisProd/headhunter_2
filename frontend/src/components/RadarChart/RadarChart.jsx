@@ -3,13 +3,12 @@ import {ResponsiveRadar} from '@nivo/radar'
 import {useSelector} from "react-redux";
 import {FlexLayout} from "../ui/Layout/FlexLayout/FlexLayout";
 
-export const RadarChart = () => {
-    const user = useSelector(state => state.userState)
+export const RadarChart = ({ student }) => {
 
     const [data, setData] = useState([])
 
     useEffect(() => {
-        if (!user?.profile) return
+        if (!student) return
         const {
             science,
             study,
@@ -17,8 +16,7 @@ export const RadarChart = () => {
             culture,
             project,
             sport
-        } = user.profile
-        console.log(science)
+        } = student
         const _data = [
             {
                 category: "Спортивная",
@@ -47,7 +45,7 @@ export const RadarChart = () => {
         ]
 
         setData(_data)
-    }, [user])
+    }, [student])
 
     return (
         <FlexLayout center minHeight>

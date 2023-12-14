@@ -6,7 +6,7 @@ export const BUTTON_TYPES = {
     SECONDARY: 'SECONDARY'
 }
 
-export const Button = ({ type, children, buttonProps, isShort }) => {
+export const Button = ({ type, children, buttonProps, isShort, onClick, disabled }) => {
 
     const getStyle = () => {
         let style = null
@@ -22,11 +22,11 @@ export const Button = ({ type, children, buttonProps, isShort }) => {
                 style = styles.primary
         }
 
-        return cn(styles.button, style, isShort && styles.short)
+        return cn(styles.button, style, isShort && styles.short, buttonProps?.classNames)
     }
 
     return (
-        <button className={getStyle()} {...buttonProps}>
+        <button className={getStyle()} {...buttonProps} onClick={onClick} disabled={disabled}>
             {children}
         </button>
     )

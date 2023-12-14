@@ -44,6 +44,7 @@
                   display: flex;
                   gap: 0.5rem;
                   align-items: center;
+                  position: relative;
 
                   & svg {
                         width: 24px;
@@ -63,4 +64,15 @@
                   }
             }
       }
+}
+
+.notify {
+      background: var(--primary-color);
+      color: #FFFFFF;
+      border-radius: 1rem;
+      position: absolute;
+      font-size: 0.6rem;
+      top: 0.2rem;
+      left: 1.7rem;
+      padding: 0.1rem 0.4rem;
 }

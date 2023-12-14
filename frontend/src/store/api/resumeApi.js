@@ -37,6 +37,16 @@ export const resumeApi = createApi({
                 dispatch(setStudentResumes(result.data));
             }
         }),
+        getStudent: builder.mutation({
+            query: (id) => ({
+                url: '/student/' + id,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const result = await queryFulfilled;
+               // dispatch(setStudentResume(result.data));
+            }
+        }),
     }),
 })
 

@@ -10,9 +10,11 @@ import ImageUploader from "../../components/ui/ImageUploader/ImageUploader.jsx";
 import {Portfolio} from "./Portfolio/Portfolio";
 import cn from "classnames";
 import {Education} from "./Education/Education.jsx";
+import Resume from "./Resume/Resume.jsx";
+import {Favorites} from "./Employer/Favorites/Favorites";
 
 const Profile = () => {
-    const [getProfile, { error }] = useGetProfileMutation()
+    const [getProfile, {error}] = useGetProfileMutation()
     const dispatch = useDispatch()
     const userState = useSelector((state) => state.userState)
     const [activeTab, setActiveTab] = useState(0)
@@ -26,20 +28,33 @@ const Profile = () => {
         <FlexLayout className={cn(globalStyles.page, globalStyles.flex_container)}>
             <Sidebar/>
             <main className={cn(globalStyles.flex_grow_2, globalStyles.marginTop)}>
-                <TabGroup className={globalStyles.tab_group} changeState={setActiveTab}>
-                    <TabContent label="Учеба">
-                        <Education/>
-                    </TabContent>
-                    <TabContent label="Портфолио">
-                        <Portfolio />
-                    </TabContent>
-                    <TabContent label="Резюме">
-                        <Portfolio />
-                    </TabContent>
-                    <TabContent label="Опыт работы">
 
-                    </TabContent>
-                </TabGroup>
+                {userState.role === "employer" ?
+                    <TabGroup className={globalStyles.tab_group} changeState={setActiveTab}>
+                        <TabContent label="Избранное">
+                            <Favorites />
+                        </TabContent>
+                        <TabContent label="Оплаченные">
+                            <Portfolio/>
+                        </TabContent>
+                    </TabGroup>
+                    :
+                    <TabGroup className={globalStyles.tab_group} changeState={setActiveTab}>
+                        <TabContent label="Учеба">
+                            <Education/>
+                        </TabContent>
+                        <TabContent label="Портфолио">
+                            <Portfolio/>
+                        </TabContent>
+                        <TabContent label="Резюме">
+                            <Resume/>
+                        </TabContent>
+                        <TabContent label="Опыт работы">
+
+                        </TabContent>
+                    </TabGroup>
+                }
+
             </main>
         </FlexLayout>
     )

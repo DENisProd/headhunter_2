@@ -10,6 +10,7 @@ import Landing from "./pages/Landing/Landing.jsx";
 import {Balance} from "./pages/Balance/Balance";
 import {StudentsForms} from "./pages/StudentForms/StudentsForms.jsx";
 import {BASE_URL} from "./components/ui/ImageUploader/ImageUploader.jsx";
+import {ShortResume} from "./pages/Profile/Resume/ShortResume.jsx";
 
 function PageTransition({ children }) {
     return (
@@ -88,6 +89,12 @@ function App() {
                 <Route path="/students" element={
                     <PageTransition>
                         <StudentsForms/>
+                    </PageTransition>
+                } />
+
+                <Route path="/student/:studentId" element={
+                    <PageTransition>
+                        <ShortResume/>
                     </PageTransition>
                 } />
 
