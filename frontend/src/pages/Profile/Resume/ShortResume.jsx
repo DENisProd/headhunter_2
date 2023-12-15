@@ -12,7 +12,8 @@ import React, {useEffect, useRef, useState} from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import {Link, useParams} from "react-router-dom";
-import {useGetStudentsMutation} from "../../../store/api/resumeApi.js";
+import {useCreateOfferMutation, useGetStudentsMutation} from "../../../store/api/resumeApi.js";
+import {useAddPortfolioUserMutation} from "../../../store/api/userApi.js";
 
 export const ShortResume = ( ) => {
     const resumes = useSelector((state) => state.resumeState)
@@ -20,6 +21,8 @@ export const ShortResume = ( ) => {
     const { studentId } = useParams()
     const [isPdfGenerated, setPdfGenerated] = useState(false)
     const [getStudents, { error }] = useGetStudentsMutation()
+    const [createOffer, { error2 }] = useCreateOfferMutation()
+    const [isSended, setIsSended] = useState(false)
 
     useEffect(() => {
         setCurrentResume(resumes.students.find(el => el.id === +studentId))
@@ -28,6 +31,14 @@ export const ShortResume = ( ) => {
     useEffect(() => {
         getStudents()
     }, [])
+
+    const sendOffer = async () => {
+        await createOffer({
+            studentId: +studentId
+        }).then(res => {
+            if (res.data) setIsSended(true)
+        })
+    }
 
     return (
         <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(globalStyles.padding_5050, globalStyles.center)}>
@@ -57,6 +68,7 @@ export const ShortResume = ( ) => {
             <Tile props={{
                 classNames: cn(globalStyles.start, globalStyles.width_50),
             }}>
+                <FlexLayout className={cn(globalStyles.padding_0, globalStyles.between)}>
                     <Link to={'/students/'} className={cn(globalStyles.with_icon, globalStyles.text_decor_none, globalStyles.bold_text, globalStyles.secondary)}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="vuesax/outline/arrow-left">
@@ -70,7 +82,18 @@ export const ShortResume = ( ) => {
                         Назад
                     </Link>
 
-                    <Button>Отправить приглашение</Button>
+                    <Button buttonProps={{
+                        classNames: globalStyles.width_50
+                    }} onClick={sendOffer} disabled={isSended}
+                    >
+                        {isSended ?
+                            "Приглашение отправлено"
+                        :
+                            "Отправить приглашение"
+                        }
+                    </Button>
+                </FlexLayout>
+
             </Tile>
 
             <Tile props={{

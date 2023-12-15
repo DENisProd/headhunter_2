@@ -13,21 +13,21 @@ import {useForm} from "react-hook-form";
 import {Button} from "../Button/Button.jsx";
 import {useAddPortfolioUserMutation, useRegisterUserMutation} from "../../../store/api/userApi.js";
 
-export const BASE_URL = 'https://hh.darksecrets.ru/api/v1/'
-// export const BASE_URL = 'http://localhost:5555/v1/'
+// export const BASE_URL = 'https://hh.darksecrets.ru/api/v1/'
+export const BASE_URL = 'http://localhost:5555/v1/'
 
 const ImageUploader = ({ setParentImages, closeAdding }) => {
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState([])
     const [addPortfolioUser, { error }] = useAddPortfolioUserMutation()
     // New state to store upload progress
-    const [uploadProgress, setUploadProgress] = useState({});
+    const [uploadProgress, setUploadProgress] = useState({})
 
     const onDrop = async (acceptedFiles) => {
-        const updatedImages = [...images];
+        const updatedImages = [...images]
 
         for (const file of acceptedFiles) {
-            const formData = new FormData();
-            formData.append('file', file);
+            const formData = new FormData()
+            formData.append('file', file)
 
             try {
                 const response = await axios.post(BASE_URL + 'file/upload', formData, {

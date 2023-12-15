@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit"
 
 const initialState = {
     students: [],
@@ -11,7 +11,8 @@ const initialState = {
         min_culture: 0,
         min_project: 0,
         min_sport: 0
-    }
+    },
+    offers: []
 }
 
 export const resumeSlice = createSlice({
@@ -23,7 +24,7 @@ export const resumeSlice = createSlice({
             state.filteredStudents = action.payload
         },
         setFilterRating(state, action) {
-            const { total, science, study, community, culture, project, sport } = action.payload;
+            const { total, science, study, community, culture, project, sport } = action.payload
 
             state.filteredStudents = state.students.filter(student => {
                 return student.total >= total &&
@@ -32,18 +33,14 @@ export const resumeSlice = createSlice({
                     student.community >= community &&
                     student.culture >= culture &&
                     student.project >= project &&
-                    student.sport >= sport;
-            });
+                    student.sport >= sport
+            })
         },
         sortByLastName(state, action) {
             state.filteredStudents = state.filteredStudents.slice().sort((a, b) => {
-                if (action.payload) {
-                    return a.lastName.localeCompare(b.lastName);
-                } else {
-                    return b.lastName.localeCompare(a.lastName);
-                }
-            });
-            // return a.total - b.total
+                if (action.payload) return a.lastName.localeCompare(b.lastName)
+                else return b.lastName.localeCompare(a.lastName)
+            })
         },
         sortByTotal(state, action) {
             state.filteredStudents = state.filteredStudents.slice().sort((a, b) => {
@@ -52,11 +49,17 @@ export const resumeSlice = createSlice({
                 } else {
                     return b.total - a.total
                 }
-            });
+            })
+        },
+        addOffer(state, action) {
+            state.offers.push(action.payload)
+        },
+        setOffers(state, action) {
+            state.offers = action.payload
         }
     },
 })
 
-export const {setStudentResumes, setFilterRating, sortByLastName, sortByTotal} = resumeSlice.actions;
+export const {setStudentResumes, setFilterRating, sortByLastName, sortByTotal, addOffer, setOffers} = resumeSlice.actions
 
 export default resumeSlice.reducer

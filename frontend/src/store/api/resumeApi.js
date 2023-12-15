@@ -2,7 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {setUserData, setUserPortfolio} from "../slices/userSlice.js";
 import {BASE_URL} from "../../components/ui/ImageUploader/ImageUploader.jsx";
-import {setStudentResumes} from "../slices/resumeSlice.js";
+import {addOffer, setOffers, setStudentResumes} from "../slices/resumeSlice.js";
 
 // Define a service using a base URL and expected endpoints
 export const resumeApi = createApi({
@@ -47,6 +47,27 @@ export const resumeApi = createApi({
                // dispatch(setStudentResume(result.data));
             }
         }),
+        createOffer: builder.mutation({
+            query: (data) => ({
+                url: '/student/offer',
+                method: 'POST',
+                body: data
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const result = await queryFulfilled
+                dispatch(addOffer(result.data))
+            }
+        }),
+        getOffers: builder.mutation({
+            query: () => ({
+                url: '/student/offer/all',
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const result = await queryFulfilled
+                dispatch(setOffers(result.data))
+            }
+        }),
     }),
 })
 
@@ -54,4 +75,6 @@ export const resumeApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
     useGetStudentsMutation,
+    useCreateOfferMutation,
+    useGetOffersMutation
 } = resumeApi
