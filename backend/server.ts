@@ -36,7 +36,7 @@ fastify.register(Admin, { logLevel: "debug", prefix: "/v1/admin" })
 
 // fastify.use('/v1/files/', serveStatic(path.join(__dirname, '/uploads')))
 
-fastify.listen({ port: 8080 }, (err, addr) => {
+fastify.listen({ port: 5555 }, (err, addr) => {
     if (err) throw err;
     console.log(`Start server...\n${addr}`);
 });

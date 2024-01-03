@@ -1,11 +1,13 @@
 import {FastifyReply, FastifyRequest} from "fastify";
 import {
     _createPortfolioDocument,
-    _getPortfolioDocumentById,
-    getPortfolioDocumentsByStudentId
+    _getPortfolioDocumentById, deleteEduPortfolioToStudentId, getEduPortfolioToStudentId,
+    getPortfolioDocumentsByStudentId, setEduPortfolioToStudentId, updatePortfolioNumbers
 } from '../services/portfolioService';
-import {getStudentProfileById} from "../services/userService";
+import {findUserByEmail, getStudentProfileById} from "../services/userService";
 import {createPortfolioFile} from "../services/portfolioFileService";
+import {EduPortfolio} from "../models/dto/EduPortfolio";
+import * as repl from "repl";
 
 export type PortfolioFileCreate = {
     url: string
@@ -19,6 +21,27 @@ type PortfolioDocCreate = {
     files: PortfolioFileCreate[]
 }
 
+type category = {
+    category: string
+    description: string
+    categoryID: number
+}
+
+export type EduPortfolioDto = {
+    categories: category[]
+    listWorks: EduPortfolio[]
+    email: string
+    admissionYear: number
+    avgMark: number
+    birthday: string
+    facul: string
+    groupID: number
+    kafName: string
+    middleName: string
+    name: string
+    surname: string
+}
+
 export const createPortfolioDocument = async (req: FastifyRequest, reply: FastifyReply) => {
     try {
         const user = (req as any).user;
@@ -28,9 +51,7 @@ export const createPortfolioDocument = async (req: FastifyRequest, reply: Fastif
         if (!studentProfile) return reply.status(404).send({ message: 'Профиль не найден'})
 
         const data = req.body as PortfolioDocCreate;
-        console.log(data)
         const document = await _createPortfolioDocument(data, studentProfile.id);
-        console.log(document)
         await Promise.all(data.files.map(async file => {
             await createPortfolioFile(file, document.id)
         }))
@@ -56,6 +77,66 @@ export const getUserPortfolio = async (request: FastifyRequest, reply: FastifyRe
     } catch (error) {
         console.log(error)
         return reply.status(500).send({ error: 'Ошибка при создании документа' });
+    }
+}
+
+export const addEduPortfolio = async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        const portfolio = await request.body as EduPortfolioDto
+        console.log(portfolio.avgMark)
+        if (!portfolio.email) return reply.status(404).send({ message: 'Пользователь не найден :((' })
+
+        const user = await findUserByEmail(portfolio.email)
+        if (!user) return reply.status(404).send({ message: 'Пользователь не найден' })
+
+        const studentProfile = await getStudentProfileById(user.id);
+        if (!studentProfile) return reply.status(404).send({ message: 'Профиль не найден'})
+
+        const eduPortfolio = await getEduPortfolioToStudentId(studentProfile.id)
+        if (eduPortfolio) await deleteEduPortfolioToStudentId(studentProfile.id)
+
+        let _categories: { [key: string]: string } = {};
+        portfolio.categories.map(category => _categories[category.category] = category.description);
+
+        const newListWorks2: EduPortfolio[] = portfolio.listWorks.map(item => ({ ...item, category: _categories[item.category] || "Другое" }))
+
+        const newListWorks = await Promise.all(portfolio.listWorks.map(async item => {
+            const updatedItem: EduPortfolio = {
+                name: item.name,
+                ballOfWork: item.ballOfWork,
+                category: _categories[item.category] || "Другое",
+                description: item.description,
+                ekAnotation: item.ekAnotation,
+                typeName: item.typeName,
+                keywords: item.keywords,
+                ekTarget: item.ekTarget
+            }
+            return await setEduPortfolioToStudentId(studentProfile.id, updatedItem);
+        }));
+
+        await updatePortfolioNumbers(studentProfile.id, newListWorks2, portfolio)
+
+        return reply.send(newListWorks)
+    } catch (error) {
+        console.log(error)
+        return reply.status(500).send({ error: 'Ошибка при добавлении портфолио' });
+    }
+}
+
+export const getEduPortfolio = async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        const user = (request as any).user;
+        const { userId } = user;
+
+        const studentProfile = await getStudentProfileById(userId);
+        if (!studentProfile) return reply.status(404).send({ message: 'Профиль не найден'})
+
+        const eduPortfolio = await getEduPortfolioToStudentId(studentProfile.id)
+
+        return reply.send(eduPortfolio)
+    } catch (e) {
+        console.log(e)
+        return reply.status(500).send('Ошибка получения портфолио')
     }
 }
 

@@ -9,6 +9,7 @@ import {TextField} from "../ui/TextInput/TextField.jsx";
 import styles from './form.module.scss'
 import globalStyles from "../../styles/global.module.scss";
 import {Checkbox} from "../ui/Checkbox/Checkbox.jsx";
+import cn from "classnames";
 
 export const RegisterForm = () => {
     const [registerUser, { error }] = useRegisterUserMutation()
@@ -90,7 +91,7 @@ export const RegisterForm = () => {
                                message={errors?.password2?.type === "required" ? 'Пароли не совпадают!' : ''}
                     />
 
-                    <FlexLayout className={globalStyles.between}>
+                    <FlexLayout className={cn(globalStyles.between, globalStyles.padding_0)}>
                         <Checkbox inputProps={{
                             ...register("agree")
                         }}/>

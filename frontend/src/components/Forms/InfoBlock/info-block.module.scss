@@ -3,3 +3,10 @@
   width: 100%;
   text-align: justify;
 }
+
+.img_container {
+
+  & img {
+    width: 48%;
+  }
+}

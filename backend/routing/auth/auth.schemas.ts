@@ -11,6 +11,8 @@ export const registerUserSchema = {
         properties: {
             email: { type: 'string' },
             password: { type: 'string' },
+            role: { type: 'string' },
+            firstName: { type: 'string' },
         },
     },
     response: {

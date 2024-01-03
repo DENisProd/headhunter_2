@@ -3,24 +3,26 @@ import {v4 as uuidv4} from "uuid";
 import bcrypt from 'bcrypt';
 import jwt, { VerifyErrors  } from 'jsonwebtoken';
 import {
+    confirmUserEmailById,
     createEmployerProfileById, createStudentProfileById,
     createUserByEmailAndPassword,
     findUserByEmail,
     findUserById
 } from "../services/userService";
-import {generateTokens, hashToken} from "../services/tokenService";
+import {generateTokens, hashToken, hashToken256} from "../services/tokenService";
 import {
     addRefreshTokenToWhitelist,
     deleteRefreshToken,
-    findRefreshTokenById,
-    revokeTokens
+    findRefreshTokenById, findUserByConfirmHash,
+    revokeTokens, sendConfirmationEmail
 } from "../services/authService";
 import {User} from "../models/dto/User";
+import {STATUS_CODES} from "http";
 
 
 export async function register(req: FastifyRequest, reply: FastifyReply) {
     try {
-        const { email, password, role } = req.body as { email: string; password: string, role: number };
+        const { email, password, role, firstName } = req.body as { email: string; password: string, role: number, firstName: string };
         if (!email || !password) {
             reply.status(400);
             throw new Error('You must provide an email and a password.');
@@ -33,19 +35,25 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
             throw new Error('Email already in use.');
         }
 
+        const userData = email + "" + Date.now()
+        const hash = hashToken256(userData)
+
         const newUser: User = {
             email: email,
-            password : password
+            password : password,
+            confirmHash: hash
         };
 
         const user = await createUserByEmailAndPassword(newUser);
 
-        if (Number(role) === 3) await createEmployerProfileById(user.id)
-        else await createStudentProfileById(user.id)
+        if (Number(role) === 3) await createEmployerProfileById(user.id, firstName)
+        else await createStudentProfileById(user.id, firstName)
 
         const jti = uuidv4();
         const { accessToken, refreshToken } = generateTokens(user, jti);
         await addRefreshTokenToWhitelist({ jti, refreshToken, userId: user.id });
+
+        await sendConfirmationEmail(user, hash)
 
         reply.send({
             accessToken,
@@ -158,5 +166,20 @@ export async function revokeRefreshTokensController(req: FastifyRequest, res: Fa
         res.send({ message: `Tokens revoked for user with id #${userId}` });
     } catch (err) {
         res.send(err);
+    }
+}
+
+export async function confirmUser(request: FastifyRequest, reply: FastifyReply) {
+    try {
+        const { hash } = request.params as { hash: string }
+        const user = await findUserByConfirmHash(hash)
+
+        if (!user) return reply.status(404).send({message: 'Пользователь не найден'})
+
+        await confirmUserEmailById(user[0].id)
+
+        return reply.send({ message: `User confirmed${hash}` });
+    } catch (err) {
+        return reply.send(err);
     }
 }

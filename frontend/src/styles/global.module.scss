@@ -53,12 +53,25 @@
       padding: 0!important;
 }
 .padding_1000 {
-      padding: 1rem 0 0 0!important;
+      padding: 1rem 0 0 0 !important;
+}
+.padding_2000 {
+      padding: 2rem 0 0 0 !important;
+}
+.padding_3101 {
+      padding: 3rem 1rem 0 1rem !important;
+}
+.padding_5050 {
+      padding: 5rem 0 5rem 0 !important;
+}
+
+.text_decor_none {
+      text-decoration: none;
 }
 
 .with_icon {
       display: flex;
-      gap: 1rem;
+      gap: 0.2rem;
       align-items: center;
 
       & svg {
@@ -71,6 +84,14 @@
       display: flex;
 }
 
+.marginTop {
+      margin: 4rem auto;
+}
+
+.secondary {
+      color: var(--text-2-color);
+}
+
 .big_avatar {
       width: 50%;
       aspect-ratio: 1/1 !important;
@@ -78,6 +99,14 @@
       border-radius: 50%;
       border: 1px solid var(--divider-color);
       box-shadow: 0 0 0 1px var(--element-bg-2);
+}
+
+.flex_grow_0 {
+      flex-grow: 0 !important;
+}
+
+.bold_text {
+      font-weight: bold;
 }
 
 @media screen and (max-width: 800px){
@@ -89,7 +118,8 @@
             width: 100%;
       }
       .width_30 {
-            width: 100%;
+            width: 100% !important;
+            max-width: 100% !important;
       }
       .width_60 {
             width: 100%;

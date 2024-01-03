@@ -23,6 +23,11 @@ export const Portfolio = () => {
         getPortfolio()
     }, [])
 
+    const closeAdding = () => {
+        setIsAdd(false)
+        getPortfolio()
+    }
+
     return (
         <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={globalStyles.padding_0}>
             <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={globalStyles.padding_0}>
@@ -36,15 +41,13 @@ export const Portfolio = () => {
                             </div>
                             :
                             <>
-                                <Button isShort buttonProps={{
-                                    onClick: () => setIsAdd(true)
-                                }}>+ Добавить</Button>
+                                <Button isShort onClick={() => setIsAdd(true)}>+ Добавить</Button>
                             </>
                         }
                     </FlexLayout>
                 </Tile>
 
-                {isAdd && <ImageUploader setParentImages={setFiles} setIsAdd={setIsAdd}/>}
+                {isAdd && <ImageUploader setParentImages={setFiles} setIsAdd={setIsAdd} closeAdding={closeAdding}/>}
                 <Tile props={{
                     classNames: cn(globalStyles.start)
                 }}>
@@ -69,16 +72,9 @@ export const Portfolio = () => {
                                             </button>
 
                                             <button>
-                                                <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
-                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <g id="icon / download">
-                                                        <path id="Vector" d="M9.5 31.666L28.5 31.666" stroke="#80889D"
-                                                              strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                                        <path id="Vector_2"
-                                                              d="M19.0002 6.33398V25.334M19.0002 25.334L24.5418 19.7923M19.0002 25.334L13.4585 19.7923"
-                                                              stroke="#80889D" strokeWidth="1.5" strokeLinecap="round"
-                                                              strokeLinejoin="round"/>
-                                                    </g>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M6 20L18 20" stroke="#80889D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    <path d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5" stroke="#80889D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                                 </svg>
                                             </button>
 

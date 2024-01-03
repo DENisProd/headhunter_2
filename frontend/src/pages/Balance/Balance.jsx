@@ -6,6 +6,7 @@ import {Button} from "../../components/ui/Button/Button";
 import styles from './balance.module.scss'
 import {TextField} from "../../components/ui/TextInput/TextField";
 import {useForm} from "react-hook-form";
+import {Typography} from "../../components/ui/Typography/Typography";
 
 export const Balance = () => {
 
@@ -16,17 +17,22 @@ export const Balance = () => {
     } = useForm()
 
     return (
-        <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={globalStyles.page}>
-            <h1>Тарифы</h1>
-            <p></p>
+        <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(globalStyles.page, globalStyles.padding_5050)}>
+            <Typography variant="h2" noMargin>Тарифы</Typography>
+            <Typography variant="p" noMargin>Тестовые тарифы</Typography>
+
             <div>
                 <form>
-                    <p>
-                        Сумма пополнения
-                        <TextField/>
-                    </p>
 
-
+                        <p>
+                            Сумма пополнения
+                            <FlexLayout>
+                                <TextField/>
+                                <Button buttonProps={{
+                                    classNames: globalStyles.width_30
+                                }}>Пополнить</Button>
+                            </FlexLayout>
+                        </p>
                 </form>
             </div>
             <FlexLayout>
@@ -65,7 +71,7 @@ export const Balance = () => {
                 }}>
                     <FlexLayout type={LAYOUT_TYPES.VERTICAL}
                                 className={cn(globalStyles.padding_0, globalStyles.center)}>
-                        <h2 className={cn(globalStyles.margin_block_0, globalStyles.center)}>3 месяца</h2>
+                        <h2 className={cn(globalStyles.margin_block_0, globalStyles.center)}>12 месяцев</h2>
 
                         <h3 className={styles.money}>5000 ₽</h3>
 

@@ -1,6 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-// npx prisma migrate dev --name init
+// yarn prisma migrate dev --name init
 
 generator client {
   provider = "prisma-client-js"
@@ -17,6 +17,13 @@ model User {
   email         String         @unique
   password      String
   refreshTokens RefreshToken[]
+
+  confirmHash  String?         @default("")
+  resetHash    String?         @default("")
+  emailConfirmed  Boolean         @default(false)
+  confirmHashCreated  DateTime?
+  resetHashCreated  DateTime?
+
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   avatar        String         @default("")
@@ -34,9 +41,21 @@ model StudentProfile {
   skills      String   @default("")
   interests   String   @default("")
   isWorkSearch Boolean @default(false)
+
+  avgMark     Int      @default(0)
+  science     Int      @default(0)
+  study       Int      @default(0)
+  community   Int      @default(0)
+  culture     Int      @default(0)
+  project     Int      @default(0)
+  sport       Int      @default(0)
+  total       Int      @default(0)
+
   user        User     @relation(fields: [userId], references: [id])
   portfolio   PortfolioDocument[]
   educations  StudentEducation[]
+  eduPortfolios   PortfolioEdu[]
+  offer       Offer[]
 }
 
 model StudentEducation {
@@ -49,6 +68,16 @@ model StudentEducation {
     student StudentProfile @relation(fields: [studentId], references: [id])
 }
 
+model Offer {
+    id         Int              @id @unique @default(autoincrement())
+    confirmed  Boolean          @default(false)
+    type       Int              @default(0)
+    employerId Int
+    employer   EmployerProfile  @relation(fields: [employerId], references: [id])
+    studentId  Int
+    student    StudentProfile   @relation(fields: [studentId], references: [id])
+}
+
 model PortfolioDocument {
   id     Int      @id @unique @default(autoincrement())
   type   String
@@ -57,6 +86,21 @@ model PortfolioDocument {
   studentId Int
   student StudentProfile @relation(fields: [studentId], references: [id])
   portfolioFile PortfolioFile[]
+}
+
+model PortfolioEdu {
+  id     Int      @id @unique @default(autoincrement())
+  ballOfWork   Int
+  category   String
+  description   String?
+  typeName  String
+  name String?
+  ekAnotation String?
+  ekTarget String?
+  keywords String?
+
+  studentId Int
+  student StudentProfile @relation(fields: [studentId], references: [id])
 }
 
 model PortfolioFile {
@@ -78,6 +122,7 @@ model EmployerProfile {
   // Например: название компании, отрасль и др.
   user   User     @relation(fields: [userId], references: [id])
   payment PaymentAction[]
+  offer       Offer[]
 }
 
 enum TransactionType {

@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Button, BUTTON_TYPES} from "./components/ui/Button/Button";
 import {FlexLayout, LAYOUT_TYPES} from "./components/ui/Layout/FlexLayout/FlexLayout.jsx";
 import {AuthorizationPage, AUTHORIZATION_TYPES} from "./pages/AuthorizationPage.jsx";
@@ -8,6 +8,11 @@ import Header from './components/Header/Header.jsx';
 import Profile from './pages/Profile/Profile.jsx';
 import Landing from "./pages/Landing/Landing.jsx";
 import {Balance} from "./pages/Balance/Balance";
+import {StudentsForms} from "./pages/StudentForms/StudentsForms.jsx";
+import {BASE_URL} from "./components/ui/ImageUploader/ImageUploader.jsx";
+import {ShortResume} from "./pages/Profile/Resume/ShortResume.jsx";
+import Notifications from "./pages/Notification/Notifications.jsx";
+import {useGetProfileMutation} from "./store/api/userApi.js";
 
 function PageTransition({ children }) {
     return (
@@ -25,12 +30,40 @@ function PageTransition({ children }) {
   }
 
 function App() {
+    const [getProfile, {error}] = useGetProfileMutation()
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(BASE_URL + 'user/check', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                if (response.status === 401) {
+                    if (!window.location.href.includes('login') && !window.location.href.includes('register') && !window.location.href.includes('/register/main')) {
+                        console.log('non auth')
+                    	window.location.href = "/login";
+                    }
+                } else {
+                    getProfile()
+                    // if (window.location.href.includes('login') && window.location.href.includes('register') && window.location.href.includes('/register/main')) {
+                    //     window.location.href = "/profile";
+                    // }
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData().then(r => console.log(r));
+    }, [history]);
 
     return (
         <>
             <Header/>
             <Routes>
-                <Route path="/register">
+                <Route path="/register/">
                     <Route path="/register/" element={
                         <PageTransition>
                             <AuthorizationPage type={AUTHORIZATION_TYPES.WHO}/>
@@ -55,6 +88,22 @@ function App() {
                 <Route path="/balance" element={
                     <PageTransition>
                         <Balance/>
+                    </PageTransition>
+                } />
+                <Route path="/notify" element={
+                    <PageTransition>
+                        <Notifications/>
+                    </PageTransition>
+                } />
+                <Route path="/students" element={
+                    <PageTransition>
+                        <StudentsForms/>
+                    </PageTransition>
+                } />
+
+                <Route path="/student/:studentId" element={
+                    <PageTransition>
+                        <ShortResume/>
                     </PageTransition>
                 } />
 

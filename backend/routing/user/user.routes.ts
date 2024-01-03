@@ -21,4 +21,8 @@ export default async function userRoutes(fastify: FastifyInstance) {
         preHandler: isAuthenticated,
         handler: portfolioController.createPortfolioDocument
     })
+    fastify.get("/check", {
+        preHandler: isAuthenticated,
+        handler: userController.checkAuth
+    })
 }
