@@ -10,6 +10,7 @@ import Art3 from '../../assets/art3.svg'
 import {useDispatch} from "react-redux";
 import {setRole} from "../../store/slices/userSlice.js";
 import cn from "classnames";
+import {Typography} from "../ui/Typography/Typography";
 
 function RoleChoose() {
       const navigate = useNavigate()
@@ -27,10 +28,11 @@ function RoleChoose() {
             dispatch(setRole(role));
       }
   return (
-    <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
-      <h1 className={globalStyles.center}>Ваш статус: </h1>
+    <FlexLayout type={LAYOUT_TYPES.VERTICAL} noPaddingMobile>
+      {/*<h1 className={globalStyles.center}>Ваш статус: </h1>*/}
+          <Typography variant="h1" center>Ваш статус: </Typography>
 
-      <FlexLayout className={globalStyles.flex_container}>
+      <FlexLayout className={globalStyles.flex_container} noPaddingMobile>
             <Tile props={{
                   onClick: () => chooseRole(1),
                   classNames: cn(globalStyles.center, globalStyles.width_30)

@@ -1,20 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { useDropzone } from 'react-dropzone';
 import styles from './image-uploader.module.scss'
 import {PortfolioTile} from "./PortfolioTile/PortfolioTile";
 import {TextField} from "../TextInput/TextField";
 import Tile from "../Tile/Tile.jsx";
-import globalStyles from "../../../styles/global.module.scss";
-import cn from 'classnames'
-import {FlexLayout} from "../Layout/FlexLayout/FlexLayout";
-import {CloseButton} from "../Button/Close/CloseButton";
 import axios from "axios";
 import {useForm} from "react-hook-form";
 import {Button} from "../Button/Button.jsx";
 import {useAddPortfolioUserMutation, useRegisterUserMutation} from "../../../store/api/userApi.js";
 
-// export const BASE_URL = 'https://hh.darksecrets.ru/api/v1/'
-export const BASE_URL = 'http://localhost:5555/v1/'
+export const BASE_URL = 'https://hh.darksecrets.ru/api/v1/'
+// export const BASE_URL = 'http://localhost:5555/v1/'
+
+const baseStyle = {
+    borderRadius: '1rem',
+    borderColor: 'var(--text-2-color)',
+    borderStyle: 'dashed',
+    backgroundColor: 'var(--element-bg)',
+    color: 'var(--text-2-color)',
+    marginBottom: '1rem'
+};
+
+const focusedStyle = {
+    borderColor: '#2196f3'
+};
+
+const acceptStyle = {
+    borderColor: '#00e676'
+};
+
+const rejectStyle = {
+    borderColor: '#ff1744'
+};
 
 const ImageUploader = ({ setParentImages, closeAdding }) => {
     const [images, setImages] = useState([])
@@ -68,14 +85,18 @@ const ImageUploader = ({ setParentImages, closeAdding }) => {
         setImages(updatedImages);
     };
 
-    const { getRootProps, getInputProps } = useDropzone({
+    const {
+        getRootProps,
+        getInputProps,
+        isFocused,
+        isDragAccept,
+        isDragReject,
+    } = useDropzone({
         onDrop,
         accept: '*', // Принимаем только изображения
     });
 
     const onSubmit = (data) => {
-        console.log(data)
-        console.log(images)
         if (images.length > 0) {
             const _data = {
                 type: 'common',
@@ -83,7 +104,6 @@ const ImageUploader = ({ setParentImages, closeAdding }) => {
                 description: data.description,
                 files: images
             }
-            console.log(_data)
             addPortfolioUser(_data)
                 .then(res => {
                     console.log(res)
@@ -93,6 +113,17 @@ const ImageUploader = ({ setParentImages, closeAdding }) => {
 
         }
     }
+
+    const style = useMemo(() => ({
+        ...baseStyle,
+        ...(isFocused ? focusedStyle : {}),
+        ...(isDragAccept ? acceptStyle : {}),
+        ...(isDragReject ? rejectStyle : {})
+    }), [
+        isFocused,
+        isDragAccept,
+        isDragReject
+    ]);
 
     return (
         <Tile props={{
@@ -119,22 +150,23 @@ const ImageUploader = ({ setParentImages, closeAdding }) => {
                     />
                 </p>
 
+                <div {...getRootProps({style})} className={styles.dropzone}>
+                    <input {...getInputProps()} />
+                    <p>Перетащите сюда файлы или нажмите, чтобы выбрать файлы</p>
+                </div>
+
+                <div className={styles.image_preview}>
+                    {images.map((file, index) => (
+                        <PortfolioTile image={file} index={index} removeImage={removeImage} uploadProgress={uploadProgress[file.name]}/>
+                    ))}
+                </div>
+
                 <Button buttonProps={{
                     type: 'submit'
                 }}>
                     Добавить портфолио
                 </Button>
             </form>
-
-            <div {...getRootProps()} className={styles.dropzone}>
-                <input {...getInputProps()} />
-                <p>Перетащите сюда файлы или нажмите, чтобы выбрать файлы</p>
-            </div>
-            <div className={styles.image_preview}>
-                {images.map((file, index) => (
-                    <PortfolioTile image={file} index={index} removeImage={removeImage} uploadProgress={uploadProgress[file.name]}/>
-                ))}
-            </div>
         </Tile>
     );
 };

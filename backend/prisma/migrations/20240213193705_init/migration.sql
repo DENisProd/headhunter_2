@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "EmployerProfile" ADD COLUMN     "inn" INTEGER NOT NULL DEFAULT 111111111;

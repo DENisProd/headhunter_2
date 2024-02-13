@@ -62,9 +62,12 @@ export function getEmployerProfileById (userId: number) {
     })
 }
 
-export function createEmployerProfileById (userId: number, firstName: string) {
+export function createEmployerProfileById (userId: number, firstName: string, inn: string) {
     return db.employerProfile.create({
-        data: { userId },
+        data: {
+            inn,
+            userId
+        },
     })
 }
 

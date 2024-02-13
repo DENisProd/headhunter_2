@@ -8,6 +8,7 @@
   cursor: pointer;
   transition: background-color 0.25s ease-in-out;
   width: 100%;
+  outline: none;
 
   display: flex;
   justify-content: center;
@@ -24,15 +25,41 @@
 
     &:hover {
       background-color: var(--primary-dark-color);
+      color: var(--text-contrast-color);
     }
   }
   &.secondary {
+    background-color: var(--element-bg);
+    color: var(--text-color);
+    border: 2px solid var(--element-bg-2);
+  }
+
+  &.small {
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    width: fit-content;
+    height: fit-content;
+    font-size: 12px;
     background-color: var(--element-bg-2);
     color: var(--text-color);
+    border: 2px solid var(--element-bg-2);
+  }
+
+  &:disabled {
+    background-color: var(--element-bg);
+    color: var(--text-color);
+    cursor: no-drop;
+    border: 2px solid var(--element-bg-2);
   }
 
   &:focus,
   &:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .button.adaptive {
+    padding: 0.5rem 1rem;
   }
 }

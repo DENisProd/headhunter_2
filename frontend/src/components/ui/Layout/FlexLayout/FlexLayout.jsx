@@ -9,7 +9,7 @@ export const LAYOUT_TYPES = {
     HORIZONTAL: 'HORIZONTAL'
 }
 
-export const FlexLayout = ({ children, maxWidth, type, className, isAdaptive, center }, props) => {
+export const FlexLayout = ({ children, maxWidth, type, className, isAdaptive, center, noPaddingMobile, noPadding }, props) => {
 
     const getStyle = () => {
         let style = null
@@ -25,7 +25,7 @@ export const FlexLayout = ({ children, maxWidth, type, className, isAdaptive, ce
                 style = styles.horizontal
         }
 
-        return cn(styles.container, style, isAdaptive && styles.isAdaptive, className, center && styles.center)
+        return cn(styles.container, style, isAdaptive && styles.isAdaptive, className, center && styles.center, noPaddingMobile ? styles.no_padding_mobile : styles.mobilePadding, noPadding && styles.noPadding)
     }
 
     return (

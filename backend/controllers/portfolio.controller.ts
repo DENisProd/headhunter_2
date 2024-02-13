@@ -8,6 +8,8 @@ import {findUserByEmail, getStudentProfileById} from "../services/userService";
 import {createPortfolioFile} from "../services/portfolioFileService";
 import {EduPortfolio} from "../models/dto/EduPortfolio";
 import * as repl from "repl";
+import educationService from "../services/educationService";
+import {Education} from "./student.controller";
 
 export type PortfolioFileCreate = {
     url: string
@@ -82,7 +84,9 @@ export const getUserPortfolio = async (request: FastifyRequest, reply: FastifyRe
 
 export const addEduPortfolio = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-        const portfolio = request.body as EduPortfolioDto
+        const portfolio = await request.body as EduPortfolioDto
+        console.log(portfolio.avgMark)
+        if (!portfolio.email) return reply.status(404).send({ message: 'Пользователь не найден :((' })
 
         const user = await findUserByEmail(portfolio.email)
         if (!user) return reply.status(404).send({ message: 'Пользователь не найден' })
@@ -104,12 +108,27 @@ export const addEduPortfolio = async (request: FastifyRequest, reply: FastifyRep
                 ballOfWork: item.ballOfWork,
                 category: _categories[item.category] || "Другое",
                 description: item.description,
+                ekAnotation: item.ekAnotation,
                 typeName: item.typeName,
+                keywords: item.keywords,
+                ekTarget: item.ekTarget
             }
             return await setEduPortfolioToStudentId(studentProfile.id, updatedItem);
         }));
 
         await updatePortfolioNumbers(studentProfile.id, newListWorks2, portfolio)
+
+        const edu = await educationService.getEducation(studentProfile.id, "Донской государственный технический университет", portfolio.facul)
+        if (!edu) {
+            const eduData: Education = {
+                faculty: portfolio.facul,
+                name: "Донской государственный технический университет",
+                specialization: "",
+                period: portfolio.admissionYear + "-"
+            }
+
+            const education = await educationService.createEducation(eduData, studentProfile.id)
+        }
 
         return reply.send(newListWorks)
     } catch (error) {
@@ -123,7 +142,9 @@ export const getEduPortfolio = async (request: FastifyRequest, reply: FastifyRep
         const user = (request as any).user;
         const { userId } = user;
 
-        const studentProfile = await getStudentProfileById(userId);
+        const { id } = request.params as { id: number }
+
+        const studentProfile = await getStudentProfileById(+id);
         if (!studentProfile) return reply.status(404).send({ message: 'Профиль не найден'})
 
         const eduPortfolio = await getEduPortfolioToStudentId(studentProfile.id)

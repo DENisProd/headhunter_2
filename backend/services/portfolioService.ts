@@ -69,6 +69,7 @@ export async function updatePortfolioNumbers(studentId: number, portfolioDto: Ed
             lastName: portfolio.surname,
             firstName: portfolio.name,
             patronymic: portfolio.middleName,
+            avgMark: portfolio.avgMark
         },
         where: {
             id: studentId

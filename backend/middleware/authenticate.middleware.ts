@@ -15,7 +15,7 @@ export const isAuthenticated: preHandlerHookHandler = async function (
     try {
         const token = authorization.split(' ')[1];
         const secret: Secret = process.env.JWT_ACCESS_SECRET || 'qwerty123';
-        const user = await jwt.verify(token, secret); // Используйте ваш пользовательский тип данных
+        const user = await jwt.verify(token, secret);
         (req as any).user = user;
     } catch (err) {
         res.status(401);

@@ -1,0 +1,29 @@
+.chart {
+  height: 300px;
+  min-width: 300px;
+
+  & text {
+    fill: var(--text-color) !important;
+  }
+
+  & div {
+    background: var(--element-bg);
+  }
+
+  &.pie {
+    height: 500px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .chart {
+    width: 100%;
+    min-width: auto;
+    //margin: 0 10%;
+
+    & .pie {
+      height: 400px;
+      min-width: 400px;
+    }
+  }
+}

@@ -28,6 +28,7 @@ model User {
   updatedAt     DateTime       @updatedAt
   avatar        String         @default("")
   phone         Int            @default(0)
+  telegram      String         @default("")
   studentProfile StudentProfile?
   employerProfile EmployerProfile?
 }
@@ -41,8 +42,9 @@ model StudentProfile {
   skills      String   @default("")
   interests   String   @default("")
   isWorkSearch Boolean @default(false)
+  salary      Int      @default(0)
 
-  avgMark     Int      @default(0)
+  avgMark     Float      @default(0)
   science     Int      @default(0)
   study       Int      @default(0)
   community   Int      @default(0)
@@ -55,6 +57,7 @@ model StudentProfile {
   portfolio   PortfolioDocument[]
   educations  StudentEducation[]
   eduPortfolios   PortfolioEdu[]
+  offer       Offer[]
 }
 
 model StudentEducation {
@@ -65,6 +68,16 @@ model StudentEducation {
     period  String
     studentId Int
     student StudentProfile @relation(fields: [studentId], references: [id])
+}
+
+model Offer {
+    id         Int              @id @unique @default(autoincrement())
+    confirmed  Boolean          @default(false)
+    type       Int              @default(0)
+    employerId Int
+    employer   EmployerProfile  @relation(fields: [employerId], references: [id])
+    studentId  Int
+    student    StudentProfile   @relation(fields: [studentId], references: [id])
 }
 
 model PortfolioDocument {
@@ -83,7 +96,10 @@ model PortfolioEdu {
   category   String
   description   String?
   typeName  String
-  name String
+  name String?
+  ekAnotation String?
+  ekTarget String?
+  keywords String?
 
   studentId Int
   student StudentProfile @relation(fields: [studentId], references: [id])
@@ -104,10 +120,12 @@ model EmployerProfile {
   balance Int     @default(0)
   companyName String @default("")
   companyAddress String @default("")
+  inn     String     @default("111111111")
   // Добавьте поля, специфичные для работодателей
   // Например: название компании, отрасль и др.
   user   User     @relation(fields: [userId], references: [id])
   payment PaymentAction[]
+  offer       Offer[]
 }
 
 enum TransactionType {

@@ -1,0 +1,28 @@
+.details {
+  & summary {
+    user-select: none;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  & summary::-webkit-details-marker {
+    display: none
+  }
+
+  & summary svg {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &[open] summary svg {
+    transform: rotate(-180deg);
+  }
+
+  & {
+    height: 2.5rem;
+    transition: height 0.2s ease-in-out;
+  }
+
+  &[open] {
+    height: 100%;
+  }
+}

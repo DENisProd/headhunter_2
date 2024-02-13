@@ -19,6 +19,10 @@
     text-align: center;
   }
 
+  &.noPadding {
+    padding: 0;
+  }
+
   & div, form {
     flex-grow: 1;
   }
@@ -32,5 +36,11 @@
     &.horizontal {
       flex-direction: column;
     }
+  }
+  .no_padding_mobile {
+    padding: 0;
+  }
+  .mobilePadding {
+    padding: 1rem 0;
   }
 }

@@ -11,6 +11,8 @@ import {Balance} from "./pages/Balance/Balance";
 import {StudentsForms} from "./pages/StudentForms/StudentsForms.jsx";
 import {BASE_URL} from "./components/ui/ImageUploader/ImageUploader.jsx";
 import {ShortResume} from "./pages/Profile/Resume/ShortResume.jsx";
+import Notifications from "./pages/Notification/Notifications.jsx";
+import {useGetProfileMutation} from "./store/api/userApi.js";
 
 function PageTransition({ children }) {
     return (
@@ -28,6 +30,7 @@ function PageTransition({ children }) {
   }
 
 function App() {
+    const [getProfile, {error}] = useGetProfileMutation()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,6 +46,7 @@ function App() {
                     	window.location.href = "/login";
                     }
                 } else {
+                    getProfile()
                     // if (window.location.href.includes('login') && window.location.href.includes('register') && window.location.href.includes('/register/main')) {
                     //     window.location.href = "/profile";
                     // }
@@ -84,6 +88,11 @@ function App() {
                 <Route path="/balance" element={
                     <PageTransition>
                         <Balance/>
+                    </PageTransition>
+                } />
+                <Route path="/notify" element={
+                    <PageTransition>
+                        <Notifications/>
                     </PageTransition>
                 } />
                 <Route path="/students" element={

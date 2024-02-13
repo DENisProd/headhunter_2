@@ -86,6 +86,12 @@ export const userApi = createApi({
                     dispatch(setUserPortfolio(result.data));
             }
         }),
+        toggleIsWork: builder.mutation({
+            query: () => ({
+                url: '/student/work',
+                method: 'GET',
+            })
+        }),
         addEducation: builder.mutation({
             query: (data) => ({
                 url: '/student/education',
@@ -111,11 +117,10 @@ export const userApi = createApi({
                 body: JSON.stringify(data),
             }),
         }),
+
     }),
 })
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const {
     useRegisterUserMutation,
     useLoginUserMutation,
@@ -127,4 +132,5 @@ export const {
     useAddEducationMutation,
     useAddMoneyMutation,
     useEditStudentProfileMutation,
+    useToggleIsWorkMutation,
 } = userApi

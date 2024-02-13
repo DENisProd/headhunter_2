@@ -7,7 +7,7 @@ import {isAuthenticated} from "../../middleware/authenticate.middleware";
 import {addEduPortfolio, getEduPortfolio} from "../../controllers/portfolio.controller";
 // import { uploadSingle } from "../../middleware/upload.middleware";
 
-export default async function userRoutes(fastify: FastifyInstance) {
+export default async function profileRoutes(fastify: FastifyInstance) {
     fastify.post("/portfolio", {
         // schema: getUserProfileSchema,
         // preHandler: uploadSingle('file'),
@@ -16,7 +16,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
     fastify.post("/edu_portfolio", {
         handler: portfolioController.addEduPortfolio
     })
-    fastify.get("/edu_portfolio", {
+    fastify.get("/edu_portfolio/:id", {
         preHandler: isAuthenticated,
         handler: portfolioController.getEduPortfolio
     })

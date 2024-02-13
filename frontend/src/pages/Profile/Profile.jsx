@@ -12,6 +12,9 @@ import cn from "classnames";
 import {Education} from "./Education/Education.jsx";
 import Resume from "./Resume/Resume.jsx";
 import {Favorites} from "./Employer/Favorites/Favorites";
+import {WorkExperience} from "./WorkExpirience/WorkExperience.jsx";
+import {OffersList} from "./Employer/OffersList/OffersList.jsx";
+import {About} from "./Employer/About/About.jsx";
 
 const Profile = () => {
     const [getProfile, {error}] = useGetProfileMutation()
@@ -27,16 +30,22 @@ const Profile = () => {
     return (
         <FlexLayout className={cn(globalStyles.page, globalStyles.flex_container)}>
             <Sidebar/>
-            <main className={cn(globalStyles.flex_grow_2, globalStyles.marginTop)}>
+            <main className={cn(globalStyles.flex_grow_2, globalStyles.marginTop, globalStyles.width_100)}>
 
                 {userState.role === "employer" ?
                     <TabGroup className={globalStyles.tab_group} changeState={setActiveTab}>
                         <TabContent label="Избранное">
                             <Favorites />
                         </TabContent>
-                        <TabContent label="Оплаченные">
-                            <Portfolio/>
+                        <TabContent label="Заявки">
+                            <OffersList />
                         </TabContent>
+                        <TabContent label="О компании">
+                            <About />
+                        </TabContent>
+                        {/*<TabContent label="Оплаченные">*/}
+                        {/*    <Portfolio/>*/}
+                        {/*</TabContent>*/}
                     </TabGroup>
                     :
                     <TabGroup className={globalStyles.tab_group} changeState={setActiveTab}>
@@ -50,7 +59,7 @@ const Profile = () => {
                             <Resume/>
                         </TabContent>
                         <TabContent label="Опыт работы">
-
+                            <WorkExperience />
                         </TabContent>
                     </TabGroup>
                 }

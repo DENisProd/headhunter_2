@@ -15,6 +15,20 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  /*place-items: center;*/
+  /*width: 100vw;*/
+  /*min-height: 100vh;*/
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--app-bg);
+  color: var(--text-color);
+  overflow-x: hidden;
 }
 
 /*body[data-theme="light"] {*/
@@ -24,6 +38,7 @@
     --app-bg: #1C1E23;
     --app-contrast-bg: #1B57B2;
     --element-bg: #232935;
+    --element-bg-semi-transparent: rgba(35, 41, 53, 0.8);
     --element-bg-2: #2C3549;
     --element-bg-contrast: #1B57B2;
 
@@ -35,19 +50,26 @@
     --primary-color: #1B57B2;
     --primary-dark-color: #0B3BA1;
     --primary-light-color: #3A84F3;
+
+    --divider-color: #394358;
+
+    --accent-color-yellow: #FDC51F;
+    --accent-dark-color-yellow: #F1B400;
+    --accent-light-color-yellow: #FFDA6D;
+    --accent-color-red: #FF6363;
+    --accent-dark-color-red: #E44444;
+    --accent-light-color-red: #FF8A8A;
+
+    --gray-color-1: #282D40;
+    --gray-color-2: #4D536A;
+    --gray-color-3: #3C4257;
+    --gray-color-4: #313745;
+    --gray-color-5: #313649;
+    --gray-color-6: #33384A;
+    --gray-color-7: #2B3044;
   }
 }
-body {
-  margin: 0;
-  padding: 0;
-  background: var(--app-bg);
-  color: var(--text-color);
-  place-items: center;
-  width: 100vw;
-  min-height: 100vh;
-  box-sizing: border-box;
-  overflow-x: hidden;
-}
+
 
 
 
@@ -56,12 +78,13 @@ body {
     --app-bg: #F4F4F4;
     --app-contrast-bg: #11519C;
     --element-bg: #FFFFFF;
+    --element-bg-semi-transparent: rgba(255, 255, 255, 0.8);
     --element-bg-2: #E7E9ED;
     --element-bg-contrast: #11519C;
 
     --text-color: #38424F;
     --text-2-color: #80889D;
-    --text-link-color: #137089;
+    --text-link-color: #1370B9;
     --text-blind-color: #C7C9CF;
     --text-contrast-color: #FFFFFF;
     --primary-color: #11519C;
@@ -69,6 +92,20 @@ body {
     --primary-light-color: #1370B9;
 
     --divider-color: #D2DAE3;
+    --gray-color-1: #D3DBE0;
+    --gray-color-2: #D3DBE7;
+    --gray-color-3: #E7E9ED;
+    --gray-color-4: #E9EDF2;
+    --gray-color-5: #EDEEF0;
+    --gray-color-6: #F1F4F9;
+    --gray-color-7: #F7F8FB;
+
+    --accent-color-yellow: #FDC51F;
+    --accent-dark-color-yellow: #F1B400;
+    --accent-light-color-yellow: #FFDA6D;
+    --accent-color-red: #FF6363;
+    --accent-dark-color-red: #E44444;
+    --accent-light-color-red: #FFA9A9;
   }
   a:hover {
     color: #747bff;

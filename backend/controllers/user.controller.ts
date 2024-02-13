@@ -3,14 +3,14 @@ import {findUserById, getEmployerProfileById, getStudentProfileById} from "../se
 
 export const getProfile = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-        const user = (request as any).user;
-        const { userId } = user;
+        const user = (request as any).user
+        const { userId } = user
 
         const userProfile = await findUserById(userId)
         // console.log(userProfile)
 
-        const studentProfile = await getStudentProfileById(userId);
-        const employerProfile = await getEmployerProfileById(userId);
+        const studentProfile = await getStudentProfileById(userId)
+        const employerProfile = await getEmployerProfileById(userId)
 
         if (studentProfile) {
             return reply.send({ profile: studentProfile, user: userProfile, userType: "student"});

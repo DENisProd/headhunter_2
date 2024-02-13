@@ -4,4 +4,7 @@ export interface EduPortfolio {
     category: string
     description: string
     typeName: string
+    ekAnotation: string
+    ekTarget: string
+    keywords: string
 }

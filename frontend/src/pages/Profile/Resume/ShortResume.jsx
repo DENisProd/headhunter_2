@@ -33,8 +33,11 @@ export const ShortResume = ( ) => {
     }, [])
 
     const sendOffer = async () => {
+        console.log(studentId)
+        console.log(currentResume)
         await createOffer({
-            studentId: +studentId
+            studentId: +studentId,
+            type: 0
         }).then(res => {
             if (res.data) setIsSended(true)
         })
@@ -84,7 +87,7 @@ export const ShortResume = ( ) => {
 
                     <Button buttonProps={{
                         classNames: globalStyles.width_50
-                    }} onClick={sendOffer} disabled={isSended}
+                    }} onClick={sendOffer} disabled={isSended} isShort
                     >
                         {isSended ?
                             "Приглашение отправлено"
