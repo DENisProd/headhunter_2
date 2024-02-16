@@ -3,6 +3,11 @@ import { FlexLayout, LAYOUT_TYPES } from '../ui/Layout/FlexLayout/FlexLayout'
 import globalStyles from '../../styles/global.module.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import Tile from '../ui/Tile/Tile'
+import styles from "./auth.module.scss"
+
+import Student from "../../assets/student-cap-svgrepo-com.svg"
+import Employer from "../../assets/pen-svgrepo-com.svg"
+import Briefcase from "../../assets/briefcase-svgrepo-com.svg"
 
 import Art1 from '../../assets/art1.svg'
 import Art2 from '../../assets/art2.svg'
@@ -35,25 +40,25 @@ function RoleChoose() {
       <FlexLayout className={globalStyles.flex_container} noPaddingMobile>
             <Tile props={{
                   onClick: () => chooseRole(1),
-                  classNames: cn(globalStyles.center, globalStyles.width_30)
+                  classNames: cn(globalStyles.center, globalStyles.width_30, styles.card)
             }}>
-                  <img src={Art1}/>
+                  <img src={Student} className={styles.art}/>
                   <p className={globalStyles.bold_text}>Я студент</p>
             </Tile>
 
             <Tile props={{
                   onClick: () => chooseRole(3),
-                  classNames: cn(globalStyles.center, globalStyles.width_30)
+                  classNames: cn(globalStyles.center, globalStyles.width_30, styles.card)
             }}>
-                  <img src={Art2}/>
+                  <img src={Employer} className={styles.art}/>
                   <p className={globalStyles.bold_text}>Я работодатель</p>
             </Tile>
 
             <Tile props={{
                   onClick: () => chooseRole(2),
-                  classNames: cn(globalStyles.center, globalStyles.width_30)
+                  classNames: cn(globalStyles.center, globalStyles.width_30, styles.card)
             }}>
-                  <img src={Art3}/>
+                  <img src={Briefcase} className={styles.art}/>
                   <p className={globalStyles.bold_text}>Я выпускник</p>
             </Tile>
       </FlexLayout>

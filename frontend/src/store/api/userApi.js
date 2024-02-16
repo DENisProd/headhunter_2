@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {setUserData, setUserPortfolio} from "../slices/userSlice.js";
+import {setUserData, setUserPortfolio, setUserWorks} from "../slices/userSlice.js";
 import {BASE_URL} from "../../components/ui/ImageUploader/ImageUploader.jsx";
 
 // Define a service using a base URL and expected endpoints
@@ -99,6 +99,13 @@ export const userApi = createApi({
                 body: JSON.stringify(data),
             })
         }),
+        addWorkExp: builder.mutation({
+            query: (data) => ({
+                url: '/student/workexp',
+                method: 'POST',
+                body: JSON.stringify(data),
+            })
+        }),
         editStudentProfile: builder.mutation({
             query: (data) => ({
                 url: '/student/',
@@ -117,7 +124,16 @@ export const userApi = createApi({
                 body: JSON.stringify(data),
             }),
         }),
-
+        getStudentWorks: builder.mutation({
+            query: () => ({
+                url: '/student/works',
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const result = await queryFulfilled
+                dispatch(setUserWorks(result.data))
+            }
+        }),
     }),
 })
 
@@ -133,4 +149,6 @@ export const {
     useAddMoneyMutation,
     useEditStudentProfileMutation,
     useToggleIsWorkMutation,
+    useGetStudentWorksMutation,
+    useAddWorkExpMutation
 } = userApi

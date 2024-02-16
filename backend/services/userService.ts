@@ -38,11 +38,13 @@ export function createStudentProfileById (userId: number, firstName: string) {
     })
 }
 
-export function getStudentProfileById (userId: number) {
-    return db.studentProfile.findUnique({
+export async function getStudentProfileById (userId: number) {
+    console.log(userId);
+    return await db.studentProfile.findUnique({
         where: { userId },
         include: {
-            educations: true
+            educations: true,
+            works: true
         }
     })
 }

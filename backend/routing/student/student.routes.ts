@@ -3,13 +3,27 @@ import {getUserProfileSchema} from "../user/user.schemas";
 import {isAuthenticated} from "../../middleware/authenticate.middleware";
 import * as studentController from "../../controllers/student.controller";
 import * as portfolioController from "../../controllers/portfolio.controller";
-import {addStudentEducation, editStudentInformation, setIsStudentWork} from "../../controllers/student.controller";
+import {
+    addStudentEducation,
+    addWorkExperience,
+    editStudentInformation, getStudentWorks,
+    setIsStudentWork
+} from "../../controllers/student.controller";
 
 export default async function studentRoutes(fastify: FastifyInstance) {
     fastify.post("/education", {
         // schema: getUserProfileSchema,
         preHandler: isAuthenticated,
         handler: studentController.addStudentEducation
+    })
+    fastify.get("/works", {
+        // schema: getUserProfileSchema,
+        preHandler: isAuthenticated,
+        handler: studentController.getStudentWorks
+    })
+    fastify.post("/workexp", {
+        preHandler: isAuthenticated,
+        handler: studentController.addWorkExperience
     })
     fastify.patch("/", {
         preHandler: isAuthenticated,

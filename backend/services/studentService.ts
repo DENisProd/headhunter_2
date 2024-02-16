@@ -8,6 +8,10 @@ export async function getStudentForms(params: IGetParams) {
     return await db.studentProfile.findMany({
         where: {
             isWorkSearch: true
+        },
+        include: {
+            educations: true,
+            works: true
         }
     })
 }
@@ -80,6 +84,36 @@ export async function toggleIsWork(studentId: number) {
     }
 }
 
+export interface IWorkExperienceCreate {
+    name: string,
+    specialization: string,
+    start: string,
+    end: string,
+    studentId: number,
+}
+
+async function createWorkExperience (work: IWorkExperienceCreate) {
+    try {
+        return await db.studentWork.create({
+            data: {...work}
+        })
+    } catch (error) {
+        console.error('Ошибка при создании опыта работы:', error);
+        throw error;
+    }
+}
+
+async function getWorkExperience() {
+    try {
+        return await db.studentWork.findMany({})
+    } catch (error) {
+        console.error('Ошибка при получении опыта работы:', error);
+        throw error;
+    }
+}
+
 export default {
     toggleIsWork,
+    createWorkExperience,
+    getWorkExperience
 }

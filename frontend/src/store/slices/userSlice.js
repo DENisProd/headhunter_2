@@ -11,7 +11,8 @@ const initialState = {
         {
             title: 'aboba'
         }
-    ]
+    ],
+    works: []
 }
 
 export const userSlice = createSlice({
@@ -26,6 +27,9 @@ export const userSlice = createSlice({
             state.profile = action.payload?.profile;
             state.role = action.payload?.userType
         },
+        setUserWorks(state, action) {
+            state.works = action.payload
+        },
         setRole(state, action) {
             state.role = action.payload
         },
@@ -35,6 +39,6 @@ export const userSlice = createSlice({
     },
 })
 
-export const {setIsAuth, setUserData, setRole, setUserPortfolio} = userSlice.actions;
+export const {setIsAuth, setUserData, setRole, setUserPortfolio, setUserWorks} = userSlice.actions;
 
 export default userSlice.reducer

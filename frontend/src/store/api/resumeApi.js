@@ -110,5 +110,6 @@ export const {
     useCreateOfferMutation,
     useGetStudentOffersMutation,
     useGetEmployerOffersMutation,
-    useGetEduPortfolioMutation
+    useGetEduPortfolioMutation,
+
 } = resumeApi
