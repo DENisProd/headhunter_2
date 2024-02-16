@@ -93,23 +93,56 @@ export const Resume = () => {
                                 <img width={250} height={250} src={user?.user?.avatar || Avatar}/>
                             </picture>
                             <FlexLayout type={LAYOUT_TYPES.VERTICAL}
-                                        className={cn(globalStyles.start, globalStyles.padding_0)}>
-                                <Typography variant="h3"
+                                        className={cn(globalStyles.start, globalStyles.padding_0, globalStyles.gap02)}>
+                                <Typography variant="h2"
                                             noMargin>{user?.profile?.lastName} {user?.profile?.firstName} {user?.profile?.patronymic}</Typography>
-                                <Typography variant="h5" noMargin>Начинающий специалист</Typography>
-
-                                <ul>
-                                    {/*<li><strong>тел.:</strong> +7 (800) 123-34-56</li>*/}
-                                    <li><strong>email:</strong> {user?.user?.email}</li>
-                                    <li><strong>tg:</strong> @{user?.user?.telegram}</li>
-                                </ul>
+                                <Typography variant="h4" noMargin>{user?.profile?.speciality}</Typography>
+                                <br/>
+                                <Typography variant="h5" noMargin>Желаемый доход: {user?.profile?.salary}</Typography>
+                                <Typography variant="p" noMargin><strong>День рождения:</strong> {user?.profile?.birthday}</Typography>
+                                <Typography variant="p" noMargin><strong>Личный сайт:</strong> {user?.profile?.website}</Typography>
+                                <Typography variant="p" noMargin><strong>Занятость:</strong> {user?.profile?.employment}</Typography>
+                                <Typography variant="p" noMargin><strong>Город:</strong> {user?.profile?.city}</Typography>
+                                <Typography variant="p" noMargin><strong>Средний балл:</strong> {user?.profile?.avgMark}</Typography>
                             </FlexLayout>
                         </FlexLayout>
 
-                        <Typography noMargin><strong>Опыт работы: </strong> менее года</Typography>
+                        <Typography variant="h3" noMargin><strong>Контакты: </strong></Typography>
+                        <div>
+                            <Typography variant="p" noMargin><strong>email: </strong>{user?.user?.email}</Typography>
+                            <Typography variant="p" noMargin><strong>tg: </strong>@{user?.user?.telegram}</Typography>
+                        </div>
 
-                        <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
+                        <Typography variant="h3" noMargin><strong>Опыт работы: </strong></Typography>
+                        <FlexLayout type={LAYOUT_TYPES.VERTICAL}
+                                    className={cn(globalStyles.start, globalStyles.padding_0)}>
+                            {user?.profile?.works && user?.profile?.works.map(edu =>
+                                <FlexLayout className={cn(globalStyles.start, globalStyles.padding_0)}>
+                                    <FlexLayout type={LAYOUT_TYPES.VERTICAL}
+                                                className={cn(globalStyles.start, globalStyles.padding_0)}>
+                                        <div className={styles.row}>
+                                            <h5 className={globalStyles.margin_block_0}>Название</h5>
+                                            <p className={globalStyles.margin_block_0}>{edu?.name}</p>
+                                        </div>
 
+                                        {edu?.specialization &&
+                                            <div className={styles.row}>
+                                                <h5 className={globalStyles.margin_block_0}>Обязанности</h5>
+                                                <p className={globalStyles.margin_block_0}>{edu?.specialization}</p>
+                                            </div>
+                                        }
+                                    </FlexLayout>
+                                    <FlexLayout type={LAYOUT_TYPES.VERTICAL}
+                                                className={cn(globalStyles.start, globalStyles.padding_0)}>
+                                        {edu?.start &&
+                                            <div className={styles.row}>
+                                                <h5 className={globalStyles.margin_block_0}>Период работы</h5>
+                                                <p className={globalStyles.margin_block_0}>{edu?.start} - {edu?.end || "Настоящее время"}</p>
+                                            </div>
+                                        }
+                                    </FlexLayout>
+                                </FlexLayout>
+                            )}
                         </FlexLayout>
 
                         <Typography variant="h3" noMargin>Образование: </Typography>
@@ -157,6 +190,11 @@ export const Resume = () => {
                         <Typography variant="h3" noMargin>Интересы: </Typography>
                         <div>
                             {user?.profile?.interests}
+                        </div>
+
+                        <Typography variant="h3" noMargin>Ключевые слова публикаций: </Typography>
+                        <div>
+                            Микропроцессорная, интернет вещей, IoT,Веб-приложение, информационная безопасность, система контроля, безопасность помещений, умный дом, ESP8266, микропроцессорная система, информационная безопасность, искусственный интеллект, Сети Петри, Маркировка, Моделирование
                         </div>
 
                         <Typography variant="h3" noMargin>Цифровой портрет: </Typography>

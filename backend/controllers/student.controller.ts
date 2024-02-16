@@ -3,7 +3,7 @@ import educationService from "../services/educationService";
 import {getEmployerProfileById, getStudentProfileById, updateStudentProfileById} from "../services/userService";
 import * as StudentService from "../services/studentService"
 import { Offer } from "@prisma/client"
-import studentService, {getEmployerOffers} from "../services/studentService";
+import studentService, {getEmployerOffers, IWorkExperienceCreate} from "../services/studentService";
 
 export type Education = {
     faculty: string
@@ -77,14 +77,53 @@ export const getStudentsForms = async (request: FastifyRequest, reply: FastifyRe
     }
 }
 
+export const addWorkExperience = async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        const user = (request as any).user
+        const {userId} = user
+
+        const studentProfile = await getStudentProfileById(userId)
+        if (!studentProfile) return reply.status(404).send({message: 'Профиль не найден'})
+
+        const work: IWorkExperienceCreate = {
+            name: (request as any).body?.name,
+            specialization: (request as any).body?.specialization,
+            start: (request as any).body?.start,
+            end: (request as any).body?.end,
+            studentId: studentProfile.id
+        }
+
+        const workExperience = await studentService.createWorkExperience(work);
+
+        return reply.send(workExperience)
+    } catch (e) {
+        console.log(e)
+        return reply.status(500)
+    }
+}
+
+export const getStudentWorks = async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        const user = (request as any).user
+        const {userId} = user
+
+        const studentProfile = await getStudentProfileById(userId)
+        if (!studentProfile) return reply.status(404).send({message: 'Профиль не найден'})
+
+        const workExperience = await studentService.getWorkExperience();
+        return reply.send(workExperience)
+    } catch (e) {
+        console.log(e)
+        return reply.status(500)
+    }
+}
+
 export const getStudentProfile = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         const user = (request as any).user
         const {userId} = user
 
-        const { id } = request.params as { id: number }
-
-        const studentProfile = await getStudentProfileById(id)
+        const studentProfile = await getStudentProfileById(userId)
         if (!studentProfile) return reply.status(404).send({message: 'Профиль не найден'})
 
         return reply.send(studentProfile)

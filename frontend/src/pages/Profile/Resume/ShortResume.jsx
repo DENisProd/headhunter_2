@@ -108,18 +108,58 @@ export const ShortResume = ( ) => {
                             <picture>
                                 <img width={250} height={250} src={Avatar}/>
                             </picture>
+
                             <FlexLayout type={LAYOUT_TYPES.VERTICAL}
-                                        className={cn(globalStyles.start, globalStyles.padding_0)}>
-                                <Typography variant="h3"
+                                        className={cn(globalStyles.start, globalStyles.padding_0, globalStyles.gap02)}>
+                                <Typography variant="h2"
                                             noMargin>{currentResume?.lastName} {currentResume?.firstName} {currentResume?.patronymic}</Typography>
-                                <Typography variant="h5" noMargin>Начинающий специалист</Typography>
+                                <Typography variant="h4" noMargin>{currentResume?.speciality}</Typography>
+                                <br/>
+                                <Typography variant="h5" noMargin>Желаемый доход: {currentResume?.salary}</Typography>
+                                <Typography variant="p" noMargin><strong>День рождения:</strong> {currentResume?.birthday}</Typography>
+                                <Typography variant="p" noMargin><strong>Личный сайт:</strong> {currentResume?.website}</Typography>
+                                <Typography variant="p" noMargin><strong>Занятость:</strong> {currentResume?.employment}</Typography>
+                                <Typography variant="p" noMargin><strong>Город:</strong> {currentResume?.city}</Typography>
+                                <Typography variant="p" noMargin><strong>Средний балл:</strong> {currentResume?.avgMark}</Typography>
                             </FlexLayout>
                         </FlexLayout>
 
-                        <Typography noMargin><strong>Опыт работы: </strong> менее года</Typography>
+                        <Typography variant="h3" noMargin><strong>Контакты: </strong></Typography>
+                        <div>
+                            <Typography variant="p" noMargin><strong>email: </strong>{currentResume?.email}</Typography>
+                            <Typography variant="p" noMargin><strong>tg: </strong>@{currentResume?.telegram}</Typography>
+                        </div>
 
-                        <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
+                        <Typography variant="h3" noMargin><strong>Опыт работы: </strong></Typography>
+                        <FlexLayout type={LAYOUT_TYPES.VERTICAL}
+                                    className={cn(globalStyles.start, globalStyles.padding_0)}>
+                            {currentResume?.works && currentResume?.works.map(edu =>
+                                <FlexLayout className={cn(globalStyles.start, globalStyles.padding_0)}>
+                                    <FlexLayout type={LAYOUT_TYPES.VERTICAL}
+                                                className={cn(globalStyles.start, globalStyles.padding_0)}>
+                                        <div className={styles.row}>
+                                            <h5 className={globalStyles.margin_block_0}>Название</h5>
+                                            <p className={globalStyles.margin_block_0}>{edu?.name}</p>
+                                        </div>
 
+                                        {edu?.specialization &&
+                                            <div className={styles.row}>
+                                                <h5 className={globalStyles.margin_block_0}>Обязанности</h5>
+                                                <p className={globalStyles.margin_block_0}>{edu?.specialization}</p>
+                                            </div>
+                                        }
+                                    </FlexLayout>
+                                    <FlexLayout type={LAYOUT_TYPES.VERTICAL}
+                                                className={cn(globalStyles.start, globalStyles.padding_0)}>
+                                        {edu?.start &&
+                                            <div className={styles.row}>
+                                                <h5 className={globalStyles.margin_block_0}>Период работы</h5>
+                                                <p className={globalStyles.margin_block_0}>{edu?.start} - {edu?.end || "Настоящее время"}</p>
+                                            </div>
+                                        }
+                                    </FlexLayout>
+                                </FlexLayout>
+                            )}
                         </FlexLayout>
 
                         <Typography variant="h3" noMargin>Образование: </Typography>

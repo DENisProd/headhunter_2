@@ -1,9 +1,9 @@
-import { FastifyInstance, FastifyRequest, FastifyReply, HookHandlerDoneFunction, preHandlerHookHandler } from 'fastify';
+import { FastifyRequest, FastifyReply, preHandlerHookHandler } from 'fastify';
 import jwt, { Secret } from 'jsonwebtoken';
 
 export const isAuthenticated: preHandlerHookHandler = async function (
-    req,
-    res
+    req: FastifyRequest,
+    res: FastifyReply
 ): Promise<void> {
     const { authorization } = req.headers as { authorization: string };
 
