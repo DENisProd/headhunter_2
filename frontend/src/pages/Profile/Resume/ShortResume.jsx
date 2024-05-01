@@ -33,8 +33,11 @@ export const ShortResume = ( ) => {
     }, [])
 
     const sendOffer = async () => {
+<<<<<<< HEAD
         console.log(studentId)
         console.log(currentResume)
+=======
+>>>>>>> main
         await createOffer({
             studentId: +studentId,
             type: 0
@@ -87,7 +90,11 @@ export const ShortResume = ( ) => {
 
                     <Button buttonProps={{
                         classNames: globalStyles.width_50
+<<<<<<< HEAD
                     }} onClick={sendOffer} disabled={isSended} isShort
+=======
+                    }} onClick={sendOffer} disabled={isSended}
+>>>>>>> main
                     >
                         {isSended ?
                             "Приглашение отправлено"
@@ -108,6 +115,7 @@ export const ShortResume = ( ) => {
                             <picture>
                                 <img width={250} height={250} src={Avatar}/>
                             </picture>
+<<<<<<< HEAD
 
                             <FlexLayout type={LAYOUT_TYPES.VERTICAL}
                                         className={cn(globalStyles.start, globalStyles.padding_0, globalStyles.gap02)}>
@@ -160,6 +168,20 @@ export const ShortResume = ( ) => {
                                     </FlexLayout>
                                 </FlexLayout>
                             )}
+=======
+                            <FlexLayout type={LAYOUT_TYPES.VERTICAL}
+                                        className={cn(globalStyles.start, globalStyles.padding_0)}>
+                                <Typography variant="h3"
+                                            noMargin>{currentResume?.lastName} {currentResume?.firstName} {currentResume?.patronymic}</Typography>
+                                <Typography variant="h5" noMargin>Начинающий специалист</Typography>
+                            </FlexLayout>
+                        </FlexLayout>
+
+                        <Typography noMargin><strong>Опыт работы: </strong> менее года</Typography>
+
+                        <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
+
+>>>>>>> main
                         </FlexLayout>
 
                         <Typography variant="h3" noMargin>Образование: </Typography>

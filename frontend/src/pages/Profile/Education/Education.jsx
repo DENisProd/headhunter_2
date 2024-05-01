@@ -148,7 +148,6 @@ export const Education = () => {
                                         ...register("telegram")
                                     }}/>
                                 </p>
-
                                 <FlexLayout>
                                     <Button type={BUTTON_TYPES.PRIMARY} isShort buttonProps={{
                                         type: 'submit'
@@ -189,7 +188,6 @@ export const Education = () => {
                                 <div className={styles.row}>
                                     <h5 className={globalStyles.margin_block_0}>Умения и навыки </h5>
                                     <p className={globalStyles.margin_block_0}>{user?.profile?.skills}</p>
-
                                     <button className={styles.edit_btn} onClick={() => setIsEdit(true)}>{edit()}</button>
                                 </div>
                             </FlexLayout>

@@ -3,6 +3,7 @@ import {SidebarWithFilters} from "./SidebarWithFilters/SidebarWithFilters";
 import {StudentCard} from "../../components/StudentCard/StudentCard";
 import cn from "classnames";
 import globalStyles from "../../styles/global.module.scss";
+
 import {useGetEduPortfolioMutation, useGetStudentsMutation} from "../../store/api/resumeApi.js";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -88,7 +89,6 @@ export const StudentsForms = () => {
     return (
         <FlexLayout className={cn(globalStyles.page, globalStyles.flex_container, globalStyles.padding_5050)} isAdaptive>
             <SidebarWithFilters/>
-
             <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
                 <Tile props={{
                     classNames: cn(globalStyles.center, globalStyles.between, globalStyles.flex_grow_0)
@@ -114,7 +114,6 @@ export const StudentsForms = () => {
                 {selectedStudent &&
                     <StudentPortfolio/>
                 }
-
                 <Tile props={{
                     classNames: cn(globalStyles.center, globalStyles.between, globalStyles.flex_grow_0)
                 }}>
@@ -155,9 +154,9 @@ export const StudentsForms = () => {
                         <div></div>
                     </div>
                 </Tile>
-
                 {resumeState.filteredStudents.map((student, index) =>
                     <StudentCard color={colorList[index]} student={student} updateFavorites={updateFavorites} inFavorites={favorites?.some(item => item.id === student.id) || false}/>
+
                 )}
             </FlexLayout>
         </FlexLayout>

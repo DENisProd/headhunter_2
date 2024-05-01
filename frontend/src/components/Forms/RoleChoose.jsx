@@ -36,7 +36,6 @@ function RoleChoose() {
     <FlexLayout type={LAYOUT_TYPES.VERTICAL} noPaddingMobile>
       {/*<h1 className={globalStyles.center}>Ваш статус: </h1>*/}
           <Typography variant="h1" center>Ваш статус: </Typography>
-
       <FlexLayout className={globalStyles.flex_container} noPaddingMobile>
             <Tile props={{
                   onClick: () => chooseRole(1),

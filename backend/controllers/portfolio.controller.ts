@@ -129,7 +129,6 @@ export const addEduPortfolio = async (request: FastifyRequest, reply: FastifyRep
 
             const education = await educationService.createEducation(eduData, studentProfile.id)
         }
-
         return reply.send(newListWorks)
     } catch (error) {
         console.log(error)
@@ -141,7 +140,6 @@ export const getEduPortfolio = async (request: FastifyRequest, reply: FastifyRep
     try {
         const user = (request as any).user;
         const { userId } = user;
-
         const { id } = request.params as { id: number }
 
         const studentProfile = await getStudentProfileById(+id);

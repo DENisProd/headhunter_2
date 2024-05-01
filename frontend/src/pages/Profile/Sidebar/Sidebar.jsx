@@ -56,10 +56,20 @@ export const Sidebar = () => {
                             <span>@{userState.user?.telegram}</span>
                         </Typography>
 
+<<<<<<< HEAD
                         {userState.role !== "employer" &&
                             <FlexLayout>
                                 <div>Ищу работу</div>
                                 <ToggleButton isOn={wantWork} toggle={toggle}/>
+=======
+                        <h4 className={globalStyles.margin_block_0}>Телефон</h4>
+                        <h6 className={globalStyles.margin_block_0}>8******</h6>
+
+                        {userState.role !== "employer" &&
+                            <FlexLayout>
+                                <div>Ищу работу</div>
+                                <ToggleButton isOn={wantWork} toggle={setWantWork}/>
+>>>>>>> main
                             </FlexLayout>
                         }
                     </div>
