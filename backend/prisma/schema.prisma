@@ -28,6 +28,7 @@ model User {
   updatedAt     DateTime       @updatedAt
   avatar        String         @default("")
   phone         Int            @default(0)
+  telegram      String         @default("")
   studentProfile StudentProfile?
   employerProfile EmployerProfile?
 }
@@ -40,9 +41,15 @@ model StudentProfile {
   patronymic  String   @default("")
   skills      String   @default("")
   interests   String   @default("")
+  speciality  String   @default("Начинающий специалист")
+  employment  String   @default("Частичная")
+  city        String   @default("г. Ростов-на-Дону")
+  website     String   @default("")
+  birthday    String   @default("")
   isWorkSearch Boolean @default(false)
+  salary      Int      @default(0)
 
-  avgMark     Int      @default(0)
+  avgMark     Float    @default(0)
   science     Int      @default(0)
   study       Int      @default(0)
   community   Int      @default(0)
@@ -56,6 +63,7 @@ model StudentProfile {
   educations  StudentEducation[]
   eduPortfolios   PortfolioEdu[]
   offer       Offer[]
+  works       StudentWork[]
 }
 
 model StudentEducation {
@@ -64,6 +72,16 @@ model StudentEducation {
     specialization String
     faculty String
     period  String
+    studentId Int
+    student StudentProfile @relation(fields: [studentId], references: [id])
+}
+
+model StudentWork {
+    id     Int      @id @unique @default(autoincrement())
+    name   String
+    specialization String
+    start  String
+    end    String  @default("")
     studentId Int
     student StudentProfile @relation(fields: [studentId], references: [id])
 }
@@ -118,6 +136,7 @@ model EmployerProfile {
   balance Int     @default(0)
   companyName String @default("")
   companyAddress String @default("")
+  inn     String     @default("111111111")
   // Добавьте поля, специфичные для работодателей
   // Например: название компании, отрасль и др.
   user   User     @relation(fields: [userId], references: [id])

@@ -3,9 +3,12 @@ import {ResponsiveRadar} from '@nivo/radar'
 import {useSelector} from "react-redux";
 import {FlexLayout} from "../ui/Layout/FlexLayout/FlexLayout";
 
-export const RadarChart = ({ student }) => {
+import styles from "./radar-chart.module.scss"
+
+export const RadarChart = ({ student, chartColor = '--primary-color' }) => {
 
     const [data, setData] = useState([])
+    const style = getComputedStyle(document.body)
 
     useEffect(() => {
         if (!student) return
@@ -47,9 +50,13 @@ export const RadarChart = ({ student }) => {
         setData(_data)
     }, [student])
 
+    // const style = {{
+    //
+    // }}
+
     return (
         <FlexLayout center minHeight>
-            <div style={{ minWidth: 300, height: 300 }}>
+            <div className={styles.chart}>
                 <ResponsiveRadar
                     animate
                     curve="linearClosed"
@@ -64,6 +71,12 @@ export const RadarChart = ({ student }) => {
                         right: 80,
                         bottom: 25
                     }}
+                    colors={() => style.getPropertyValue(chartColor)}
+                    // colors={{ scheme: 'category10' }}
+                    // borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+                    // borderColor={`var(${chartColor})`} // Цвет границы секторов
+                    // borderColor={{ from: 'color' }}
+                    // fillOpacity={0.6} // Прозрачность секторов
                 />
             </div>
         </FlexLayout>

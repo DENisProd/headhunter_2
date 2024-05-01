@@ -112,7 +112,7 @@
                             const jsonString = JSON.stringify(data, null, " ");
 
                             // Устанавливаем текст элемента равным строке JSON
-                            textElement.innerHTML = "<strong>Эти данные пойдут на генерацию резюме:</strong> <details>" + jsonString + "</details>";
+                            textElement.innerHTML = "<strong>Эти данные пойдут на генерацию резюме:</strong> <details><ul> <li>Портфолио</li> <li>Email</li> <li>ФИО</li> <li>День рождения</li> <li>Средний балл</li> <li>Группа</li> <li>Факультет, кафедра</li> </ul></details>";
                             console.log(data)
 
                             // Показываем блок с кнопками "Даю согласие" и "Отмена"
@@ -190,8 +190,9 @@
 
                 sendButton.addEventListener('click', function() {
                     inputDiv.style.display = 'none';
-
-                    fetch("http://localhost:5555/v1/user/prof/edu_portfolio", {
+                    // "https://hh.darksecrets.ru/api/v1/user/prof/edu_portfolio"
+                    // "http://localhost:5555/v1/user/prof/edu_portfolio"
+                    fetch("https://hh.darksecrets.ru/api/v1/user/prof/edu_portfolio", {
                         method: 'POST',
                         body: JSON.stringify({
                             ...data,
@@ -223,6 +224,6 @@
 
                 notifiesBlocks[2].appendChild(myDiv)
             }
-        }, 3000)
+        }, 4000)
     }
 })();

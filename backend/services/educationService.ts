@@ -1,7 +1,7 @@
 import {db} from "../database/db";
 import {Education} from "../controllers/student.controller";
 
-export async function _createEducation(data: Education, studentId: number) {
+async function createEducation(data: Education, studentId: number) {
     return await db.studentEducation.create({
         data: {
             studentId,
@@ -11,4 +11,19 @@ export async function _createEducation(data: Education, studentId: number) {
             period:  data.period,
         },
     });
+}
+
+async function getEducation(studentId: number, name: string, faculty: string): Promise<Education[]> {
+    return await db.studentEducation.findMany({
+        where: {
+            studentId,
+            name,
+            faculty
+        }
+    })
+}
+
+export default {
+    createEducation,
+    getEducation
 }

@@ -2,7 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {setUserData, setUserPortfolio} from "../slices/userSlice.js";
 import {BASE_URL} from "../../components/ui/ImageUploader/ImageUploader.jsx";
-import {addOffer, setOffers, setStudentResumes} from "../slices/resumeSlice.js";
+import {addOffer, setEduPortfolio, setOffers, setStudentResumes} from "../slices/resumeSlice.js";
 
 // Define a service using a base URL and expected endpoints
 export const resumeApi = createApi({
@@ -78,6 +78,28 @@ export const resumeApi = createApi({
                 dispatch(setOffers(result.data))
             }
         }),
+        getEduPortfolio: builder.mutation({
+            query: (id) => ({
+                url: '/user/prof/edu_portfolio/' + id,
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                //try {
+                const result = await queryFulfilled;
+                let data = {}
+                result.data.map(item => {
+                    if (item?.typeName === "Управленческая деятельность") {
+                        if (data["Управленческая деятельность"]) data["Управленческая деятельность"].push(item)
+                        else data["Управленческая деятельность"] = [item]
+                    } else {
+                        if (data[item.category]) data[item.category].push(item)
+                        else data[item.category] = [item]
+                    }
+                })
+
+                dispatch(setEduPortfolio(data));
+            }
+        }),
     }),
 })
 
@@ -87,5 +109,6 @@ export const {
     useGetStudentsMutation,
     useCreateOfferMutation,
     useGetStudentOffersMutation,
-    useGetEmployerOffersMutation
+    useGetEmployerOffersMutation,
+    useGetEduPortfolioMutation,
 } = resumeApi

@@ -32,7 +32,7 @@ const Notifications = () => {
                                 )}
                             </>
                             :
-                            <Typography variant="p">У вас ещё нет приглашений</Typography>
+                            <Typography variant="p">{userState.role === "employer" ? "У вас ещё нет откликов" : "У вас ещё нет приглашений"}</Typography>
                         }
             </FlexLayout>
         </FlexLayout>

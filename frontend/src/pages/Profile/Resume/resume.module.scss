@@ -2,4 +2,29 @@
   padding: 3rem 3rem 7rem 3rem;
   box-sizing: border-box;
   width: 100%;
+<<<<<<< HEAD
+
+  & picture img {
+    border-radius: 12px;
+  }
+}
+
+.resume_label {
+  display: none;
+}
+
+.resume {
+  width: 100%;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 767px) {
+  .resume {
+    display: none;
+  }
+  .resume_label {
+    display: block;
+  }
+=======
+>>>>>>> main
 }

@@ -12,7 +12,8 @@ const initialState = {
         min_project: 0,
         min_sport: 0
     },
-    offers: []
+    offers: [],
+    eduPortfolio: {}
 }
 
 export const resumeSlice = createSlice({
@@ -56,10 +57,13 @@ export const resumeSlice = createSlice({
         },
         setOffers(state, action) {
             state.offers = action.payload
+        },
+        setEduPortfolio(state, action) {
+            state.eduPortfolio = action.payload
         }
     },
 })
 
-export const {setStudentResumes, setFilterRating, sortByLastName, sortByTotal, addOffer, setOffers} = resumeSlice.actions
+export const { setStudentResumes, setFilterRating, sortByLastName, sortByTotal, addOffer, setOffers, getStudentById, setEduPortfolio } = resumeSlice.actions
 
 export default resumeSlice.reducer

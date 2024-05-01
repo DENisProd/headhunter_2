@@ -3,9 +3,20 @@
   user-select: none;
   color: var(--text-color);
 
+  & p {
+    color: var(--accent-dark-color-red);
+    margin-block-end: 0;
+    margin-block-start: 0;
+  }
+
+  & label {
+    font-size: 14px;
+  }
+
   & input {
-    border-radius: 1rem;
-    border: 1px solid var(--text-2-color);
+    margin-top: 0.3rem;
+    border-radius: 12px;
+    border: 1px solid var(--element-bg-2);
     padding: 0.6rem 1.5rem;
     font-size: 1rem;
     font-weight: 400;
@@ -15,9 +26,14 @@
     width: 100%;
     box-sizing: border-box;
     outline: none;
+    background: var(--element-bg-2);
 
     &:focus {
-      border: 1px solid var(--primary-color);
+      border: 1px solid var(--element-bg);
     }
+  }
+
+  &.error input{
+    border: 1px solid var(--accent-dark-color-red) !important;
   }
 }

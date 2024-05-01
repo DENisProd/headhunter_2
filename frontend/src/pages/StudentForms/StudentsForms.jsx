@@ -3,16 +3,52 @@ import {SidebarWithFilters} from "./SidebarWithFilters/SidebarWithFilters";
 import {StudentCard} from "../../components/StudentCard/StudentCard";
 import cn from "classnames";
 import globalStyles from "../../styles/global.module.scss";
-import {useGetStudentsMutation} from "../../store/api/resumeApi.js";
-import {useEffect, useState} from "react";
+
+import {useGetEduPortfolioMutation, useGetStudentsMutation} from "../../store/api/resumeApi.js";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Tile from "../../components/ui/Tile/Tile.jsx";
 import studentCardStyles from '../../components/StudentCard/student-card.module.scss'
 import {sortByLastName, sortByTotal} from "../../store/slices/resumeSlice.js";
-import BarChart from "../../components/BarChart/BarChart.jsx";
+import {CustomBarChart} from "../../components/ui/CustomBarChart/CustomBarChart.jsx";
+import {RadarChart} from "../../components/RadarChart/RadarChart";
+import {Button} from "../../components/ui/Button/Button";
+import {PieChart} from "./PieChart/PieChart";
+import {StudentPortfolio} from "./StudentPortfolio/StudentPortfolio";
+
+const colors = [
+    '--text-link-color',
+    '--text-blind-color',
+    '--text-contrast-color',
+    '--primary-color',
+    '--primary-dark-color',
+    '--primary-light-color',
+    '--accent-color-yellow',
+    '--accent-dark-color-yellow',
+    '--accent-light-color-yellow',
+    '--accent-color-red',
+    '--accent-dark-color-red',
+    '--accent-light-color-red',
+]
+
+const getUniqueRandomColor = () => {
+    return colors[Math.floor(Math.random() * colors.length)]
+}
+
+const shuffleArray = (array) => {
+    let shuffledArray = array.slice();
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+};
 
 export const StudentsForms = () => {
+    const [selectedStudent, setSelectedStudent] = useState(null)
+    const [colorList, setColorList] = useState([])
     const [getStudents, { error }] = useGetStudentsMutation()
+    const [getStudentPortfolio, { error2 }] = useGetEduPortfolioMutation()
     const dispatch = useDispatch()
     const resumeState = useSelector((state) => state.resumeState)
     const [isSortByLastName, setSortByLastName] = useState(false)
@@ -26,6 +62,7 @@ export const StudentsForms = () => {
     }
 
     useEffect(() => {
+        setColorList(shuffleArray(colors.slice()))
         getStudents()
         updateFavorites()
     }, [])
@@ -39,15 +76,44 @@ export const StudentsForms = () => {
         dispatch(sortByTotal(isSortByTotal))
     }
 
+    const getStudentById = (studentId) => {
+        return resumeState.students.find(student => student.id === studentId) || null
+    }
+
+    const onSelect = (id, color) => {
+        const foundStudent = getStudentById(id);
+        setSelectedStudent({...foundStudent, color})
+        getStudentPortfolio(foundStudent.userId)
+    }
+
     return (
-        <FlexLayout className={cn(globalStyles.page, globalStyles.flex_container, globalStyles.padding_5050)}>
+        <FlexLayout className={cn(globalStyles.page, globalStyles.flex_container, globalStyles.padding_5050)} isAdaptive>
             <SidebarWithFilters/>
             <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
                 <Tile props={{
                     classNames: cn(globalStyles.center, globalStyles.between, globalStyles.flex_grow_0)
                 }}>
-                    <BarChart data={resumeState.filteredStudents}/>
+                    <FlexLayout type={LAYOUT_TYPES.VERTICAL} noPadding>
+                        <h3 className={cn(globalStyles.margin_block_0, globalStyles.with_icon)}>Рейтинг обучающихся</h3>
+                    </FlexLayout>
+                    <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
+                        <CustomBarChart colorList={colorList} list={resumeState.filteredStudents} sortByField={'total'} displayField={'salary'} onSelect={onSelect}/>
+                    </FlexLayout>
                 </Tile>
+                {selectedStudent &&
+                    <Tile props={{
+                        classNames: cn(globalStyles.center, globalStyles.between, globalStyles.flex_grow_0)
+                    }}>
+                        <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
+                            <h3 className={cn(globalStyles.margin_block_0, globalStyles.with_icon)}>Цифровой портрет обучающегося</h3>
+                            <RadarChart student={selectedStudent} chartColor={selectedStudent.color}/>
+                        </FlexLayout>
+                    </Tile>
+                }
+
+                {selectedStudent &&
+                    <StudentPortfolio/>
+                }
                 <Tile props={{
                     classNames: cn(globalStyles.center, globalStyles.between, globalStyles.flex_grow_0)
                 }}>
@@ -88,9 +154,9 @@ export const StudentsForms = () => {
                         <div></div>
                     </div>
                 </Tile>
+                {resumeState.filteredStudents.map((student, index) =>
+                    <StudentCard color={colorList[index]} student={student} updateFavorites={updateFavorites} inFavorites={favorites?.some(item => item.id === student.id) || false}/>
 
-                {resumeState.filteredStudents.map(student =>
-                    <StudentCard student={student} updateFavorites={updateFavorites} inFavorites={favorites?.some(item => item.id === student.id) || false}/>
                 )}
             </FlexLayout>
         </FlexLayout>

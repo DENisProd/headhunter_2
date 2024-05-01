@@ -19,10 +19,17 @@ import {
 import {User} from "../models/dto/User";
 import {STATUS_CODES} from "http";
 
+export interface IRegisterProps {
+    email: string,
+    password: string,
+    role: number,
+    firstName: string,
+    inn: string
+}
 
 export async function register(req: FastifyRequest, reply: FastifyReply) {
     try {
-        const { email, password, role, firstName } = req.body as { email: string; password: string, role: number, firstName: string };
+        const { email, password, role, firstName, inn } = req.body as IRegisterProps;
         if (!email || !password) {
             reply.status(400);
             throw new Error('You must provide an email and a password.');
@@ -41,12 +48,12 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
         const newUser: User = {
             email: email,
             password : password,
-            confirmHash: hash
+            confirmHash: hash,
         };
 
         const user = await createUserByEmailAndPassword(newUser);
 
-        if (Number(role) === 3) await createEmployerProfileById(user.id, firstName)
+        if (Number(role) === 3) await createEmployerProfileById(user.id, firstName, inn)
         else await createStudentProfileById(user.id, firstName)
 
         const jti = uuidv4();

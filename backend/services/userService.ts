@@ -38,11 +38,13 @@ export function createStudentProfileById (userId: number, firstName: string) {
     })
 }
 
-export function getStudentProfileById (userId: number) {
-    return db.studentProfile.findUnique({
+export async function getStudentProfileById (userId: number) {
+    console.log(userId);
+    return await db.studentProfile.findUnique({
         where: { userId },
         include: {
-            educations: true
+            educations: true,
+            works: true
         }
     })
 }
@@ -62,9 +64,12 @@ export function getEmployerProfileById (userId: number) {
     })
 }
 
-export function createEmployerProfileById (userId: number, firstName: string) {
+export function createEmployerProfileById (userId: number, firstName: string, inn: string) {
     return db.employerProfile.create({
-        data: { userId },
+        data: {
+            inn,
+            userId
+        },
     })
 }
 

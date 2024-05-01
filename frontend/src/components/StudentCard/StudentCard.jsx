@@ -7,7 +7,7 @@ import cn from "classnames";
 import Avatar from '../../assets/avatars/avatar1.png'
 import {useNavigate} from "react-router-dom";
 
-export const StudentCard = ({ student, inFavorites, updateFavorites }) => {
+export const StudentCard = ({ student, inFavorites, updateFavorites, color }) => {
     const navigate = useNavigate()
 
     const addToFavorites = () => {
@@ -29,26 +29,31 @@ export const StudentCard = ({ student, inFavorites, updateFavorites }) => {
 
     return (
         <Tile props={{
-            classNames: cn(globalStyles.start, globalStyles.flex_grow_0, styles.with_hover),
-            onClick: () => navToStudent()
+            classNames: cn(globalStyles.start, globalStyles.flex_grow_0, styles.with_hover)
         }}>
             <div className={styles.container}>
-                <div className={styles.avatar}>
-                    <picture>
-                        <img src={Avatar}/>
-                    </picture>
-                </div>
+                <div className={styles.right_container} onClick={() => navToStudent()}>
+                    <div className={styles.avatar}>
+                        <picture>
+                            <img src={Avatar} style={{
+                                border: `3px solid var(${color})`,
+                                borderRadius: '50%'
+                            }}/>
+                        </picture>
+                    </div>
 
-                <div className={globalStyles.start}>
-                    {student.lastName} {student.firstName} {student.patronymic}
-                </div>
+                    <div className={globalStyles.start}>
+                        <div >{student.lastName} {student.firstName} {student.patronymic}: </div>
+                        <div className={globalStyles.start}>Желаемый доход от: {student?.salary || 0} ₽</div>
+                    </div>
 
-                <div className={globalStyles.start}>
-                    {student.total}
-                </div>
+                    <div className={globalStyles.start}>
+                        {student.total}
+                    </div>
 
-                <div className={globalStyles.start}>
-                    {student.skills}
+                    <div className={globalStyles.start}>
+                        {student.skills || "Навыки ещё не указаны"}
+                    </div>
                 </div>
 
                 <div>

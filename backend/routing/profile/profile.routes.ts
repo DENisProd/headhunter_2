@@ -16,7 +16,7 @@ export default async function profileRoutes(fastify: FastifyInstance) {
     fastify.post("/edu_portfolio", {
         handler: portfolioController.addEduPortfolio
     })
-    fastify.get("/edu_portfolio", {
+    fastify.get("/edu_portfolio/:id", {
         preHandler: isAuthenticated,
         handler: portfolioController.getEduPortfolio
     })

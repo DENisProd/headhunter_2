@@ -7,6 +7,9 @@
 .width_60 {
       width: 60%;
 }
+.width_100 {
+      width: 100%;
+}
 
 .flex_grow_2 {
       flex-grow: 2;
@@ -19,9 +22,8 @@
 }
 
 .start {
-      justify-content: start;
-      text-align: start;
-
+      justify-content: start !important;
+      text-align: start !important;
 }
 
 .between {
@@ -30,6 +32,13 @@
 
 .gap4 {
       gap: 4rem;
+}
+
+.gap1 {
+      gap: 1rem;
+}
+.gap02 {
+      gap: 0.2rem;
 }
 
 .margin_block_0 {
@@ -44,6 +53,7 @@
 
 .page {
       max-width: 1200px;
+      width: 100%;
       margin: 0 auto;
       box-sizing: border-box;
       padding: 1rem;
@@ -62,7 +72,7 @@
       padding: 3rem 1rem 0 1rem !important;
 }
 .padding_5050 {
-      padding: 5rem 0 5rem 0 !important;
+      padding: 5rem 1rem 5rem 1rem !important;
 }
 
 .text_decor_none {
@@ -86,6 +96,9 @@
 
 .marginTop {
       margin: 4rem auto;
+}
+.marginTop1 {
+      margin: 1rem auto;
 }
 
 .secondary {

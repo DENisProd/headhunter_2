@@ -18,7 +18,7 @@ export const Favorites = () => {
     }, [])
 
     return (
-        <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
+        <FlexLayout type={LAYOUT_TYPES.VERTICAL} noPadding>
             {Array.isArray(favorites) && favorites.length > 0 ?
                 <>
                     {favorites.map(student =>

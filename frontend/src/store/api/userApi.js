@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {setUserData, setUserPortfolio} from "../slices/userSlice.js";
+import {setUserData, setUserPortfolio, setUserWorks} from "../slices/userSlice.js";
 import {BASE_URL} from "../../components/ui/ImageUploader/ImageUploader.jsx";
 
 // Define a service using a base URL and expected endpoints
@@ -86,9 +86,22 @@ export const userApi = createApi({
                     dispatch(setUserPortfolio(result.data));
             }
         }),
+        toggleIsWork: builder.mutation({
+            query: () => ({
+                url: '/student/work',
+                method: 'GET',
+            })
+        }),
         addEducation: builder.mutation({
             query: (data) => ({
                 url: '/student/education',
+                method: 'POST',
+                body: JSON.stringify(data),
+            })
+        }),
+        addWorkExp: builder.mutation({
+            query: (data) => ({
+                url: '/student/workexp',
                 method: 'POST',
                 body: JSON.stringify(data),
             })
@@ -111,11 +124,19 @@ export const userApi = createApi({
                 body: JSON.stringify(data),
             }),
         }),
+        getStudentWorks: builder.mutation({
+            query: () => ({
+                url: '/student/works',
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const result = await queryFulfilled
+                dispatch(setUserWorks(result.data))
+            }
+        }),
     }),
 })
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const {
     useRegisterUserMutation,
     useLoginUserMutation,
@@ -127,4 +148,7 @@ export const {
     useAddEducationMutation,
     useAddMoneyMutation,
     useEditStudentProfileMutation,
+    useToggleIsWorkMutation,
+    useGetStudentWorksMutation,
+    useAddWorkExpMutation
 } = userApi

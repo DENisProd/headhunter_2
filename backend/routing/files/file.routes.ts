@@ -5,7 +5,7 @@ import util from 'util'
 import { pipeline } from 'stream'
 import path from 'path';
 // import mimeTypes from 'mime-types';
-import {uploadsDir} from "../../server"; // Импортируем пакет mime-types
+import {uploadsDir} from "../../server";
 import mimeTypes from 'mime-types'
 
 const pump = util.promisify(pipeline)

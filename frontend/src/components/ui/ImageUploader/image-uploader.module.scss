@@ -14,16 +14,18 @@
 
 .image_preview {
     //width: 12rem;
-    display: flex;
+    display: flex !important;
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 1rem;
+    width: 100%;
 }
 
 .tile {
     position: relative;
     width: 12rem;
     flex-grow: 0 !important;
+    user-select: none;
 }
 
 .image_item {
@@ -33,7 +35,7 @@
 }
 .tile img{
     width: 12rem;
-    height: 12rem;
+    height: 8rem;
     object-fit: cover;
     border-radius: 1rem;
 }

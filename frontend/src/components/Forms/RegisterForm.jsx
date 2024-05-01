@@ -10,19 +10,21 @@ import styles from './form.module.scss'
 import globalStyles from "../../styles/global.module.scss";
 import {Checkbox} from "../ui/Checkbox/Checkbox.jsx";
 import cn from "classnames";
+import {Typography} from "../ui/Typography/Typography";
 
 export const RegisterForm = () => {
     const [registerUser, { error }] = useRegisterUserMutation()
     const navigate = useNavigate()
     const isAuth = useSelector((state) => state.userState.isAuth)
-    const [emailIsBusy, setEmailIsBusy] = useState(false)
     const role = useSelector(state => state.userState.role);
+    const [errorLabel, setErrorLabel] = useState('')
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
-    } = useForm()
+        getValues,
+        formState: { errors, isValid },
+    } = useForm({mode: "onBlur"})
 
     useEffect(() => {
         // if (isAuth) navigate('/profile')
@@ -30,6 +32,7 @@ export const RegisterForm = () => {
 
     const onSubmit = (data) => {
         const user = {
+            inn: data.inn,
             firstName: data.name,
             email: data.email,
             password: data.password,
@@ -37,17 +40,16 @@ export const RegisterForm = () => {
             role
         };
 
-        console.log(user)
-
         registerUser(user)
             .then((data) => {
-                if ((data.message = "Error: Email is already in use!")) {
-                    setEmailIsBusy(true)
+                if (data?.data?.accessToken) {
+                    localStorage.setItem('token', data?.data?.accessToken)
+                    localStorage.setItem('refresh_token', data?.data?.refreshToken)
+                    navigate('/profile')
+                } else {
+                    setErrorLabel(data?.error?.data?.message)
+                    console.log(data?.error?.status)
                 }
-                console.log(data)
-                localStorage.setItem('token', data.data?.accessToken)
-                localStorage.setItem('refresh_token', data.data?.refreshToken)
-                navigate('/profile')
             })
             .catch((er) => {
                 console.log(er)
@@ -57,56 +59,79 @@ export const RegisterForm = () => {
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-                <h2 className={styles.header_text}>Регистрация</h2>
-                <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
-                    <TextField fieldProps={{
-                        type: 'text',
-                        placeholder: 'Введите имя',
-                        ...register("name", { required: true, maxLength: 100 })
-                    }}
-                    message={errors?.name?.type === "required" ? 'Введите ваше имя!' : ''}
-                    />
+                {/*<h2 className={styles.header_text}>Регистрация</h2>*/}
+                <Typography variant="h2" center>Регистрация</Typography>
+                <FlexLayout type={LAYOUT_TYPES.VERTICAL} noPaddingMobile>
+                    {role === 3 ?
+                        <TextField fieldProps={{
+                            type: 'number',
+                            placeholder: 'Введите ИНН',
+                            ...register("inn", { required: true })
+                        }}
+                                   title={"ИНН вашей организации"}
+                                   message={errors?.name?.type === "required" ? 'Введите ваш инн!' : ''}
+                                   isError={error?.name}
+                        />
+                    :
+                        <TextField fieldProps={{
+                            type: 'text',
+                            placeholder: 'Введите имя',
+                            ...register("name", { required: true, maxLength: 100 })
+                        }}
+                                   title={"Ваше имя"}
+                                   message={errors?.name?.type === "required" ? 'Введите ваше имя!' : ''}
+                                   isError={error?.name}
+                        />
+                    }
 
                     <TextField fieldProps={{
-                        type: 'email',
-                        placeholder: 'Введите email',
-                        ...register("email", { required: true, pattern: /^\S+@\S+$/i })
+                        type: 'email', placeholder: 'Введите email',
+                        ...register("email", {required: "Введите почту", pattern: { value: /^\S+@\S+$/i, message: "Введите почту"}})
                     }}
-                               message={errors?.email?.type === "required" ? 'Введите вашу почту!' : ''}
+                               title={"Ваш email"}
+                               message={errors?.email && errors?.email?.message }
+                               isError={error?.email}
                     />
 
                     <TextField fieldProps={{
                         type: 'password',
                         placeholder: 'Придумайте пароль',
-                        ...register("password", { required: true, minLength: 6, maxLength: 12 })
+                        ...register("password", {
+                            required: "Введите пароль",
+                            minLength: { value: 6, message: 'Пароль должен быть минимум 6 символов'}
+                        })
                     }}
-                               message={errors?.password?.type === "required" ? 'Придумайте пароль!' : ''}
+                               title={"Пароль"}
+                               message={ errors?.password && errors?.password?.message }
+                               isError={error?.password}
                     />
 
                     <TextField fieldProps={{
                         type: 'password',
                         placeholder: 'Повторите пароль',
-                        ...register("password2", { required: true, minLength: 6, maxLength: 12 })
+                        ...register("password2", { validate: (value) => value === getValues("password") || "Пароли должны совпадать" })
                     }}
-                               message={errors?.password2?.type === "required" ? 'Пароли не совпадают!' : ''}
+                               title={"Повтор пароля"}
+                               message={errors?.password2 && errors?.password2?.message}
+                               isError={error?.password2}
                     />
 
-                    <FlexLayout className={cn(globalStyles.between, globalStyles.padding_0)}>
+                    <FlexLayout className={cn(globalStyles.between, globalStyles.padding_0)} noPaddingMobile>
                         <Checkbox inputProps={{
                             ...register("agree")
                         }}/>
                         <div>Запомнить меня</div>
                     </FlexLayout>
 
-                    {emailIsBusy && <p>Email уже занят!</p>}
+                    <div>{errorLabel}</div>
 
-                    <Button buttonProps={{
+                    <Button disabled={!isValid} buttonProps={{
                         type: 'submit'
                     }}>
                         Создать аккаунт
                     </Button>
 
-                    <div>
+                    <div className={styles.link}>
                         <Link to={"/login"}>У меня уже есть аккаунт</Link>
                     </div>
                 </FlexLayout>

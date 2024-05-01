@@ -1,11 +1,24 @@
 .form {
   box-sizing: border-box;
-  padding-top: 1rem;
+  padding: 1rem 3rem 1rem 3rem;
   width: 100%;
+  background: var(--element-bg);
+  border-radius: 36px;
+
+  & .link a{
+    text-decoration: none;
+    color: var(--app-contrast-bg);
+  }
 }
 
 .header_text {
   margin-top: 0;
   text-align: center;
   color: var(--text-color);
+}
+
+@media screen and (max-width: 920px) {
+  .form {
+    padding: 1rem;
+  }
 }

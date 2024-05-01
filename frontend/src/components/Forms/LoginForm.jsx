@@ -15,12 +15,12 @@ export const LoginForm = () => {
     const [loginUser, {error}] = useLoginUserMutation()
     const navigate = useNavigate()
     const isAuth = useSelector((state) => state.userState.isAuth)
-    const [emailIsBusy, setEmailIsBusy] = useState(false)
+    const [errorLabel, setErrorLabel] = useState('')
 
     const {
         register,
         handleSubmit,
-        formState: {errors},
+        formState: { errors, isValid },
     } = useForm()
 
     useEffect(() => {
@@ -28,25 +28,25 @@ export const LoginForm = () => {
     }, [isAuth])
 
     const onSubmit = (data) => {
-        console.log(data)
         const user = {
             email: data.email,
             password: data.password,
         };
 
-        console.log(user)
-
         loginUser(user)
             .then((data) => {
-                if ((data.message = "Error: Email is already in use!")) {
-                    setEmailIsBusy(true)
+                if (data?.data?.accessToken) {
+                    localStorage.setItem('token', data?.data?.accessToken)
+                    localStorage.setItem('refresh_token', data?.data?.refreshToken)
+                    navigate('/profile')
+                } else {
+                    setErrorLabel(data?.error?.data?.message)
+                    console.log(data?.error?.status)
                 }
-                localStorage.setItem('token', data.data.accessToken)
-                localStorage.setItem('refresh_token', data.data.refreshToken)
-                navigate('/profile')
             })
             .catch((er) => {
                 console.log(er)
+                setErrorLabel(er.message)
             });
     };
 
@@ -54,22 +54,28 @@ export const LoginForm = () => {
         <>
             <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                 <h2 className={styles.header_text}>Вход</h2>
-                <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
+                <FlexLayout type={LAYOUT_TYPES.VERTICAL} noPaddingMobile>
 
                     <TextField fieldProps={{
                         type: 'email',
                         placeholder: 'Введите email',
-                        ...register("email", {required: true, pattern: /^\S+@\S+$/i})
+                        ...register("email", {required: "Введите почту", pattern: { value: /^\S+@\S+$/i, message: "Введите почту"}})
                     }}
-                               message={errors?.email?.type === "required" ? 'Введите вашу почту!' : ''}
+                               title={"Email"}
+                               message={errors?.email && errors?.email?.message }
+                               isError={errors?.email}
                     />
 
                     <TextField fieldProps={{
                         type: 'password',
                         placeholder: 'Введите пароль',
-                        ...register("password", {required: true, minLength: 6, maxLength: 12})
+                        ...register("password", {
+                            required: "Введите пароль",
+                        })
                     }}
-                               message={errors?.password?.type === "required" ? 'Введите пароль!' : ''}
+                               title={"Пароль"}
+                               message={errors?.password && errors?.password?.message}
+                               isError={errors?.password}
                     />
 
                     <FlexLayout className={cn(globalStyles.between, globalStyles.padding_0)}>
@@ -79,9 +85,9 @@ export const LoginForm = () => {
                         <div>Запомнить меня</div>
                     </FlexLayout>
 
-                    {emailIsBusy && <p>Email уже занят!</p>}
+                    <div>{errorLabel}</div>
 
-                    <Button buttonProps={{
+                    <Button disabled={!isValid} buttonProps={{
                         type: 'submit'
                     }}>
                         Войти
@@ -93,8 +99,8 @@ export const LoginForm = () => {
                         Войти через ДГТУ.Цифра
                     </Button>
 
-                    <div>
-                        <Link to={"/register/"}>Создать аккаунта</Link>
+                    <div className={styles.link}>
+                        <Link to={"/register/"}>Создать аккаунт</Link>
                     </div>
                 </FlexLayout>
             </form>

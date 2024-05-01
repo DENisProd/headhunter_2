@@ -1,7 +1,8 @@
 .btn {
   //border: 2px solid var(--background-secondary);
-  background-color: var(--app-bg);
-  color: var(--text-color);
+  max-width: 4rem;
+  background-color: var(--element-bg-2);
+  color: var(--app-bg);
   border-radius: 100px;
   font-size: 0.8em;
   padding: 5px 0px;
@@ -37,7 +38,7 @@
   }
 
   & .off {
-    background-color: var(--element-bg-2);
+    background-color: var(--app-bg);
     left: .5em;
   }
 

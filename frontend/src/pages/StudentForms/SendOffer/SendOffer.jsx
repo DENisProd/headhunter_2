@@ -1,0 +1,5 @@
+export const SendOffer = () => {
+    return (
+        <></>
+    )
+}

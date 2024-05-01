@@ -8,6 +8,8 @@ import {findUserByEmail, getStudentProfileById} from "../services/userService";
 import {createPortfolioFile} from "../services/portfolioFileService";
 import {EduPortfolio} from "../models/dto/EduPortfolio";
 import * as repl from "repl";
+import educationService from "../services/educationService";
+import {Education} from "./student.controller";
 
 export type PortfolioFileCreate = {
     url: string
@@ -116,6 +118,17 @@ export const addEduPortfolio = async (request: FastifyRequest, reply: FastifyRep
 
         await updatePortfolioNumbers(studentProfile.id, newListWorks2, portfolio)
 
+        const edu = await educationService.getEducation(studentProfile.id, "Донской государственный технический университет", portfolio.facul)
+        if (!edu) {
+            const eduData: Education = {
+                faculty: portfolio.facul,
+                name: "Донской государственный технический университет",
+                specialization: "",
+                period: portfolio.admissionYear + "-"
+            }
+
+            const education = await educationService.createEducation(eduData, studentProfile.id)
+        }
         return reply.send(newListWorks)
     } catch (error) {
         console.log(error)
@@ -127,8 +140,9 @@ export const getEduPortfolio = async (request: FastifyRequest, reply: FastifyRep
     try {
         const user = (request as any).user;
         const { userId } = user;
+        const { id } = request.params as { id: number }
 
-        const studentProfile = await getStudentProfileById(userId);
+        const studentProfile = await getStudentProfileById(+id);
         if (!studentProfile) return reply.status(404).send({ message: 'Профиль не найден'})
 
         const eduPortfolio = await getEduPortfolioToStudentId(studentProfile.id)

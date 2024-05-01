@@ -1,10 +1,10 @@
 import cn from "classnames";
 import styles from './typography.module.scss'
 
-export const Typography = ({ noMargin, variant, children }) => {
+export const Typography = ({ noMargin, variant, children, center, alignEnd }) => {
 
     const getStyle = () => {
-        return cn(styles.main, noMargin && styles.no_margin)
+        return cn(styles.main, noMargin && styles.no_margin, center && styles.center, alignEnd && styles.align_end)
     }
 
     const getTag = () => {

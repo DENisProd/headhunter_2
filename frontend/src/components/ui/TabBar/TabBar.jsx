@@ -31,8 +31,8 @@ export function TabGroup({ children, header, className, changeState }) {
     };
 
     return (
-        <div>
-            <div className={className}>
+        <>
+
                 <TabHeader>{header}</TabHeader>
                 <div className={styles.tabs_container}>
                     {React.Children.map(children, (child, index) => (
@@ -44,13 +44,12 @@ export function TabGroup({ children, header, className, changeState }) {
                         />
                     ))}
                 </div>
-            </div>
 
             {React.Children.map(children, (child, index) => (
                 <TabPanel key={index} isActive={activeTab === index}>
                     {child.props.children}
                 </TabPanel>
             ))}
-        </div>
+        </>
     );
 }

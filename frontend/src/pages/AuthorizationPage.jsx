@@ -38,7 +38,7 @@ export const AuthorizationPage = ({ type }) => {
 
     return (
         <div className={cn(styles.auth_page)}>
-            <FlexLayout isAdaptive type={LAYOUT_TYPES.HORIZONTAL} className={globalStyles.gap4}>
+            <FlexLayout isAdaptive type={LAYOUT_TYPES.HORIZONTAL} className={globalStyles.gap4} noPaddingMobile>
                 {getElement()}
             </FlexLayout>
         </div>
