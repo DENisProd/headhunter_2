@@ -33,11 +33,8 @@ export const ShortResume = ( ) => {
     }, [])
 
     const sendOffer = async () => {
-<<<<<<< HEAD
         console.log(studentId)
         console.log(currentResume)
-=======
->>>>>>> main
         await createOffer({
             studentId: +studentId,
             type: 0
@@ -72,7 +69,7 @@ export const ShortResume = ( ) => {
             {/*    {isPdfGenerated ? 'PDF Сохранен' : 'Сохранить в PDF'}*/}
             {/*</Button>*/}
             <Tile props={{
-                classNames: cn(globalStyles.start, globalStyles.width_50),
+                classNames: cn(globalStyles.start),
             }}>
                 <FlexLayout className={cn(globalStyles.padding_0, globalStyles.between)}>
                     <Link to={'/students/'} className={cn(globalStyles.with_icon, globalStyles.text_decor_none, globalStyles.bold_text, globalStyles.secondary)}>
@@ -90,11 +87,7 @@ export const ShortResume = ( ) => {
 
                     <Button buttonProps={{
                         classNames: globalStyles.width_50
-<<<<<<< HEAD
                     }} onClick={sendOffer} disabled={isSended} isShort
-=======
-                    }} onClick={sendOffer} disabled={isSended}
->>>>>>> main
                     >
                         {isSended ?
                             "Приглашение отправлено"
@@ -107,15 +100,14 @@ export const ShortResume = ( ) => {
             </Tile>
 
             <Tile props={{
-                classNames: cn(globalStyles.start, globalStyles.padding_0, globalStyles.width_50),
+                classNames: cn(globalStyles.start, globalStyles.padding_0),
             }}>
                 <div className={styles.container}>
                     <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(globalStyles.start, globalStyles.padding_0)}>
                         <FlexLayout className={cn(globalStyles.start, globalStyles.padding_0)}>
                             <picture>
-                                <img width={250} height={250} src={Avatar}/>
+                                <img width={150} height={150} src={Avatar}/>
                             </picture>
-<<<<<<< HEAD
 
                             <FlexLayout type={LAYOUT_TYPES.VERTICAL}
                                         className={cn(globalStyles.start, globalStyles.padding_0, globalStyles.gap02)}>
@@ -168,20 +160,6 @@ export const ShortResume = ( ) => {
                                     </FlexLayout>
                                 </FlexLayout>
                             )}
-=======
-                            <FlexLayout type={LAYOUT_TYPES.VERTICAL}
-                                        className={cn(globalStyles.start, globalStyles.padding_0)}>
-                                <Typography variant="h3"
-                                            noMargin>{currentResume?.lastName} {currentResume?.firstName} {currentResume?.patronymic}</Typography>
-                                <Typography variant="h5" noMargin>Начинающий специалист</Typography>
-                            </FlexLayout>
-                        </FlexLayout>
-
-                        <Typography noMargin><strong>Опыт работы: </strong> менее года</Typography>
-
-                        <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
-
->>>>>>> main
                         </FlexLayout>
 
                         <Typography variant="h3" noMargin>Образование: </Typography>

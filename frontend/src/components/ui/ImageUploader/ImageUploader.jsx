@@ -8,9 +8,10 @@ import axios from "axios";
 import {useForm} from "react-hook-form";
 import {Button} from "../Button/Button.jsx";
 import {useAddPortfolioUserMutation, useRegisterUserMutation} from "../../../store/api/userApi.js";
+import { SERVER_URL } from '../../../App.jsx';
 
 // export const BASE_URL = 'https://hh.darksecrets.ru/api/v1/'
-export const BASE_URL = 'http://localhost:5555/v1/'
+// export const BASE_URL = 'http://localhost:5555/v1/'
 
 const baseStyle = {
     borderRadius: '1rem',
@@ -47,7 +48,7 @@ const ImageUploader = ({ setParentImages, closeAdding }) => {
             formData.append('file', file)
 
             try {
-                const response = await axios.post(BASE_URL + 'file/upload', formData, {
+                const response = await axios.post(SERVER_URL + 'file/upload', formData, {
                     onUploadProgress: (progressEvent) => {
                         const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
                         setUploadProgress((prevState) => ({ ...prevState, [file.name]: progress }));
@@ -59,7 +60,7 @@ const ImageUploader = ({ setParentImages, closeAdding }) => {
 
                 // Assuming response.data contains the URL of the uploaded file
                 console.log(response.data)
-                updatedImages.push({ url: BASE_URL + "uploads/" + response.data?.file?.filename, name: file.name, mimeType: response.data?.file?.mimeType });
+                updatedImages.push({ url: SERVER_URL + "uploads/" + response.data?.file?.filename, name: file.name, mimeType: response.data?.file?.mimeType });
                 setImages(updatedImages);
                 setUploadProgress(prevState => ({ ...prevState, [file.name]: 100 })); // Set progress to 100% on completion
             } catch (error) {

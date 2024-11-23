@@ -4,7 +4,7 @@ import styles from './tile.module.scss'
 
 function Tile({ children, props }) {
   return (
-    <div className={cn(styles.container, props?.classNames)} {...props}>
+    <div className={cn(styles.tile, props?.classNames)} {...props}>
             {children}
     </div>
   )

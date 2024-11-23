@@ -1,0 +1,26 @@
+.dropzone {
+    margin-top: 1rem;
+    border: 2px dashed #cccccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.image_container {
+    display: flex;
+    justify-content: center;
+}
+
+.image {
+    max-width: 800px;
+    max-height: 480px;
+    width: 100%;
+    border-radius: 0.8rem;
+    object-fit: cover;
+
+    &.small {
+        width: 50%;
+        margin: 0 auto;
+    }
+}

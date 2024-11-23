@@ -31,7 +31,7 @@ export const BarColumn = ({ color, text, tooltipText, height, id, onSelect }) =>
         >
             <div className={styles.bar} style={{ height: `calc(${height} * 20rem + 1rem)`, background: `var(${color})` }}/>
             <div className={styles.divider}/>
-            <div>{ text }</div>
+            <div>{ +text>0 ? +text : "- "}₽</div>
             <div className={cn(styles.hover_block, isLongTouch && styles.visible)}>
                 {tooltipText}
             </div>

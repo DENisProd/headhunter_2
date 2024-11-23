@@ -11,10 +11,7 @@
   },
   "dependencies": {
     "@nivo/bar": "^0.84.0",
-<<<<<<< HEAD
     "@nivo/pie": "^0.84.0",
-=======
->>>>>>> main
     "@nivo/radar": "^0.84.0",
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.6.2",
@@ -38,6 +35,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "sass": "^1.69.5",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-mkcert": "^1.17.5"
   }
 }

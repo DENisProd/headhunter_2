@@ -6,6 +6,25 @@ export interface IGetParams {
     scienceScore: number
 }
 
+function toShortSchema(data: any) {
+    return {
+        skills: data.skills,
+        interests: data.interests,
+        science: data.scienceScore,
+        study: data.studyScore,
+        community: data.communityScore,
+        culture: data.cultureScore,
+        project: data.projectScore,
+        sport: data.sportScore,
+        total: data.totalScore,
+        salary: data.salary,
+        speciality: data.speciality,
+        city: data?.city,
+        birthday: data?.birthday,
+        id: data?.id,
+    }
+}
+
 export async function getStudentForms(params: IGetParams) {
     return await db.studentProfile.findMany({
         where: {
@@ -117,5 +136,6 @@ async function getWorkExperience() {
 export default {
     toggleIsWork,
     createWorkExperience,
-    getWorkExperience
+    getWorkExperience,
+    toShortSchema,
 }

@@ -68,9 +68,16 @@ export const editStudentInformation = async (request: FastifyRequest, reply: Fas
 
 export const getStudentsForms = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
+        const user = (request as any).user
+
+        const employerProfile = await getEmployerProfileById(user.userId)
+        if (!employerProfile) return reply.status(404).send({message: 'Работодатель не найден'})
+
         const students = await StudentService.getStudentForms({ scienceScore: 0})
 
-        return reply.send(students)
+        const response = students.map((student) => studentService.toShortSchema(student))
+
+        return reply.send(response)
     } catch (e) {
         console.log(e)
         return reply.status(500)

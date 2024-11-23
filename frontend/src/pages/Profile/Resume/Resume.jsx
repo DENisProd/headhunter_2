@@ -48,7 +48,6 @@ export const Resume = () => {
 
 
     return (
-<<<<<<< HEAD
         <FlexLayout type={LAYOUT_TYPES.VERTICAL} noPadding>
             <Tile>
                 <FlexLayout className={globalStyles.padding_0}>
@@ -83,37 +82,10 @@ export const Resume = () => {
             </Tile>
 
             <div className={styles.resume_label}>Предпросмотр резюме доступен только с ноутбука</div>
-=======
-        <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
-            <Button onClick={generatePdf} disabled={isPdfGenerated}>
-                {isPdfGenerated ?
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="vuesax/linear/tick-circle">
-                            <g id="tick-circle">
-                                <path id="Vector"
-                                      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-                                      stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round"
-                                      strokeLinejoin="round"/>
-                                <path id="Vector_2" d="M7.75 11.9999L10.58 14.8299L16.25 9.16992" stroke="#FFFFFF"
-                                      strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            </g>
-                        </g>
-                    </svg>
-                    :
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M6 20L18 20" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round"
-                              strokeLinejoin="round"/>
-                        <path d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5" stroke="#FFFFFF" strokeWidth="1.5"
-                              strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>}
-                {isPdfGenerated ? 'PDF Сохранен' : 'Сохранить в PDF'}
-            </Button>
->>>>>>> main
 
             <Tile props={{
                 classNames: cn(globalStyles.start, globalStyles.padding_0),
             }}>
-<<<<<<< HEAD
                 <div className={cn(styles.container, styles.resume)} ref={contentDivRef}>
                     <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(globalStyles.start, globalStyles.padding_0, styles.resume)}>
                         <FlexLayout className={cn(globalStyles.start, globalStyles.padding_0)}>
@@ -171,32 +143,6 @@ export const Resume = () => {
                                     </FlexLayout>
                                 </FlexLayout>
                             )}
-=======
-                <div className={styles.container} ref={contentDivRef}>
-                    <FlexLayout type={LAYOUT_TYPES.VERTICAL} className={cn(globalStyles.start, globalStyles.padding_0)}>
-                        <FlexLayout className={cn(globalStyles.start, globalStyles.padding_0)}>
-                            <picture>
-                                <img width={250} height={250} src={Avatar}/>
-                            </picture>
-                            <FlexLayout type={LAYOUT_TYPES.VERTICAL}
-                                        className={cn(globalStyles.start, globalStyles.padding_0)}>
-                                <Typography variant="h3"
-                                            noMargin>{user?.profile?.lastName} {user?.profile?.firstName} {user?.profile?.patronymic}</Typography>
-                                <Typography variant="h5" noMargin>Начинающий специалист</Typography>
-
-                                <ul>
-                                    <li><strong>тел.:</strong> +7 (800) 123-34-56</li>
-                                    <li><strong>email:</strong> {user?.user?.email}</li>
-                                    <li><strong>tg:</strong> @temerskiyproduct</li>
-                                </ul>
-                            </FlexLayout>
-                        </FlexLayout>
-
-                        <Typography noMargin><strong>Опыт работы: </strong> менее года</Typography>
-
-                        <FlexLayout type={LAYOUT_TYPES.VERTICAL}>
-
->>>>>>> main
                         </FlexLayout>
 
                         <Typography variant="h3" noMargin>Образование: </Typography>
@@ -246,14 +192,11 @@ export const Resume = () => {
                             {user?.profile?.interests}
                         </div>
 
-<<<<<<< HEAD
                         <Typography variant="h3" noMargin>Ключевые слова публикаций: </Typography>
                         <div>
                             Микропроцессорная, интернет вещей, IoT,Веб-приложение, информационная безопасность, система контроля, безопасность помещений, умный дом, ESP8266, микропроцессорная система, информационная безопасность, искусственный интеллект, Сети Петри, Маркировка, Моделирование
                         </div>
 
-=======
->>>>>>> main
                         <Typography variant="h3" noMargin>Цифровой портрет: </Typography>
 
                         <FlexLayout>

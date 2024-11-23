@@ -3,17 +3,17 @@ import {User} from "../models/dto/User";
 import {db} from "../database/db";
 import {StudentEditProfile} from "../controllers/student.controller";
 
-export function findUserByEmail(email: string) {
-    return db.user.findUnique({
+export async function findUserByEmail(email: string) {
+    return await db.user.findUnique({
         where: {
             email,
         },
     })
 }
 
-export function createUserByEmailAndPassword(user: User) {
+export async function createUserByEmailAndPassword(user: User) {
     user.password = bcrypt.hashSync(user.password, 12);
-    return db.user.create({
+    return await db.user.create({
         data: {
             ...user,
             confirmHashCreated: new Date()
@@ -21,16 +21,16 @@ export function createUserByEmailAndPassword(user: User) {
     })
 }
 
-export function findUserById(id: number) {
-    return db.user.findUnique({
+export async function findUserById(id: number) {
+    return await db.user.findUnique({
         where: {
             id,
         },
     })
 }
 
-export function createStudentProfileById (userId: number, firstName: string) {
-    return db.studentProfile.create({
+export async function createStudentProfileById (userId: number, firstName: string) {
+    return await db.studentProfile.create({
         data: {
             userId,
             firstName
@@ -49,8 +49,8 @@ export async function getStudentProfileById (userId: number) {
     })
 }
 
-export function updateStudentProfileById(userId: number, updatedData: StudentEditProfile) {
-    return db.studentProfile.update({
+export async function updateStudentProfileById(userId: number, updatedData: StudentEditProfile) {
+    return await db.studentProfile.update({
         where: { userId },
         data: {
             ...updatedData
@@ -58,14 +58,14 @@ export function updateStudentProfileById(userId: number, updatedData: StudentEdi
     });
 }
 
-export function getEmployerProfileById (userId: number) {
-    return db.employerProfile.findUnique({
+export async function getEmployerProfileById (userId: number) {
+    return await db.employerProfile.findUnique({
         where: { userId },
     })
 }
 
-export function createEmployerProfileById (userId: number, firstName: string, inn: string) {
-    return db.employerProfile.create({
+export async function createEmployerProfileById (userId: number, firstName: string, inn: string) {
+    return await db.employerProfile.create({
         data: {
             inn,
             userId
@@ -73,8 +73,8 @@ export function createEmployerProfileById (userId: number, firstName: string, in
     })
 }
 
-export function confirmUserEmailById (id: number) {
-    return db.user.update({
+export async function confirmUserEmailById (id: number) {
+    return await db.user.update({
         where: {
             id
         },

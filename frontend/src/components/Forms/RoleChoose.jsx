@@ -9,9 +9,6 @@ import Student from "../../assets/student-cap-svgrepo-com.svg"
 import Employer from "../../assets/pen-svgrepo-com.svg"
 import Briefcase from "../../assets/briefcase-svgrepo-com.svg"
 
-import Art1 from '../../assets/art1.svg'
-import Art2 from '../../assets/art2.svg'
-import Art3 from '../../assets/art3.svg'
 import {useDispatch} from "react-redux";
 import {setRole} from "../../store/slices/userSlice.js";
 import cn from "classnames";

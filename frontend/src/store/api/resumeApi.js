@@ -1,14 +1,14 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {setUserData, setUserPortfolio} from "../slices/userSlice.js";
-import {BASE_URL} from "../../components/ui/ImageUploader/ImageUploader.jsx";
 import {addOffer, setEduPortfolio, setOffers, setStudentResumes} from "../slices/resumeSlice.js";
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 // Define a service using a base URL and expected endpoints
 export const resumeApi = createApi({
     reducerPath: 'resumeApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: BASE_URL,
+        baseUrl: SERVER_URL,
         prepareHeaders: headers => {
             headers.set('Content-Type', 'application/json');
             headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));

@@ -44,7 +44,7 @@ export const StudentCard = ({ student, inFavorites, updateFavorites, color }) =>
 
                     <div className={globalStyles.start}>
                         <div >{student.lastName} {student.firstName} {student.patronymic}: </div>
-                        <div className={globalStyles.start}>Желаемый доход от: {student?.salary || 0} ₽</div>
+                        <div className={globalStyles.start}>Желаемый доход от: {student?.salary>0 || "не указан"} ₽</div>
                     </div>
 
                     <div className={globalStyles.start}>

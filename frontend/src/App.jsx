@@ -9,10 +9,11 @@ import Profile from './pages/Profile/Profile.jsx';
 import Landing from "./pages/Landing/Landing.jsx";
 import {Balance} from "./pages/Balance/Balance";
 import {StudentsForms} from "./pages/StudentForms/StudentsForms.jsx";
-import {BASE_URL} from "./components/ui/ImageUploader/ImageUploader.jsx";
 import {ShortResume} from "./pages/Profile/Resume/ShortResume.jsx";
 import Notifications from "./pages/Notification/Notifications.jsx";
 import {useGetProfileMutation} from "./store/api/userApi.js";
+
+export const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 function PageTransition({ children }) {
     return (
@@ -34,8 +35,22 @@ function App() {
 
     useEffect(() => {
         const fetchData = async () => {
+            const response = await fetch("https://edu.donstu.ru/api/tokenauth", {
+                body: JSON.stringify({
+                    fingerprint: 
+                    "xkv4ed6H63YM!JP_P_kbNghXy-@q8xj6ejW-nfOsgA!XV6gXfst0GsXPCWFehPOJTiya2Pazz9!MmKB7inKPD0z3MG?PZzJR11D3IFkPR9ANxKt7VO$@F-Gjz@NvSLZAzta1GOzcB@_JzmFBdF!K3O",
+                    isParent: false,
+                    password: "s4f0et",
+                    recaptchaToken: null,
+                    userName: "guly.denis2014@yandex.ru"
+                }),
+                method: "POST",
+                headers: {
+                    "Fp": "xkv4ed6H63YM!JP_P_kbNghXy-@q8xj6ejW-nfOsgA!XV6gXfst0GsXPCWFehPOJTiya2Pazz9!MmKB7inKPD0z3MG?PZzJR11D3IFkPR9ANxKt7VO$@F-Gjz@NvSLZAzta1GOzcB@_JzmFBdF!K3O"
+                },
+            });
             try {
-                const response = await fetch(BASE_URL + 'user/check', {
+                const response = await fetch(SERVER_URL + 'user/check', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
