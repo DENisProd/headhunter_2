@@ -38,15 +38,15 @@ function App() {
             const response = await fetch("https://edu.donstu.ru/api/tokenauth", {
                 body: JSON.stringify({
                     fingerprint: 
-                    "xkv4ed6H63YM!JP_P_kbNghXy-@q8xj6ejW-nfOsgA!XV6gXfst0GsXPCWFehPOJTiya2Pazz9!MmKB7inKPD0z3MG?PZzJR11D3IFkPR9ANxKt7VO$@F-Gjz@NvSLZAzta1GOzcB@_JzmFBdF!K3O",
+                    "",
                     isParent: false,
-                    password: "s4f0et",
+                    password: "",
                     recaptchaToken: null,
-                    userName: "guly.denis2014@yandex.ru"
+                    userName: ""
                 }),
                 method: "POST",
                 headers: {
-                    "Fp": "xkv4ed6H63YM!JP_P_kbNghXy-@q8xj6ejW-nfOsgA!XV6gXfst0GsXPCWFehPOJTiya2Pazz9!MmKB7inKPD0z3MG?PZzJR11D3IFkPR9ANxKt7VO$@F-Gjz@NvSLZAzta1GOzcB@_JzmFBdF!K3O"
+                    "Fp": ""
                 },
             });
             try {
